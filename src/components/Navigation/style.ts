@@ -1,0 +1,28 @@
+import { css } from '@emotion/core';
+import addUser from '../../images/icon-add.svg';
+import listOfUsers from '../../images/icon-list-of.svg';
+import { appNormalFont } from '../../common/styles/global.style';
+
+const nav = [
+  appNormalFont,
+  css({
+    textDecoration: 'none',
+    color: 'white',
+    opacity: 0.5,
+    marginLeft: '59px',
+    '&:hover': {
+      opacity: 1,
+    },
+    '.active': {
+      opacity: 1,
+    },
+    '.icon-add-user': {
+      backgroundImage: `url(${addUser})`,
+    },
+    '.icon-list-user': {
+      backgroundImage: `url(${listOfUsers})`,
+    },
+  })
+];
+
+export default nav;
