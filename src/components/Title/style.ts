@@ -1,6 +1,6 @@
 import { css } from '@emotion/core';
 
-import { appBoldFont } from '../../common/styles/global.style';
+import { appBoldFont } from 'common/styles/global.style';
 
 export const title = [
   appBoldFont,

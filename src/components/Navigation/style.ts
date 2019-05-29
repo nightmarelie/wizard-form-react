@@ -1,7 +1,7 @@
 import { css } from '@emotion/core';
-import addUser from '../../images/icon-add.svg';
-import listOfUsers from '../../images/icon-list-of.svg';
-import { appNormalFont } from '../../common/styles/global.style';
+import addUser from 'common/images/icon-add.svg';
+import listOfUsers from 'common/images/icon-list-of.svg';
+import { appNormalFont } from 'common/styles/global.style';
 
 const nav = [
   appNormalFont,

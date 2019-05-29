@@ -4,7 +4,7 @@ import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './style';
-import routes from '../../common/routes';
+import routes from 'common/routes';
 
 interface IProps {}
 

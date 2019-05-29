@@ -7,9 +7,13 @@ import './style/index.css';
 import './style/App.css';
 import styles from 'common/styles/global.style';
 import routes from 'common/routes';
+
+// components
 import Header from 'components/Header/Header';
-import ListOfUser from '../User/ListOfUsers';
-import CreateUser from '../User/CreateUser';
+
+// pages
+import ListOfUser from 'pages/User/ListOfUsers';
+import CreateUser from 'pages/User/CreateUser';
 
 export const history = createBrowserHistory();
 

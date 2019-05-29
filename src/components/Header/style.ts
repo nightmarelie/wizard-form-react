@@ -1,5 +1,5 @@
 import { css } from '@emotion/core';
-import { Colors } from '../../common/styles/global.style';
+import { Colors } from 'common/styles/global.style';
 
 export const logo = css({
   height: '16px',

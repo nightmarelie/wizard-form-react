@@ -1,7 +1,7 @@
 import { css } from '@emotion/core';
 
-import actionDelete from '../../images/action-delete.svg';
-import actionEdit from '../../images/action-edit.svg';
+import actionDelete from 'common/images/action-delete.svg';
+import actionEdit from 'common/images/action-edit.svg';
 
 export enum FontFamily {
   Global = 'Roboto',

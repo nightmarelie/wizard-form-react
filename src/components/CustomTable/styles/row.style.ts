@@ -1,6 +1,6 @@
 import { css } from '@emotion/core';
 
-import { appNormalFont } from '../../../common/styles/global.style';
+import { appNormalFont } from 'common/styles/global.style';
 
 export const flexRow = [
   appNormalFont,
