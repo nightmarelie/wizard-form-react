@@ -18,9 +18,9 @@ export const flexRow = [
         background: '#4E86E4',
         color: 'white',
         fontWeight: 'bold',
-      }
-    }
-  })
+      },
+    },
+  }),
 ];
 
 export default flexRow;

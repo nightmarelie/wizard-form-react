@@ -22,7 +22,7 @@ const nav = [
     '.icon-list-user': {
       backgroundImage: `url(${listOfUsers})`,
     },
-  })
+  }),
 ];
 
 export default nav;

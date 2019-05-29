@@ -1,17 +1,20 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import React, { ReactElement } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './styles/wrapper.style';
 
-interface IProps {}
+interface Props {
+  children: React.ReactNode;
+}
 
-const Wrapper: React.FC<IProps> = ({ children }): ReactElement<IProps> => {
-  return (
-    <div css={styles}>
-      {children}
-    </div>
-  );
+const Wrapper: React.FC<Props> = ({ children }): React.ReactElement<Props> => {
+  return <div css={styles}>{children}</div>;
+};
+
+Wrapper.propTypes = {
+  children: PropTypes.element.isRequired,
 };
 
 export default Wrapper;

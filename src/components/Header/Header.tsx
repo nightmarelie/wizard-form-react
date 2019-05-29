@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from 'common/images/logo.svg';
 
@@ -9,9 +9,7 @@ import Container from 'components/Container/Container';
 
 import styles from './style';
 
-interface IProps {}
-
-const Header: React.FC<IProps> = (_: IProps): ReactElement<IProps> => {
+const Header: React.FC = (): React.ReactElement => {
   return (
     <header css={styles}>
       <Container>

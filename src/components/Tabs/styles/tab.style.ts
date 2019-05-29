@@ -9,7 +9,7 @@ export const tab = css({
   '&.active': {
     color: 'white',
     backgroundColor: '#4E86E4',
-  }
+  },
 });
 
 export default tab;

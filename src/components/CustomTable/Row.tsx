@@ -1,14 +1,24 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import React, { ReactElement } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './styles/row.style';
 
-interface IProps {
-  className: string;
-}
+type Props = {
+  children: React.ReactNode;
+} & Partial<DefaultProps>;
 
-const Container: React.FC<IProps> = ({ children, className = 'flex-row' }): ReactElement<IProps> => {
+const defaultProps = {
+  className: 'flex-row',
+};
+
+type DefaultProps = Readonly<typeof defaultProps>;
+
+const Row: React.FC<Props> = ({
+  children,
+  className = 'flex-row',
+}): React.ReactElement<Props> => {
   return (
     <div css={styles} className={className} role="rowgroup">
       {children}
@@ -16,4 +26,9 @@ const Container: React.FC<IProps> = ({ children, className = 'flex-row' }): Reac
   );
 };
 
-export default Container;
+Row.propTypes = {
+  children: PropTypes.element.isRequired,
+  className: PropTypes.string,
+};
+
+export default Row;

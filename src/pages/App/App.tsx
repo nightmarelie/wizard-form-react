@@ -21,21 +21,16 @@ const App: React.FC = () => {
   return (
     <Router history={history}>
       <Global styles={[styles]} />
-      <Header/>
+      <Header />
       <Switch>
         <Redirect exact path={routes.home} to={routes.listOfUsers} />
         <Route exact path={routes.listOfUsers} component={ListOfUser} />
         <Route exact path={routes.createUser} component={CreateUser} />
-        // create-user
-        // show-user
-        // list-of-user
-        // edit-user
-        // /404 -> notFound
-        // /500 -> Error
-        // * -> notFound
+        // create-user // show-user // list-of-user // edit-user // /404 ->
+        notFound // /500 -> Error // * -> notFound
       </Switch>
     </Router>
   );
-}
+};
 
 export default App;

@@ -1,20 +1,29 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import React, { ReactElement } from 'react';
+import React from 'react';
 
 import styles from './styles/tab.style';
+import PropTypes from 'prop-types';
 
-interface IProps {
+interface Props {
   className: string;
   payload: string;
 }
 
-const Tab: React.FC<IProps> = ({ className, payload }): ReactElement<IProps> => {
+const Tab: React.FC<Props> = ({
+  payload,
+  className,
+}): React.ReactElement<Props> => {
   return (
     <div css={styles} className={className} role="cell">
       {payload}
     </div>
   );
+};
+
+Tab.propTypes = {
+  payload: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
 };
 
 export default Tab;

@@ -5,7 +5,7 @@ export const pagination = [
   appNormalFont,
   css({
     display: 'inline-block',
-    'a': {
+    a: {
       color: 'black',
       float: 'left',
       padding: '6px 12px',
@@ -19,9 +19,9 @@ export const pagination = [
         backgroundColor: '#4E86E4',
         color: 'white',
         border: '1px solid #4E86E4',
-      }
+      },
     },
-  })
+  }),
 ];
 
 export default pagination;

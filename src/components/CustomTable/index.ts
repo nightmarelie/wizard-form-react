@@ -6,6 +6,6 @@ const Table = {
   Row,
   Cell,
   Wrapper,
-}
+};
 
 export default Table;

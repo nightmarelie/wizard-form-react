@@ -6,9 +6,7 @@ import Container from 'components/Container/Container';
 import Title from 'components/Title/Title';
 import Tabs from 'components/Tabs';
 
-interface IProps {}
-
-const CreateUser: React.FC<IProps> = (_: IProps): ReactElement<IProps> => {
+const CreateUser: React.FC = (): ReactElement => {
   return (
     <Container>
       <Title title="Adding new user" />
