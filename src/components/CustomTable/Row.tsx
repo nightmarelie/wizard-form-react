@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './styles/row.style';
+import { flexRow as styles } from './styles';
 
 type Props = {
   children: React.ReactNode;

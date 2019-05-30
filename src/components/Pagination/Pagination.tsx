@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core';
 import React, { ReactElement } from 'react';
 
-import styles from './style';
+import styles from './styles';
 
 interface Props {
   totalRecords: number;

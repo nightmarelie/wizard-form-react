@@ -3,18 +3,16 @@ import { jsx } from '@emotion/core';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { tabs as styles } from './styles';
-
 interface Props {
   children: React.ReactNode;
 }
 
-const Wrapper: React.FC<Props> = ({ children }): React.ReactElement<Props> => {
-  return <div css={styles}>{children}</div>;
+export const Row: React.FC<Props> = ({
+  children,
+}): React.ReactElement<Props> => {
+  return <tr>{children}</tr>;
 };
 
-Wrapper.propTypes = {
+Row.propTypes = {
   children: PropTypes.element.isRequired,
 };
-
-export default Wrapper;

@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 import logo from 'common/images/logo.svg';
 
 import Navigation from 'components/Navigation/Navigation';
-import Container from 'components/Container/Container';
+import { Container } from 'components/Wrapper';
 
-import styles from './style';
+import styles from './styles';
 
 const Header: React.FC = (): React.ReactElement => {
   return (

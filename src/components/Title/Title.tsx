@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core';
 import React, { ReactElement } from 'react';
 
-import styles from './style';
+import styles from './styles';
 import PropTypes from 'prop-types';
 
 interface Props {

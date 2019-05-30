@@ -1,5 +1,5 @@
 import { css } from '@emotion/core';
-import { appNormalFont } from 'common/styles/global.style';
+import { appNormalFont, Colors } from 'common/styles/global.styles';
 
 export const pagination = [
   appNormalFont,
@@ -16,9 +16,9 @@ export const pagination = [
         backgroundColor: '#ddd',
       },
       '&.active': {
-        backgroundColor: '#4E86E4',
+        backgroundColor: Colors.BlueV2,
         color: 'white',
-        border: '1px solid #4E86E4',
+        border: `1px solid ${Colors.BlueV2}`,
       },
     },
   }),

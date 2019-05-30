@@ -1,15 +1,18 @@
 import { css } from '@emotion/core';
 
-import actionDelete from 'common/images/action-delete.svg';
-import actionEdit from 'common/images/action-edit.svg';
-
 export enum FontFamily {
   Global = 'Roboto',
 }
 
 export enum Colors {
   Black = 'black',
-  Blue = '#2F68C8',
+  BlueV1 = '#2F68C8',
+  BlueV2 = '#4E86E4',
+  GreyV1 = '#475666',
+  GreyV2 = '#9BB0CB',
+  GreyV3 = '#657C9A',
+  Light = '#E7F0FF',
+  Red = '#FF8989',
 }
 
 export const appNormalFont = css({
@@ -99,46 +102,6 @@ export const inline = css`
   }
 `;
 
-export const action = css`
-  .action {
-    ${appNormalFont}
-    color: #9BB0CB;
-    display: inline-block;
-    cursor: pointer;
-    &.action-add {
-      &.action-icon {
-        &::before {
-          background-color: orange;
-        }
-      }
-    }
-    &.action-icon {
-      &::before {
-        content: '';
-        width: 12px;
-        height: 16px;
-        position: relative;
-        top: 0;
-        left: 0;
-        display: inline-block;
-        margin-right: 7px;
-      }
-    }
-  }
-`;
-
-export const actionEditIcon = css`
-  .action.action-edit.action-icon::before {
-    background-image: url(${actionDelete});
-  }
-`;
-
-export const actionDeleteIcon = css`
-  .action.action-delete.action-icon::before {
-    background-image: url(${actionEdit});
-  }
-`;
-
 export const avatar = css`
   .avatar {
     width: 200px;
@@ -161,11 +124,28 @@ export const avatarSmall = css`
 
 export const contentWrapper = css`
   .content-wrapper {
+    display: flex;
+    padding: 65px 100px;
     background-color: #fafcff;
     &::after {
       content: '';
       display: block;
       clear: both;
+    }
+  }
+`;
+
+export const link = css`
+  a {
+    text-decoration: none;
+    font-family: inherit;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: ${Colors.GreyV1};
+    &:hover {
+      text-decoration: underline;
     }
   }
 `;
@@ -182,10 +162,8 @@ export default [
   br,
   clear,
   inline,
-  action,
-  actionEditIcon,
-  actionDeleteIcon,
   avatar,
   avatarSmall,
   contentWrapper,
+  link,
 ];

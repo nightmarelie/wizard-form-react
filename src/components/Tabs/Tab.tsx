@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core';
 import React from 'react';
 
-import styles from './styles/tab.style';
+import { tab as styles } from './styles';
 import PropTypes from 'prop-types';
 
 interface Props {

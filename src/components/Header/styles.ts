@@ -1,5 +1,5 @@
 import { css } from '@emotion/core';
-import { Colors } from 'common/styles/global.style';
+import { Colors } from 'common/styles/global.styles';
 
 export const logo = css({
   height: '16px',
@@ -17,7 +17,7 @@ export const container = css({
 export const header = css({
   padding: '10px 0',
   height: '60px',
-  backgroundColor: Colors.Blue,
+  backgroundColor: Colors.BlueV1,
   display: 'block',
   '.container': container,
   '.logo': logo,

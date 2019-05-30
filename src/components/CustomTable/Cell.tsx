@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './styles/cell.style';
+import { flexCell as styles } from './styles';
 
 type Props = {
   payload?: string;
@@ -19,7 +19,7 @@ type DefaultProps = Readonly<typeof defaultProps>;
 const Cell: React.FC<Props> = ({
   children,
   payload,
-  className = 'flex-cell',
+  className,
 }): React.ReactElement<Props> => {
   return (
     <div css={styles} className={className} role="cell">
@@ -28,6 +28,8 @@ const Cell: React.FC<Props> = ({
     </div>
   );
 };
+
+Cell.defaultProps = defaultProps;
 
 Cell.propTypes = {
   payload: PropTypes.string.isRequired,
