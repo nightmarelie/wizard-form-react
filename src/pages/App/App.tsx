@@ -26,8 +26,6 @@ const App: React.FC = () => {
         <Redirect exact path={routes.home} to={routes.listOfUsers} />
         <Route exact path={routes.listOfUsers} component={ListOfUser} />
         <Route exact path={routes.createUser} component={CreateUser} />
-        // create-user // show-user // list-of-user // edit-user // /404 ->
-        notFound // /500 -> Error // * -> notFound
       </Switch>
     </Router>
   );

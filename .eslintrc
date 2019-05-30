@@ -13,7 +13,11 @@
     "jest": true
   },
   "rules": {
-    "prettier/prettier": ["error", { "singleQuote": true, "trailingComma": "all" }],
+    "prettier/prettier": ["error", {
+      "singleQuote": true,
+      "trailingComma": "all",
+      "tabWidth": 2
+    }],
     "quotemark": [true, "single"],
     "member-access": [false],
     "ordered-imports": [false],
@@ -28,16 +32,21 @@
       "allowTypedFunctionExpressions": true
     }]
   },
+  "parserOptions":  {
+    "ecmaVersion":  2018,
+    "sourceType":  "module",
+    "ecmaFeatures":  {
+      "jsx":  true
+    }
+  },
   "settings": {
     "react": {
       "pragma": "React",
       "version": "detect"
     },
-    "settings": {
-      "import/resolver": {
-        "node": {
-          "moduleDirectory": ["node_modules", "src/"]
-        }
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "src/"]
       }
     }
   },
