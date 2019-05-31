@@ -38,7 +38,7 @@ export const flexRow = [
     display: 'flex',
     flexFlow: 'row wrap',
     color: Colors.GreyV1,
-    '&:nth-child(odd)': {
+    '&:nth-of-type(odd)': {
       '.flex-cell': {
         background: Colors.Light,
       },

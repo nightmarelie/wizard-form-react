@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
   className?: string;
 }
 
@@ -14,6 +14,9 @@ export const Container: React.FC<Props> = ({
 };
 
 Container.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
   className: PropTypes.string,
 };

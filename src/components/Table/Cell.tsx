@@ -14,5 +14,8 @@ export const Cell: React.FC<Props> = ({
 };
 
 Cell.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
 };

@@ -3,15 +3,21 @@ import { jsx } from '@emotion/core';
 import React from 'react';
 
 import { Container, Column } from 'components/Wrapper';
-import Title from 'components/Title/Title';
+import { BreadcrumbTitle } from 'components/Title';
 import * as Table from 'components/Table';
 import Action from 'components/Action/Action';
+
+import routes from 'common/routes';
 
 class ViewUser extends React.Component {
   public render(): React.ReactElement {
     return (
       <Container>
-        <Title title="User Name" />
+        <BreadcrumbTitle
+          title="User Name"
+          breadcrumbLink={routes.listOfUsers}
+          breadcrumbTitle="Users list"
+        />
         <Container className="content-wrapper preview-wrapper">
           <Column addClassName="half left">
             <span className="avatar" />

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import styles from './styles';
 
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
   addClassName: string;
 }
 
@@ -22,6 +22,9 @@ export const Column: React.FC<Props> = ({
 };
 
 Column.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
   addClassName: PropTypes.string.isRequired,
 };

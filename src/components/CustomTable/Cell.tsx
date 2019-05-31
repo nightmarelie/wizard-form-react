@@ -32,8 +32,11 @@ const Cell: React.FC<Props> = ({
 Cell.defaultProps = defaultProps;
 
 Cell.propTypes = {
-  payload: PropTypes.string.isRequired,
-  children: PropTypes.element,
+  payload: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
   className: PropTypes.string,
 };
 

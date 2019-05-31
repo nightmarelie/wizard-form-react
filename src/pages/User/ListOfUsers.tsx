@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { Container } from 'components/Wrapper';
 import Table from 'components/CustomTable';
-import Title from 'components/Title/Title';
+import { Title } from 'components/Title/Title';
 import Pagination from 'components/Pagination/Pagination';
 import Action from 'components/Action/Action';
 
@@ -13,12 +13,44 @@ import fakeData from 'common/fake-data.json';
 import routes from 'common/routes';
 import * as helper from 'common/helpers';
 
-class ListOfUser extends React.Component {
-  private handleUserDelete(e: React.MouseEvent) {
-    console.log(e.target);
+interface State {
+  tryToDeleteUser: number; // like this
+}
+
+class ListOfUser extends React.Component<{}, State> {
+  public constructor(props: {}) {
+    super(props);
+    this.state = {
+      tryToDeleteUser: 0,
+    };
+
+    this.handleCancel = this.handleCancel.bind(this);
+  }
+
+  public componentDidMount(): void {
+    document.addEventListener('keydown', this.handleCancel, false);
+  }
+
+  public componentWillUnmount(): void {
+    document.removeEventListener('keydown', this.handleCancel, false);
+  }
+
+  private handleCancel(event: KeyboardEvent): void {
+    if (event.keyCode === 27) {
+      this.setState({
+        tryToDeleteUser: 0,
+      });
+    }
+  }
+
+  private handleUserDelete(userId: number): void {
+    this.setState({
+      tryToDeleteUser: userId,
+    });
   }
 
   public render(): React.ReactElement {
+    const tryToDeleteUser = this.state.tryToDeleteUser;
     const headers = fakeData.headers;
     const payload = fakeData.users;
     return (
@@ -45,7 +77,11 @@ class ListOfUser extends React.Component {
             <Table.Cell className="flex-cell separator" />
           </Table.Row>
           {payload.map<ReactElement>(data => (
-            <Table.Row key={data.id} className="flex-row">
+            <Table.Row
+              key={data.id}
+              className="flex-row"
+              isShifted={data.id === tryToDeleteUser}
+            >
               <Table.Cell className="flex-cell first">
                 <Link
                   to={helper.tempReplacer(routes.viewUser, { ':id': data.id })}
@@ -61,7 +97,7 @@ class ListOfUser extends React.Component {
               <Table.Cell className="flex-cell last" payload="">
                 <Action addClassName="action-edit" />
                 <Action
-                  handler={this.handleUserDelete}
+                  handler={() => this.handleUserDelete(data.id)}
                   addClassName="action-delete"
                 />
               </Table.Cell>

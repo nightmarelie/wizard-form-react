@@ -28,7 +28,10 @@ const Action: React.FC<Props> = ({
 };
 
 Action.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
   addClassName: PropTypes.string.isRequired,
   handler: PropTypes.func,
 };

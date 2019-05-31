@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core';
 import React, { ReactElement } from 'react';
 
 import { Container } from 'components/Wrapper';
-import Title from 'components/Title/Title';
+import { Title } from 'components/Title/Title';
 import Tabs from 'components/Tabs';
 
 const CreateUser: React.FC = (): ReactElement => {

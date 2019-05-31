@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
 }
 
 export const Row: React.FC<Props> = ({
@@ -14,5 +14,8 @@ export const Row: React.FC<Props> = ({
 };
 
 Row.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
 };
