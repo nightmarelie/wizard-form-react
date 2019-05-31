@@ -2,27 +2,37 @@ import { css } from '@emotion/core';
 import { Fonts, Colors } from 'common/styles/global.styles';
 
 export const pagination = css({
-  font: Fonts.Normal,
-  display: 'inline-block',
-  '&.clear:after': {
-    content: '""',
-    display: 'block',
-    clear: 'both',
-  },
-  a: {
-    color: 'black',
-    float: 'left',
-    padding: '6px 12px',
-    textDecoration: 'none',
-    transition: 'background-color .3s',
-    border: '1px solid #ddd',
-    '&:hover:not(.active)': {
-      backgroundColor: '#ddd',
-    },
-    '&.active': {
-      backgroundColor: Colors.BlueV2,
-      color: 'white',
-      border: `1px solid ${Colors.BlueV2}`,
+  '.pagination': {
+    font: Fonts.Normal,
+    display: 'inline-block',
+    padding: 0,
+    li: {
+      color: 'black',
+      float: 'left',
+      padding: '6px 12px',
+      textDecoration: 'none',
+      listStyle: 'none',
+      // transition: 'background-color .2s',
+      border: `1px solid ${Colors.GreyV4}`,
+      '&:hover:not(.active)': {
+        backgroundColor: Colors.GreyV2,
+      },
+      '&.active': {
+        backgroundColor: Colors.BlueV2,
+        color: 'white',
+        border: `1px solid ${Colors.BlueV2}`,
+      },
+      'a': {
+        margin: 0,
+        padding: 0,
+        border: 0,
+        font: 'inherit',
+        verticalAlign: 'baseline',
+        userSelect: 'none',
+        '&:hover, &:active, &:focus': {
+          outline: 0,
+        }
+      }
     },
   },
 });

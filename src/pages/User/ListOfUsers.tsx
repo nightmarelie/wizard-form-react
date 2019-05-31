@@ -18,7 +18,12 @@ import * as helper from 'common/helpers';
 import * as global from 'common/styles/global.styles';
 
 interface State {
-  tryToDeleteUser: number; // like this
+  tryToDeleteUser: number;
+  pagination: {
+    perPage: number;
+    offset: number;
+    pageCount: number;
+  };
 }
 
 class ListOfUser extends React.Component<{}, State> {
@@ -26,18 +31,51 @@ class ListOfUser extends React.Component<{}, State> {
     super(props);
     this.state = {
       tryToDeleteUser: 0,
+      pagination: {
+        perPage: 4,
+        offset: 0,
+        pageCount: 1,
+      },
     };
 
     this.handleCancel = this.handleCancel.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   public componentDidMount(): void {
     document.addEventListener('keydown', this.handleCancel, false);
+
+    // TODO: replace with db request
+    const pagination = this.state.pagination;
+    this.setState({
+      pagination: {
+        ...pagination,
+        pageCount: this.colculatePageCount(
+          fakeData.users.length,
+          pagination.perPage,
+        ),
+      },
+    });
+  }
+
+  private colculatePageCount(total: number, perPage: number): number {
+    return Math.ceil(total / perPage);
   }
 
   public componentWillUnmount(): void {
     document.removeEventListener('keydown', this.handleCancel, false);
   }
+
+  private handlePageClick: (data: { selected: number }) => void = ({
+    selected,
+  }) => {
+    const pagination = this.state.pagination;
+    const offset = Math.ceil(selected * pagination.perPage);
+
+    this.setState({ pagination: { ...pagination, offset } }, () => {
+      // load data from db
+    });
+  };
 
   private handleCancel(event: KeyboardEvent): void {
     if (event.keyCode === 27) {
@@ -54,7 +92,7 @@ class ListOfUser extends React.Component<{}, State> {
   }
 
   public render(): React.ReactElement {
-    const tryToDeleteUser = this.state.tryToDeleteUser;
+    const { tryToDeleteUser, pagination } = this.state;
     const headers = fakeData.headers;
     const payload = fakeData.users;
     return (
@@ -107,9 +145,8 @@ class ListOfUser extends React.Component<{}, State> {
           <Table.Row>
             <Table.Cell addClassName="separator">
               <Pagination
-                totalRecords={payload.length}
-                pageLimit={2}
-                onPageChanged={(): void => console.log('test')}
+                pageCount={pagination.pageCount}
+                handler={this.handlePageClick}
               />
             </Table.Cell>
           </Table.Row>
