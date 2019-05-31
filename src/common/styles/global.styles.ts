@@ -8,20 +8,21 @@ export enum Colors {
   Black = 'black',
   BlueV1 = '#2F68C8',
   BlueV2 = '#4E86E4',
+  BlueV3 = '#5E97F3',
   GreyV1 = '#475666',
   GreyV2 = '#9BB0CB',
   GreyV3 = '#657C9A',
-  Light = '#E7F0FF',
+  GreyV4 = '#EAF1FD',
+  LightV1 = '#E7F0FF',
+  LightV2 = '#FAFCFF',
   Red = '#FF8989',
 }
 
-export const appNormalFont = css({
-  font: `normal 500 14px/16px '${FontFamily.Global}', sans-serif`,
-});
-
-export const appBoldFont = css({
-  font: `normal bold 35px/41px '${FontFamily.Global}', sans-serif`,
-});
+export const Fonts = {
+  Normal: `normal 500 14px/16px '${FontFamily.Global}'`,
+  Middle: `normal bold 24px/28px '${FontFamily.Global}'`,
+  Bold: `normal bold 35px/41px '${FontFamily.Global}'`,
+};
 
 export const customFont = css`
   @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
@@ -43,23 +44,7 @@ const body = css`
   }
 `;
 
-export const icon = css`
-  .icon {
-    width: 17px;
-    height: 17px;
-    display: inline-block;
-    margin: 0 5px;
-  }
-`;
-
-export const container = css`
-  .container {
-    margin: 0 auto;
-    width: 100%;
-    max-width: 970px;
-  }
-`;
-
+// form start
 export const breakAfter = css`
   .break-after {
     &::after {
@@ -69,101 +54,28 @@ export const breakAfter = css`
   }
 `;
 
-export const right = css`
-  .right {
-    float: right;
-  }
-`;
-
-export const left = css`
-  .left {
-    float: left;
-  }
-`;
-
-export const br = css`
-  .br:after {
-    content: '';
-    display: block;
-  }
-`;
-
-export const clear = css`
-  .clear:after {
-    content: '';
-    display: block;
-    clear: both;
-  }
-`;
-
 export const inline = css`
   .inline {
     display: inline;
   }
 `;
+// form end
 
-export const avatar = css`
-  .avatar {
-    width: 200px;
-    height: 200px;
-    background-color: #eb5757;
-    border-radius: 200px;
-    display: inline-block;
-    vertical-align: middle;
-    margin: 0 15px;
-  }
-`;
+export const link = css({
+  textDecoration: 'none',
+  fontFamily: 'inherit',
+  font: Fonts.Normal,
+  color: Colors.GreyV1,
+  '&:hover': {
+    textDecoration: 'underline',
+  },
+});
 
-export const avatarSmall = css`
-  .avatar-small {
-    width: 40px;
-    height: 40px;
-    border-radius: 40px;
-  }
-`;
+export const h2 = css({
+  margin: 0,
+  color: Colors.GreyV2,
+  font: Fonts.Bold,
+  paddingBottom: '70px',
+});
 
-export const contentWrapper = css`
-  .content-wrapper {
-    display: flex;
-    padding: 65px 100px;
-    background-color: #fafcff;
-    &::after {
-      content: '';
-      display: block;
-      clear: both;
-    }
-  }
-`;
-
-export const link = css`
-  a {
-    text-decoration: none;
-    font-family: inherit;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
-    color: ${Colors.GreyV1};
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
-
-export default [
-  customFont,
-  reset,
-  body,
-  icon,
-  container,
-  breakAfter,
-  right,
-  left,
-  br,
-  clear,
-  inline,
-  avatar,
-  avatarSmall,
-  contentWrapper,
-  link,
-];
+export default [customFont, reset, body];

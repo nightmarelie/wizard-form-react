@@ -8,13 +8,14 @@ import Navigation from 'components/Navigation/Navigation';
 import { Container } from 'components/Wrapper';
 
 import styles from './styles';
+import * as global from 'common/styles/global.styles';
 
 const Header: React.FC = (): React.ReactElement => {
   return (
     <header css={styles}>
       <Container>
-        <Link to="/">
-          <img src={logo} className="logo" />
+        <Link css={global.link} to="/">
+          <img src={logo} className="logo" alt="logo" />
         </Link>
         <Navigation />
       </Container>

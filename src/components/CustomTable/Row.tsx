@@ -5,26 +5,21 @@ import PropTypes from 'prop-types';
 
 import { flexRow as styles } from './styles';
 
-type Props = {
+interface Props {
   children: React.ReactNode | React.ReactNode[];
   isShifted?: boolean;
-} & Partial<DefaultProps>;
-
-const defaultProps = {
-  className: 'flex-row',
-};
-
-type DefaultProps = Readonly<typeof defaultProps>;
+  addClassName?: string;
+}
 
 const Row: React.FC<Props> = ({
   children,
-  className = 'flex-row',
+  addClassName,
   isShifted,
 }): React.ReactElement<Props> => {
   return (
     <div
       css={styles}
-      className={`${className} ${isShifted ? 'shift' : ''}`}
+      className={`flex-row ${addClassName} ${isShifted ? 'shift' : ''}`}
       role="rowgroup"
     >
       {children}
@@ -37,7 +32,7 @@ Row.propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
-  className: PropTypes.string,
+  addClassName: PropTypes.string,
   isShifted: PropTypes.bool,
 };
 

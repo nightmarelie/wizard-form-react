@@ -1,12 +1,12 @@
 import { css } from '@emotion/core';
-import { appNormalFont, Colors } from 'common/styles/global.styles';
+import { Fonts, Colors } from 'common/styles/global.styles';
 
 import actionDelete from 'common/images/action-delete.svg';
 import actionDeleteDanger from 'common/images/action-delete-danger.svg';
 import actionEdit from 'common/images/action-edit.svg';
 
 export const action = css`
-  ${appNormalFont}
+  ${Fonts.Normal}
   color: #9BB0CB;
   display: inline-block;
   cursor: pointer;

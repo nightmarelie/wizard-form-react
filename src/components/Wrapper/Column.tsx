@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './styles';
+import { column as styles } from './styles';
 
 interface Props {
   children: React.ReactNode | React.ReactNode[];

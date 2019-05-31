@@ -5,31 +5,24 @@ import PropTypes from 'prop-types';
 
 import { flexCell as styles } from './styles';
 
-type Props = {
+interface Props {
   payload?: string;
   children?: React.ReactNode;
-} & Partial<DefaultProps>;
-
-const defaultProps = {
-  className: 'flex-cell',
-};
-
-type DefaultProps = Readonly<typeof defaultProps>;
+  addClassName?: string;
+}
 
 const Cell: React.FC<Props> = ({
   children,
   payload,
-  className,
+  addClassName,
 }): React.ReactElement<Props> => {
   return (
-    <div css={styles} className={className} role="cell">
+    <div css={styles} className={`flex-cell ${addClassName}`} role="cell">
       {children}
       {payload}
     </div>
   );
 };
-
-Cell.defaultProps = defaultProps;
 
 Cell.propTypes = {
   payload: PropTypes.string,
@@ -37,7 +30,7 @@ Cell.propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
-  className: PropTypes.string,
+  addClassName: PropTypes.string,
 };
 
 export default Cell;

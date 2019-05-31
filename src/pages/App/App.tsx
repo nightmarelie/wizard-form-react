@@ -21,7 +21,7 @@ export const history = createBrowserHistory();
 const App: React.FC = () => {
   return (
     <Router history={history}>
-      <Global styles={[styles]} />
+      <Global styles={styles} />
       <Header />
       <Switch>
         <Redirect exact path={routes.home} to={routes.listOfUsers} />

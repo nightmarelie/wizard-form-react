@@ -1,16 +1,24 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { wrapper as styles } from './styles';
+
 interface Props {
   children: React.ReactNode | React.ReactNode[];
-  className?: string;
+  addClassName?: string;
 }
 
 export const Container: React.FC<Props> = ({
   children,
-  className = 'container',
+  addClassName = '',
 }): React.ReactElement<Props> => {
-  return <div className={className}>{children}</div>;
+  return (
+    <div css={styles} className={`container ${addClassName}`}>
+      {children}
+    </div>
+  );
 };
 
 Container.propTypes = {
@@ -18,5 +26,5 @@ Container.propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
-  className: PropTypes.string,
+  addClassName: PropTypes.string,
 };

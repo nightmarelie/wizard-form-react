@@ -8,6 +8,8 @@ import { Title } from './Title';
 import { breadcrumbTitle as styles } from './styles';
 import PropTypes from 'prop-types';
 
+import * as global from 'common/styles/global.styles';
+
 interface Props {
   title: string;
   breadcrumbTitle: string;
@@ -22,7 +24,7 @@ export const BreadcrumbTitle: React.FC<Props> = ({
   return (
     <div css={styles}>
       <Title title={title} />
-      <Link className="back" to={breadcrumbLink}>
+      <Link css={global.link} className="back" to={breadcrumbLink}>
         {breadcrumbTitle}
       </Link>
     </div>

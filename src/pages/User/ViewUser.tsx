@@ -6,6 +6,7 @@ import { Container, Column } from 'components/Wrapper';
 import { BreadcrumbTitle } from 'components/Title';
 import * as Table from 'components/Table';
 import Action from 'components/Action/Action';
+import Avatar from 'components/Avatar/Avatar';
 
 import routes from 'common/routes';
 
@@ -18,9 +19,9 @@ class ViewUser extends React.Component {
           breadcrumbLink={routes.listOfUsers}
           breadcrumbTitle="Users list"
         />
-        <Container className="content-wrapper preview-wrapper">
+        <Container addClassName="content-wrapper preview-wrapper">
           <Column addClassName="half left">
-            <span className="avatar" />
+            <Avatar />
           </Column>
           <Column addClassName="half right">
             <Table.Wrapper>

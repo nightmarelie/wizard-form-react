@@ -8,10 +8,14 @@ import Table from 'components/CustomTable';
 import { Title } from 'components/Title/Title';
 import Pagination from 'components/Pagination/Pagination';
 import Action from 'components/Action/Action';
+import Button from 'components/Button/Button';
+import Avatar from 'components/Avatar/Avatar';
 
 import fakeData from 'common/fake-data.json';
 import routes from 'common/routes';
 import * as helper from 'common/helpers';
+
+import * as global from 'common/styles/global.styles';
 
 interface State {
   tryToDeleteUser: number; // like this
@@ -57,57 +61,51 @@ class ListOfUser extends React.Component<{}, State> {
       <Container>
         <Title title="List of user" />
         <Table.Wrapper>
-          <Table.Row className="flex-row header">
-            <Table.Cell
-              className="flex-cell first"
-              payload={headers.colomnName}
-            />
-            <Table.Cell className="flex-cell" payload={headers.colomnCompany} />
-            <Table.Cell
-              className="flex-cell"
-              payload={headers.colomnContancts}
-            />
-            <Table.Cell
-              className="flex-cell"
-              payload={headers.colomnLastUpdate}
-            />
-            <Table.Cell className="flex-cell last" payload="" />
+          <Table.Row addClassName="header">
+            <Table.Cell addClassName="first" payload={headers.colomnName} />
+            <Table.Cell payload={headers.colomnCompany} />
+            <Table.Cell payload={headers.colomnContancts} />
+            <Table.Cell payload={headers.colomnLastUpdate} />
+            <Table.Cell addClassName="last" payload="" />
           </Table.Row>
-          <Table.Row className="flex-row">
-            <Table.Cell className="flex-cell separator" />
+          <Table.Row>
+            <Table.Cell addClassName="separator" />
           </Table.Row>
           {payload.map<ReactElement>(data => (
-            <Table.Row
-              key={data.id}
-              className="flex-row"
-              isShifted={data.id === tryToDeleteUser}
-            >
-              <Table.Cell className="flex-cell first">
+            <Table.Row key={data.id} isShifted={data.id === tryToDeleteUser}>
+              <Table.Cell addClassName="first">
                 <Link
+                  css={global.link}
                   to={helper.tempReplacer(routes.viewUser, { ':id': data.id })}
                   className="navigate"
                 >
-                  <span className="avatar avatar-small" />
+                  <Avatar addClassName="avatar-small" />
                   {data.name}
                 </Link>
               </Table.Cell>
-              <Table.Cell className="flex-cell" payload={data.company} />
-              <Table.Cell className="flex-cell" payload={data.contacts} />
-              <Table.Cell className="flex-cell" payload={data.lastUpdateAt} />
-              <Table.Cell className="flex-cell last" payload="">
+              <Table.Cell payload={data.company} />
+              <Table.Cell payload={data.contacts} />
+              <Table.Cell payload={data.lastUpdateAt} />
+              <Table.Cell addClassName="last" payload="">
                 <Action addClassName="action-edit" />
                 <Action
                   handler={() => this.handleUserDelete(data.id)}
                   addClassName="action-delete"
                 />
               </Table.Cell>
-              <Table.Cell className="flex-cell danger" payload="">
+              <Table.Cell addClassName="danger" payload="">
                 <Action addClassName="action-delete-danger">delete</Action>
               </Table.Cell>
             </Table.Row>
           ))}
-          <Table.Row className="flex-row">
-            <Table.Cell className="flex-cell separator">
+          <Table.Row addClassName="empty">
+            <Table.Cell addClassName="separator">
+              <h2 css={global.h2}>No users here :(</h2>
+              <Button link={routes.createUser} title="Create new user" />
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell addClassName="separator">
               <Pagination
                 totalRecords={payload.length}
                 pageLimit={2}
