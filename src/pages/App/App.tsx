@@ -1,6 +1,10 @@
 import React from 'react';
-import { Router, Route, Switch, Redirect } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 import { Global } from '@emotion/core';
 
 import './style/index.css';
@@ -16,11 +20,9 @@ import ListOfUser from 'pages/User/ListOfUsers';
 import CreateUser from 'pages/User/CreateUser';
 import ViewUser from 'pages/User/ViewUser';
 
-export const history = createBrowserHistory();
-
 const App: React.FC = () => {
   return (
-    <Router history={history}>
+    <Router>
       <Global styles={styles} />
       <Header />
       <Switch>

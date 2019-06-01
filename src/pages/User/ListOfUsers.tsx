@@ -100,7 +100,7 @@ class ListOfUser extends React.Component<{}, State> {
         <Title title="List of user" />
         <Table.Wrapper>
           <Table.Row addClassName="header">
-            <Table.Cell addClassName="first" payload={headers.colomnName} />
+            <Table.Cell addClassName="first" payload={headers.colomnUsername} />
             <Table.Cell payload={headers.colomnCompany} />
             <Table.Cell payload={headers.colomnContancts} />
             <Table.Cell payload={headers.colomnLastUpdate} />
@@ -118,12 +118,12 @@ class ListOfUser extends React.Component<{}, State> {
                   className="navigate"
                 >
                   <Avatar addClassName="avatar-small" />
-                  {data.name}
+                  {data.username}
                 </Link>
               </Table.Cell>
               <Table.Cell payload={data.company} />
-              <Table.Cell payload={data.contacts} />
-              <Table.Cell payload={data.lastUpdateAt} />
+              <Table.Cell payload={data.email} />
+              <Table.Cell payload={data.updateAt} />
               <Table.Cell addClassName="last" payload="">
                 <Action addClassName="action-edit" />
                 <Action

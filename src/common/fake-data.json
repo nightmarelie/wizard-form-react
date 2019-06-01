@@ -1,6 +1,6 @@
 {
   "headers": {
-    "colomnName": "name",
+    "colomnUsername": "username",
     "colomnCompany": "company",
     "colomnContancts": "contacts",
     "colomnLastUpdate": "last update",
@@ -9,59 +9,59 @@
   "users": [
     {
       "id": 1,
-      "name": "Maxim Morozov",
+      "username": "Maxim Morozov",
       "company": "Company",
-      "contacts": "test@email.com",
-      "lastUpdateAt": "3 month ago"
+      "email": "test@email.com",
+      "updateAt": "3 month ago"
     },
     {
       "id": 2,
-      "name": "Maxim Morozov",
+      "username": "Maxim Morozov",
       "company": "Company",
-      "contacts": "test@email.com",
-      "lastUpdateAt": "3 month ago"
+      "email": "test@email.com",
+      "updateAt": "3 month ago"
     },
     {
       "id": 3,
-      "name": "Maxim Morozov",
+      "username": "Maxim Morozov",
       "company": "Company",
-      "contacts": "test@email.com",
-      "lastUpdateAt": "3 month ago"
+      "email": "test@email.com",
+      "updateAt": "3 month ago"
     },
     {
       "id": 4,
-      "name": "Maxim Morozov",
+      "username": "Maxim Morozov",
       "company": "Company",
-      "contacts": "test@email.com",
-      "lastUpdateAt": "3 month ago"
+      "email": "test@email.com",
+      "updateAt": "3 month ago"
     },
     {
       "id": 5,
-      "name": "Maxim Morozov",
+      "username": "Maxim Morozov",
       "company": "Company",
-      "contacts": "test@email.com",
-      "lastUpdateAt": "3 month ago"
+      "email": "test@email.com",
+      "updateAt": "3 month ago"
     },
     {
       "id": 6,
-      "name": "Maxim Morozov",
+      "username": "Maxim Morozov",
       "company": "Company",
-      "contacts": "test@email.com",
-      "lastUpdateAt": "3 month ago"
+      "email": "test@email.com",
+      "updateAt": "3 month ago"
     },
     {
       "id": 7,
-      "name": "Maxim Morozov",
+      "username": "Maxim Morozov",
       "company": "Company ",
-      "contacts": "test@email.com",
-      "lastUpdateAt": "3 month ago"
+      "email": "test@email.com",
+      "updateAt": "3 month ago"
     },
     {
       "id": 8,
-      "name": "Maxim Morozov",
+      "username": "Maxim Morozov",
       "company": "Company",
-      "contacts": "test@email.com",
-      "lastUpdateAt": "3 month ago"
+      "email": "test@email.com",
+      "updateAt": "3 month ago"
     }
   ]
 }
