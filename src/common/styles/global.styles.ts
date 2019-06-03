@@ -13,6 +13,7 @@ export enum Colors {
   GreyV2 = '#9BB0CB',
   GreyV3 = '#657C9A',
   GreyV4 = '#EAF1FD',
+  GreyV5 = '#C1CFE0',
   LightV1 = '#E7F0FF',
   LightV2 = '#FAFCFF',
   Red = '#FF8989',

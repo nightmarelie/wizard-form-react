@@ -1,9 +1,12 @@
 import { css } from '@emotion/core';
 import { Fonts, Colors } from 'common/styles/global.styles';
 
-import actionDelete from 'common/images/action-delete.svg';
-import actionDeleteDanger from 'common/images/action-delete-danger.svg';
-import actionEdit from 'common/images/action-edit.svg';
+import actionDelete from 'common/images/icon-delete.svg';
+import actionDeleteDanger from 'common/images/icon-delete-danger.svg';
+import actionEdit from 'common/images/icon-edit.svg';
+import actionAdd from 'common/images/icon-add.svg';
+import actionEye from 'common/images/icon-eye.svg';
+import actionEyeSlash from 'common/images/icon-eye-slash.svg';
 
 export const action = css`
   ${Fonts.Normal}
@@ -14,13 +17,6 @@ export const action = css`
   &:hover {
     opacity: 1;
   }
-  &.action-add {
-    &.action-icon {
-      &::before {
-        background-color: orange;
-      }
-    }
-  }
   &.action-icon::before {
     content: '';
     width: 12px;
@@ -30,6 +26,19 @@ export const action = css`
     left: 0;
     display: inline-block;
     margin-right: 7px;
+  }
+  &.action-add.action-icon::before {
+    background-image: url(${actionAdd});
+  }
+  &.action-eye-slash.action-icon::before {
+    background-image: url(${actionEyeSlash});
+  }
+  &.action-eye.action-icon::before {
+    background-image: url(${actionEye});
+  }
+  &.action-eye-slash.action-icon::before,
+  &.action-eye.action-icon::before {
+    width: 15px;
   }
   &.action-edit.action-icon::before {
     background-image: url(${actionEdit});

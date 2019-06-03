@@ -6,16 +6,23 @@ import { tab as styles } from './styles';
 import PropTypes from 'prop-types';
 
 interface Props {
-  className: string;
+  isActive: boolean;
   payload: string;
+  handler?: (event: React.MouseEvent) => void;
 }
 
 const Tab: React.FC<Props> = ({
   payload,
-  className,
+  isActive,
+  handler,
 }): React.ReactElement<Props> => {
   return (
-    <div css={styles} className={className} role="cell">
+    <div
+      css={styles}
+      className={`tab ${isActive ? 'active' : ''}`}
+      role="cell"
+      onClick={handler}
+    >
       {payload}
     </div>
   );
@@ -23,7 +30,8 @@ const Tab: React.FC<Props> = ({
 
 Tab.propTypes = {
   payload: PropTypes.string.isRequired,
-  className: PropTypes.string.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  handler: PropTypes.func.isRequired,
 };
 
 export default Tab;

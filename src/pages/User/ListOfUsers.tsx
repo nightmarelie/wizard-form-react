@@ -8,7 +8,7 @@ import Table from 'components/CustomTable';
 import { Title } from 'components/Title/Title';
 import Pagination from 'components/Pagination/Pagination';
 import Action from 'components/Action/Action';
-import Button from 'components/Button/Button';
+import Button from 'components/Button';
 import Avatar from 'components/Avatar/Avatar';
 
 import fakeData from 'common/fake-data.json';
@@ -114,7 +114,7 @@ class ListOfUser extends React.Component<{}, State> {
               <Table.Cell addClassName="first">
                 <Link
                   css={global.link}
-                  to={helper.tempReplacer(routes.viewUser, { ':id': data.id })}
+                  to={helper.stringReplacer(routes.viewUser, { id: data.id })}
                   className="navigate"
                 >
                   <Avatar addClassName="avatar-small" />
@@ -139,7 +139,12 @@ class ListOfUser extends React.Component<{}, State> {
           <Table.Row addClassName="empty">
             <Table.Cell addClassName="separator">
               <h2 css={global.h2}>No users here :(</h2>
-              <Button link={routes.createUser} title="Create new user" />
+              <Button
+                link={helper.stringReplacer(routes.createUser, {
+                  step: 'first',
+                })}
+                title="Create new user"
+              />
             </Table.Cell>
           </Table.Row>
           <Table.Row>

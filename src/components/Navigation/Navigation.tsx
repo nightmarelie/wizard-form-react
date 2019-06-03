@@ -7,11 +7,16 @@ import Icon from 'components/Icon/Icon';
 
 import styles from './styles';
 import routes from 'common/routes';
+import * as helper from 'common/helpers';
 
 const Navigation: React.FC = (): ReactElement => {
   return (
     <nav>
-      <NavLink activeClassName="active" to={routes.createUser} css={styles}>
+      <NavLink
+        activeClassName="active"
+        to={helper.stringReplacer(routes.createUser, { step: 'first' })}
+        css={styles}
+      >
         <Icon addClassName="icon-add-user" />
         Add new user
       </NavLink>

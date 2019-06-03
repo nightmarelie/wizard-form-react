@@ -11,6 +11,7 @@ import './style/index.css';
 import './style/App.css';
 import styles from 'common/styles/global.styles';
 import routes from 'common/routes';
+import * as helper from 'common/helpers';
 
 // components
 import Header from 'components/Header/Header';
@@ -28,7 +29,7 @@ const App: React.FC = () => {
       <Switch>
         <Redirect exact path={routes.home} to={routes.listOfUsers} />
         <Route exact path={routes.listOfUsers} component={ListOfUser} />
-        <Route exact path={routes.createUser} component={CreateUser} />
+        <Route path={routes.createUser} component={CreateUser} />
         <Route exact path={routes.viewUser} component={ViewUser} />
       </Switch>
     </Router>

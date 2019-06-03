@@ -1,5 +1,10 @@
-export const tempReplacer: (
+export const stringReplacer: (
   t: string,
   r: { [key: string]: string | number },
-) => string = (temp, replacements) =>
-  temp.replace(/:\w+/g, replace => String(replacements[replace]) || replace);
+  p?: string,
+) => string = (temp, replacements, placeholder = ':') =>
+  temp.replace(
+    new RegExp(`${placeholder}\\w+`, 'g'),
+    replace =>
+      String(replacements[replace.replace(placeholder, '')]) || replace,
+  );
