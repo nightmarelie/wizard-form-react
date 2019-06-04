@@ -9,7 +9,7 @@ class Database extends Dexie {
     super(databaseName);
     this.version(1).stores({
       users:
-        '++id,&username,password,firstName,lastName,birthDate,&email,adress,company,fax,facebook,phone1,phone2,skills,hobies,updateAt',
+        '++id,&username,password,firstName,lastName,birthDate,&email,address,company,fax,facebook,phone1,phone2,skills,hobies,updateAt',
     });
     this.users = this.table('users');
   }

@@ -5,7 +5,7 @@ import React from 'react';
 import { Container, Column } from 'components/Wrapper';
 import { BreadcrumbTitle } from 'components/Title';
 import * as Table from 'components/Table';
-import Action from 'components/Action/Action';
+import ActionIcon from 'components/ActionIcon/ActionIcon';
 import Avatar from 'components/Avatar/Avatar';
 
 import routes from 'common/routes';
@@ -19,18 +19,18 @@ class ViewUser extends React.Component {
           breadcrumbLink={routes.listOfUsers}
           breadcrumbTitle="Users list"
         />
-        <Container addClassName="content-wrapper preview-wrapper">
-          <Column addClassName="half left">
+        <Container className="content-wrapper preview-wrapper">
+          <Column className="half left">
             <Avatar />
           </Column>
-          <Column addClassName="half right">
+          <Column className="half right">
             <Table.Wrapper>
               <Table.Row>
                 <Table.Cell>
-                  Account <Action addClassName="action-edit" />
+                  Account <ActionIcon className="action-edit" />
                 </Table.Cell>
                 <Table.Cell>
-                  <Table.Wrapper addClassName="info">
+                  <Table.Wrapper className="info">
                     <Table.Row>
                       <Table.Cell>User name:</Table.Cell>
                       <Table.Cell>username</Table.Cell>
@@ -44,10 +44,10 @@ class ViewUser extends React.Component {
               </Table.Row>
               <Table.Row>
                 <Table.Cell>
-                  Personal <Action addClassName="action-edit" />
+                  Personal <ActionIcon className="action-edit" />
                 </Table.Cell>
                 <Table.Cell>
-                  <Table.Wrapper addClassName="info">
+                  <Table.Wrapper className="info">
                     <Table.Row>
                       <Table.Cell>First name:</Table.Cell>
                       <Table.Cell>Maxim</Table.Cell>

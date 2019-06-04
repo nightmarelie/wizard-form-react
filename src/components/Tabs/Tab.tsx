@@ -3,7 +3,6 @@ import { jsx } from '@emotion/core';
 import React from 'react';
 
 import { tab as styles } from './styles';
-import PropTypes from 'prop-types';
 
 interface Props {
   isActive: boolean;
@@ -19,19 +18,13 @@ const Tab: React.FC<Props> = ({
   return (
     <div
       css={styles}
-      className={`tab ${isActive ? 'active' : ''}`}
+      className={`tab ${isActive ? 'active' : 'disabled'}`}
       role="cell"
       onClick={handler}
     >
       {payload}
     </div>
   );
-};
-
-Tab.propTypes = {
-  payload: PropTypes.string.isRequired,
-  isActive: PropTypes.bool.isRequired,
-  handler: PropTypes.func.isRequired,
 };
 
 export default Tab;

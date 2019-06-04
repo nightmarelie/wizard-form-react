@@ -16,10 +16,12 @@ export enum Colors {
   GreyV5 = '#C1CFE0',
   LightV1 = '#E7F0FF',
   LightV2 = '#FAFCFF',
-  Red = '#FF8989',
+  RedV1 = '#FF8989',
+  RedV2 = '#EB5757',
 }
 
 export const Fonts = {
+  Small: `normal 500 9px/11px '${FontFamily.Global}'`,
   Normal: `normal 500 14px/16px '${FontFamily.Global}'`,
   Middle: `normal bold 24px/28px '${FontFamily.Global}'`,
   Bold: `normal bold 35px/41px '${FontFamily.Global}'`,
@@ -42,16 +44,6 @@ const body = css`
     min-height: 100vh;
     font-family: ${FontFamily.Global};
     margin: 0;
-  }
-`;
-
-// form start
-export const breakAfter = css`
-  .break-after {
-    &::after {
-      content: '';
-      white-space: pre;
-    }
   }
 `;
 

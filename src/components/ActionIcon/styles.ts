@@ -50,7 +50,7 @@ export const action = css`
     &::before {
       background-image: url(${actionDeleteDanger});
     }
-    color: ${Colors.Red};
+    color: ${Colors.RedV1};
   }
 `;
 

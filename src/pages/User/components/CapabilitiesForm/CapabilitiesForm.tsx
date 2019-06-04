@@ -4,10 +4,12 @@ import React from 'react';
 
 interface Props {
   children: React.ReactNode | React.ReactNode[];
+  className?: string;
 }
 
-export const Row: React.FC<Props> = ({
+export const Container: React.FC<Props> = ({
   children,
+  className = '',
 }): React.ReactElement<Props> => {
-  return <tr>{children}</tr>;
+  return <div className={`container ${className}`}>{children}</div>;
 };

@@ -7,7 +7,7 @@ export interface User {
   lastName: string;
   birthDate: Date;
   email: string;
-  adress: string;
+  address: string;
   /* contacts */
   company: string;
   fax: string;

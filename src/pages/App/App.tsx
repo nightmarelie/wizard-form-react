@@ -11,7 +11,6 @@ import './style/index.css';
 import './style/App.css';
 import styles from 'common/styles/global.styles';
 import routes from 'common/routes';
-import * as helper from 'common/helpers';
 
 // components
 import Header from 'components/Header/Header';

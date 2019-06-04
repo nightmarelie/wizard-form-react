@@ -1,30 +1,21 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import React from 'react';
-import PropTypes from 'prop-types';
-import { InjectedFormProps } from 'redux-form';
+import React, { SyntheticEvent } from 'react';
 
 import { form as styles } from './styles';
 
-type Props = {
+export interface Props {
   children?: React.ReactNode | React.ReactNode[];
-} & InjectedFormProps;
+  onSubmit: (e: SyntheticEvent) => void;
+}
 
 const Form: React.FC<Props> = (props): React.ReactElement<Props> => {
-  const { children, handleSubmit } = props;
+  const { children, onSubmit } = props;
   return (
-    <form css={styles} onSubmit={handleSubmit}>
+    <form css={styles} onSubmit={onSubmit}>
       {children}
     </form>
   );
-};
-
-Form.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node),
-  ]),
-  handleSubmit: PropTypes.func.isRequired,
 };
 
 export { Form as Wrapper };

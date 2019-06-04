@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import React from 'react';
-import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 
 import styles from './styles';
@@ -42,12 +41,5 @@ const Pagination: React.FC<Props> = ({
 };
 
 Pagination.defaultProps = defaultProps;
-
-Pagination.propTypes = {
-  handler: PropTypes.func.isRequired,
-  pageCount: PropTypes.number,
-  marginPagesDisplayed: PropTypes.number,
-  pageRangeDisplayed: PropTypes.number,
-};
 
 export default Pagination;

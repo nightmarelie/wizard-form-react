@@ -6,6 +6,11 @@ const active = css({
   color: 'white',
 });
 
+const disabled = css({
+  backgroundColor: Colors.RedV2,
+  color: 'white',
+});
+
 export const tab = css({
   cursor: 'pointer',
   padding: '17px 20px',
@@ -14,8 +19,9 @@ export const tab = css({
   borderBottom: '2px solid transparent',
   width: 'calc(100% / 4)',
   textAlign: 'center',
-  '&:hover': active,
+  '&.active:hover': active,
   '&.active': active,
+  '&.disabled:hover': disabled,
 });
 
 export const tabs = css({

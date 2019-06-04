@@ -7,12 +7,12 @@ import { Container } from 'components/Wrapper';
 import Table from 'components/CustomTable';
 import { Title } from 'components/Title/Title';
 import Pagination from 'components/Pagination/Pagination';
-import Action from 'components/Action/Action';
-import Button from 'components/Button';
+import ActionIcon from 'components/ActionIcon/ActionIcon';
+import LinkButton from 'components/LinkButton/LinkButton';
 import Avatar from 'components/Avatar/Avatar';
 
 import fakeData from 'common/fake-data.json';
-import routes from 'common/routes';
+import routes, { Forms } from 'common/routes';
 import * as helper from 'common/helpers';
 
 import * as global from 'common/styles/global.styles';
@@ -99,56 +99,56 @@ class ListOfUser extends React.Component<{}, State> {
       <Container>
         <Title title="List of user" />
         <Table.Wrapper>
-          <Table.Row addClassName="header">
-            <Table.Cell addClassName="first" payload={headers.colomnUsername} />
+          <Table.Row className="header">
+            <Table.Cell className="first" payload={headers.colomnUsername} />
             <Table.Cell payload={headers.colomnCompany} />
             <Table.Cell payload={headers.colomnContancts} />
             <Table.Cell payload={headers.colomnLastUpdate} />
-            <Table.Cell addClassName="last" payload="" />
+            <Table.Cell className="last" payload="" />
           </Table.Row>
           <Table.Row>
-            <Table.Cell addClassName="separator" />
+            <Table.Cell className="separator" />
           </Table.Row>
           {payload.map<ReactElement>(data => (
             <Table.Row key={data.id} isShifted={data.id === tryToDeleteUser}>
-              <Table.Cell addClassName="first">
+              <Table.Cell className="first">
                 <Link
                   css={global.link}
                   to={helper.stringReplacer(routes.viewUser, { id: data.id })}
                   className="navigate"
                 >
-                  <Avatar addClassName="avatar-small" />
+                  <Avatar className="avatar-small" />
                   {data.username}
                 </Link>
               </Table.Cell>
               <Table.Cell payload={data.company} />
               <Table.Cell payload={data.email} />
               <Table.Cell payload={data.updateAt} />
-              <Table.Cell addClassName="last" payload="">
-                <Action addClassName="action-edit" />
-                <Action
+              <Table.Cell className="last" payload="">
+                <ActionIcon className="action-edit" />
+                <ActionIcon
                   handler={() => this.handleUserDelete(data.id)}
-                  addClassName="action-delete"
+                  className="action-delete"
                 />
               </Table.Cell>
-              <Table.Cell addClassName="danger" payload="">
-                <Action addClassName="action-delete-danger">delete</Action>
+              <Table.Cell className="danger" payload="">
+                <ActionIcon className="action-delete-danger">delete</ActionIcon>
               </Table.Cell>
             </Table.Row>
           ))}
-          <Table.Row addClassName="empty">
-            <Table.Cell addClassName="separator">
+          <Table.Row className="empty">
+            <Table.Cell className="separator">
               <h2 css={global.h2}>No users here :(</h2>
-              <Button
+              <LinkButton
                 link={helper.stringReplacer(routes.createUser, {
-                  step: 'first',
+                  form: Forms.account,
                 })}
                 title="Create new user"
               />
             </Table.Cell>
           </Table.Row>
           <Table.Row>
-            <Table.Cell addClassName="separator">
+            <Table.Cell className="separator">
               <Pagination
                 pageCount={pagination.pageCount}
                 handler={this.handlePageClick}

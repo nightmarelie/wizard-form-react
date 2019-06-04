@@ -3,34 +3,26 @@ import { jsx } from '@emotion/core';
 import React, { ReactElement } from 'react';
 
 import { button as styles } from './styles';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 interface Props {
   title: string;
   link: string;
   handler?: (event: React.MouseEvent) => void;
-  addClassName?: string;
+  className?: string;
 }
 
-export const Button: React.FC<Props> = ({
+export const LinkButton: React.FC<Props> = ({
   title,
   link,
   handler,
-  addClassName = '',
+  className = '',
 }): ReactElement<Props> => {
   return (
-    <Link css={styles} className={addClassName} to={link} onClick={handler}>
+    <Link css={styles} className={className} to={link} onClick={handler}>
       {title}
     </Link>
   );
 };
 
-Button.propTypes = {
-  title: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
-  handler: PropTypes.func,
-  addClassName: PropTypes.string,
-};
-
-export default Button;
+export default LinkButton;

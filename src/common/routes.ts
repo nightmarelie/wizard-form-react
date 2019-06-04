@@ -1,19 +1,23 @@
 const routes = {
   home: '/',
-  createUser: '/add-new-user/step/:step',
-  listOfUsers: '/list-of-user',
-  viewUser: '/view-user/:id',
-  editUser: '/edit-user/:id/step/:step',
+  createUser: '/new-user/:form',
+  listOfUsers: '/users',
+  viewUser: '/users/:id',
+  editUser: '/users/:id/:form',
   notFound: '/404',
   serverError: '/500',
   other: '*',
 };
 
-export enum Steps {
-  first = 'first',
-  second = 'second',
-  third = 'third',
-  fourth = 'fourth',
+export enum Forms {
+  account = 'account',
+  profile = 'profile',
+  contacts = 'contacts',
+  capabilities = 'capabilities',
+}
+
+export interface Params {
+  form: Forms;
 }
 
 export default routes;

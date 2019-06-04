@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { Title } from './Title';
 
 import { breadcrumbTitle as styles } from './styles';
-import PropTypes from 'prop-types';
 
 import * as global from 'common/styles/global.styles';
 
@@ -29,10 +28,4 @@ export const BreadcrumbTitle: React.FC<Props> = ({
       </Link>
     </div>
   );
-};
-
-BreadcrumbTitle.propTypes = {
-  title: PropTypes.string.isRequired,
-  breadcrumbTitle: PropTypes.string.isRequired,
-  breadcrumbLink: PropTypes.string.isRequired,
 };
