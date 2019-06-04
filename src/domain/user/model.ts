@@ -12,11 +12,13 @@ export interface User {
   company: string;
   fax: string;
   facebook: string;
-  phone1: string;
-  phone2: string;
+  github: string;
+  phones: string[];
+  mainLanguage: string;
   /* capabilities */
   skills: string[];
   hobies: string[];
+  additionalInfo: string;
   /* system */
   id: number;
   updateAt: Date;

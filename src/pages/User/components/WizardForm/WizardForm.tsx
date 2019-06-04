@@ -29,6 +29,13 @@ import {
   OwnProps as ProfileFormProps,
 } from '../ProfileForm';
 
+import {
+  ContactsForm,
+  validate as contactsFormValidate,
+  Data as ContactsFormData,
+  OwnProps as ContactsFormProps,
+} from '../ContactsForm';
+
 type Props = {} & RouteComponentProps;
 
 interface State {
@@ -149,10 +156,18 @@ class WizardForm extends React.Component<Props, State> {
           />
         );
       }
-      // case Forms.profile:
-      //   // return this.renderSecondStep();
-      // case Forms.contacts:
-      //   // return this.renderThirdStep();
+      case Forms.contacts: {
+        const WizardContactsForm = this.formFactory<
+          ContactsFormData,
+          ContactsFormProps
+        >(contactsFormValidate, ContactsForm);
+        return (
+          <WizardContactsForm
+            nextForm={this.handleChangeForm.bind(this, Forms.capabilities)}
+            previousForm={() => this.handleChangeForm(Forms.profile)}
+          />
+        );
+      }
       // case Forms.capabilities:
       //   // return this.renderFourthStep();
     }
