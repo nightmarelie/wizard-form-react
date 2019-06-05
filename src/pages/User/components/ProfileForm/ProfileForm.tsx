@@ -40,6 +40,14 @@ export const ProfileForm: React.FC<Props> = ({
             component={Form.Input}
             type="input"
           />
+
+          <div className="w70 left">
+            <Field
+              name="birthDate"
+              label="Birth date"
+              component={Form.DatePicker}
+            />
+          </div>
         </div>
       </Column>
       <Column className="half">

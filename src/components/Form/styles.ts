@@ -3,6 +3,9 @@ import { css } from '@emotion/core';
 import { Fonts, Colors } from 'common/styles/global.styles';
 import star from 'common/images/icon-star.svg';
 
+import recLeft from 'common/images/icon-rectangle-left.svg';
+import recRight from 'common/images/icon-rectangle-right.svg';
+
 export const form = css({
   display: 'flex',
   padding: '65px 100px',
@@ -30,12 +33,24 @@ export const form = css({
   '.w80': {
     width: '80%',
   },
+  '.w70': {
+    width: '70%',
+  },
   '.w30': {
     width: '30%',
   },
   '.break-after': {
     marginBottom: '10px',
   },
+});
+
+const icon = css({
+  position: 'absolute',
+  zIndex: 2,
+  right: 0,
+  bottom: 'calc(50% - 8px)',
+  margin: 0,
+  float: 'none',
 });
 
 export const input = css({
@@ -61,10 +76,6 @@ export const input = css({
     top: 0,
     outline: 'none',
     border: 'none',
-    '-moz-appearance': 'none',
-    '-webkit-appearance': 'none',
-    '-ms-appearance': 'none',
-    '-o-appearance': 'none',
     appearance: 'none',
     '&:after': {
       content: '""',
@@ -77,6 +88,60 @@ export const input = css({
     },
     ':checked:after': {
       backgroundColor: Colors.BlueV2,
+    },
+  },
+});
+
+export const datePicker = css({
+  '.react-datepicker-wrapper, .react-datepicker__input-container': {
+    width: '100%',
+  },
+  '.react-datepicker-popper': {
+    width: '100%',
+    marginTop: '-8px',
+    '.react-datepicker__navigation': {
+      border: 'none',
+      width: '15px',
+      height: '15px',
+      top: '8px',
+    },
+    '.react-datepicker__navigation--previous': {
+      backgroundImage: `url(${recLeft})`,
+    },
+    '.react-datepicker__navigation--next': {
+      backgroundImage: `url(${recRight})`,
+    },
+    '.react-datepicker__triangle': {
+      border: 'none',
+      '&:before': {
+        content: 'none',
+      },
+    },
+    '.react-datepicker, .react-datepicker__header, .react-datepicker__month-container': {
+      width: '100%',
+      border: 'none',
+      backgroundColor: 'white',
+      font: Fonts.Small,
+      color: Colors.GreyV1,
+      '.react-datepicker__day-name, .react-datepicker__day': {
+        width: '28px',
+        height: '15px',
+        lineHeight: '22px',
+        padding: 0,
+        margin: 0,
+      },
+      '.react-datepicker__day': {
+        backgroundColor: Colors.LightV2,
+        '&.react-datepicker__day--keyboard-selected, &.react-datepicker__month-text--keyboard-selected, &.react-datepicker__day--selected': {
+          color: Colors.Black,
+          fontWeight: 'bold',
+        },
+      },
+      '.react-datepicker__current-month': {
+        font: Fonts.Normal,
+        marginBottom: '7px',
+        paddingBottom: '13px',
+      },
     },
   },
 });
@@ -120,6 +185,9 @@ export const label = css({
     paddingLeft: '20px',
     marginBottom: '9px',
     lineHeight: '22px',
+  },
+  '&.date-picker-container': {
+    '.icon': icon,
   },
 });
 
@@ -170,13 +238,11 @@ export const ul = css({
   listStyle: 'none',
   li: {
     position: 'relative',
-    '.icon': {
-      position: 'absolute',
-      zIndex: 2,
-      right: '-28px',
-      bottom: 'calc(50% - 8px)',
-      margin: 0,
-      float: 'none',
-    },
+    '.icon': [
+      icon,
+      {
+        right: '-28px',
+      },
+    ],
   },
 });

@@ -6,3 +6,4 @@ export * from './Button';
 export * from './styles';
 export * from './Textarea';
 export * from './InputArray';
+export * from './DatePicker';

@@ -8,6 +8,7 @@ import actionAdd from 'common/images/icon-add.svg';
 import actionEye from 'common/images/icon-eye.svg';
 import actionEyeSlash from 'common/images/icon-eye-slash.svg';
 import actionRemove from 'common/images/icon-minus.svg';
+import actionCalendar from 'common/images/icon-calendar.svg';
 
 export const action = css`
   font: ${Fonts.Normal};
@@ -49,6 +50,9 @@ export const action = css`
   }
   &.action-delete.action-icon::before {
     background-image: url(${actionDelete});
+  }
+  &.action-calendar.action-icon::before {
+    background-image: url(${actionCalendar});
   }
   &.action-delete-danger.action-icon {
     &::before {
