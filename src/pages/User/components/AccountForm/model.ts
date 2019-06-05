@@ -1,6 +1,7 @@
-export interface Data {
-  username: string;
-  password: string;
+import { Account } from 'domain/user';
+
+export interface Data extends Account {
+  _type: string;
   repeatPassword: string;
 }
 

@@ -3,21 +3,19 @@ import { jsx } from '@emotion/core';
 import React from 'react';
 import { WrappedFieldProps } from 'redux-form';
 
-import { label as labelStyle, input as inputStyle } from './styles';
+import { label as labelStyle, textarea as textareaStyle } from './styles';
 
 type Props = {
   label: string;
-  type: string;
   isRequired?: boolean;
-  className?: string;
+  className: string;
 } & WrappedFieldProps;
 
-export const Input: React.FC<Props> = ({
+export const Textarea: React.FC<Props> = ({
   input,
   label,
-  type,
   isRequired = true,
-  className = '',
+  className,
   meta: { touched, error },
 }): React.ReactElement<Props> => {
   return (
@@ -26,10 +24,8 @@ export const Input: React.FC<Props> = ({
       className={`${className} ${isRequired ? 'required' : ''}`}
     >
       {label}
-      <input css={inputStyle} {...input} type={type} />
+      <textarea css={textareaStyle} {...input} />
       {touched && error && <span className="error">{error}</span>}
     </label>
   );
 };
-
-export default Input;

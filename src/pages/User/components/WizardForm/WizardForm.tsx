@@ -9,6 +9,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 // common
 import * as helper from 'common/helpers';
+import * as dictionaries from 'common/dictionaries';
 import routes, { Forms, Params as RouteParams } from 'common/routes';
 
 // components
@@ -36,6 +37,13 @@ import {
   OwnProps as ContactsFormProps,
 } from '../ContactsForm';
 
+import {
+  CapabilitiesForm,
+  validate as capabilitiesFormValidate,
+  Data as CapabilitiesFormData,
+  OwnProps as CapabilitiesFormProps,
+} from '../CapabilitiesForm';
+
 type Props = {} & RouteComponentProps;
 
 interface State {
@@ -57,9 +65,9 @@ class WizardForm extends React.Component<Props, State> {
       activeForm: Forms.account,
       locks: {
         [Forms.account]: false,
-        [Forms.profile]: true,
-        [Forms.contacts]: true,
-        [Forms.capabilities]: true,
+        [Forms.profile]: false,
+        [Forms.contacts]: false,
+        [Forms.capabilities]: false,
       },
     };
 
@@ -165,6 +173,19 @@ class WizardForm extends React.Component<Props, State> {
           <WizardContactsForm
             nextForm={this.handleChangeForm.bind(this, Forms.capabilities)}
             previousForm={() => this.handleChangeForm(Forms.profile)}
+          />
+        );
+      }
+      case Forms.capabilities: {
+        const WizardCapabilitiesForm = this.formFactory<
+          CapabilitiesFormData,
+          CapabilitiesFormProps
+        >(capabilitiesFormValidate, CapabilitiesForm);
+        return (
+          <WizardCapabilitiesForm
+            nextForm={this.handleChangeForm.bind(this, Forms.capabilities)}
+            previousForm={() => this.handleChangeForm(Forms.contacts)}
+            hobbies={dictionaries.hobbies}
           />
         );
       }

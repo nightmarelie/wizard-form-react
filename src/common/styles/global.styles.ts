@@ -18,6 +18,8 @@ export enum Colors {
   LightV2 = '#FAFCFF',
   RedV1 = '#FF8989',
   RedV2 = '#EB5757',
+  CyanV1 = '#4EE4A5',
+  CyanV2 = '#00cca4',
 }
 
 export const Fonts = {

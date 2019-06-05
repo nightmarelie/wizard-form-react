@@ -4,3 +4,5 @@ export * from './ImgUpload';
 export * from './Input';
 export * from './Button';
 export * from './styles';
+export * from './Textarea';
+export * from './InputArray';

@@ -18,7 +18,7 @@ const Tab: React.FC<Props> = ({
   return (
     <div
       css={styles}
-      className={`tab ${isActive ? 'active' : 'disabled'}`}
+      className={`tab ${isActive ? 'active' : ''}`}
       role="cell"
       onClick={handler}
     >

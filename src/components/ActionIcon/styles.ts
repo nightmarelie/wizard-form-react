@@ -7,10 +7,11 @@ import actionEdit from 'common/images/icon-edit.svg';
 import actionAdd from 'common/images/icon-add.svg';
 import actionEye from 'common/images/icon-eye.svg';
 import actionEyeSlash from 'common/images/icon-eye-slash.svg';
+import actionRemove from 'common/images/icon-minus.svg';
 
 export const action = css`
-  ${Fonts.Normal}
-  color: #9BB0CB;
+  font: ${Fonts.Normal};
+  color: ${Colors.GreyV3};
   display: inline-block;
   cursor: pointer;
   opacity: 0.5;
@@ -29,6 +30,9 @@ export const action = css`
   }
   &.action-add.action-icon::before {
     background-image: url(${actionAdd});
+  }
+  &.action-remove.action-icon::before {
+    background-image: url(${actionRemove});
   }
   &.action-eye-slash.action-icon::before {
     background-image: url(${actionEyeSlash});

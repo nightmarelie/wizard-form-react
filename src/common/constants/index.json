@@ -1,0 +1,23 @@
+{
+  "forms": {
+    "capabilities": {
+      "labels": {
+        "skils": "Skills",
+        "info": "Additional information",
+        "myHobbies": "My hobbies",
+        "art": "Art",
+        "sport": "Sport, fitness, aerobica and staff like that",
+        "game": "I just want to play games, I’m not living in this life",
+        "famale": "I’m a female... I’m doing nothing. Every day.",
+        "guitar": "Guitar, guitar and guitar again. I’m fall in love with it.",
+        "wtf": "WTF is “hobbies”???"
+      }
+    },
+    "buttons": {
+      "back": "Back",
+      "finish": "Finish",
+      "forward": "Forward"
+    }
+  }
+  
+}

@@ -1,27 +1,37 @@
-export interface User {
+export interface Model extends Account, Profile, Contacts, Capabilities {
   /* account */
+  /* profile */
+  /* contacts */
+  /* capabilities */
+  /* system */
+}
+
+export interface Account {
   username: string;
   password: string;
-  /* personal */
+}
+
+export interface Profile {
   firstName: string;
   lastName: string;
   birthDate: Date;
   email: string;
   address: string;
-  /* contacts */
+}
+
+export interface Contacts {
   company: string;
   fax: string;
   facebook: string;
   github: string;
   phones: string[];
   mainLanguage: string;
-  /* capabilities */
+}
+
+export interface Capabilities {
   skills: string[];
   hobies: string[];
   additionalInfo: string;
-  /* system */
-  id: number;
-  updateAt: Date;
 }
 
 export enum Action {
@@ -44,6 +54,6 @@ export interface State {
     loading: boolean;
     // TODO: pganation
   };
-  readonly data: User[];
+  readonly data: Model[];
   readonly errors?: string;
 }

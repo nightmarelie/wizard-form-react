@@ -1,10 +1,7 @@
-export interface Data {
-  company: string;
-  fax: string;
-  facebook: string;
-  github: string;
-  phones: string[];
-  mainLanguage: string;
+import { Contacts } from 'domain/user';
+
+export interface Data extends Contacts {
+  _type: string;
 }
 
 export type Errors<T extends Data> = { [P in keyof T]?: string };

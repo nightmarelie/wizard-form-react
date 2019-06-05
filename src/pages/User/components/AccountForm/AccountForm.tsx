@@ -8,6 +8,8 @@ import { Column } from 'components/Wrapper';
 import ActionIcon from 'components/ActionIcon/ActionIcon';
 import * as Form from 'components/Form';
 
+import constants from 'common/constants/index.json';
+
 import * as model from './model';
 
 export interface OwnProps {
@@ -92,7 +94,7 @@ export class AccountForm extends React.Component<Props, State> {
 
           <Form.Button
             className="ver-indent right"
-            title="Forward"
+            title={constants.forms.buttons.forward}
             disabled={disabled}
             type="submit"
           />

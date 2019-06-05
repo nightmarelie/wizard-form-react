@@ -60,12 +60,11 @@ export const ContactsForm: React.FC<Props> = ({
         <div className="w80 right">
           <Field name="fax" label="Fax" component={Form.Input} type="input" />
 
-          <Field
+          <Form.FieldArrayCustom
             name="phones"
-            label="Phones"
-            component={Form.Input}
-            type="input"
-            isRequired={false}
+            label="Phone"
+            actionLabel="add phone number"
+            component={Form.InputArray}
           />
 
           <Form.Button
