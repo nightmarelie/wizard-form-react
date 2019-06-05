@@ -1,5 +1,33 @@
 {
   "forms": {
+    "contacts": {
+      "labels": {
+        "en": "English",
+        "fr": "French",
+        "es": "Spanish",
+        "ar": "Arabic",
+        "cmn": "Mandarin",
+        "ru": "Russian",
+        "pt": "Portuguese",
+        "de": "German",
+        "ja": "Japanese",
+        "hi": "Hindi",
+        "ms": "Malay",
+        "fa": "Persian",
+        "sw": "Swahili",
+        "ta": "Tamil",
+        "it": "Italian",
+        "nl": "Dutch",
+        "bn": "Bengali",
+        "tr": "Turkish",
+        "vi": "Vietnamese",
+        "pl": "Polish",
+        "jv": "Javanese",
+        "pa": "Punjabi",
+        "th": "Thai",
+        "ko": "Korean"
+      }
+    },
     "capabilities": {
       "labels": {
         "skils": "Skills",
@@ -10,7 +38,25 @@
         "game": "I just want to play games, I’m not living in this life",
         "famale": "I’m a female... I’m doing nothing. Every day.",
         "guitar": "Guitar, guitar and guitar again. I’m fall in love with it.",
-        "wtf": "WTF is “hobbies”???"
+        "wtf": "WTF is “hobbies”???",
+        "html": "HTML",
+        "css": "CSS",
+        "js": "Javascript",
+        "react": "React",
+        "angular": "Angular",
+        "jquery": "jQuery",
+        "node": "NodeJS",
+        "python": "Python",
+        "php": "PHP",
+        "ruby": "Ruby On Rails",
+        "sql": "SQL",
+        "backbone": "BackboneJS",
+        "design": "Web Design",
+        "management": "Project management",
+        "git": "Git",
+        "docker": "Docker",
+        "aws": "AWS Lambda",
+        "firebase": "Firebase"
       }
     },
     "buttons": {
@@ -19,5 +65,4 @@
       "forward": "Forward"
     }
   }
-  
 }

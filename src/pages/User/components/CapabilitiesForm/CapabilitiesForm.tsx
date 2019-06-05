@@ -8,16 +8,14 @@ import { Column } from 'components/Wrapper';
 import * as Form from 'components/Form';
 
 import constants from 'common/constants/index.json';
+import { Dictionary } from 'common/dictionaries';
 
 import { Data } from './model';
 
 export interface OwnProps extends Partial<InjectedFormProps> {
   nextForm: (unlock?: boolean) => void;
   previousForm: () => void;
-  hobbies: {
-    label: string;
-    name: string;
-  }[];
+  hobbies: Dictionary[];
 }
 
 type Props = OwnProps & InjectedFormProps<Data, OwnProps>;
@@ -48,10 +46,10 @@ export const CapabilitiesForm: React.FC<Props> = ({
           <label css={Form.label} className="break-after">
             {constants.forms.capabilities.labels.myHobbies}
           </label>
-          {hobbies.map(({ name, label }, index) => (
+          {hobbies.map(({ value, label }, index) => (
             <Field
               key={index}
-              name={`hobbies.${name}`}
+              name={`hobbies.${value}`}
               label={label}
               component={Form.Input}
               type="checkbox"

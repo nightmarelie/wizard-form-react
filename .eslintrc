@@ -31,7 +31,7 @@
       "allowExpressions": true,
       "allowTypedFunctionExpressions": true
     }],
-    "react/prop-types": 0,
+    "react/prop-types": 0
   },
   "parserOptions":  {
     "ecmaVersion":  2018,

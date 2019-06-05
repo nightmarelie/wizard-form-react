@@ -22,7 +22,7 @@ export const pagination = css({
         color: 'white',
         border: `1px solid ${Colors.BlueV2}`,
       },
-      'a': {
+      a: {
         margin: 0,
         padding: 0,
         border: 0,
@@ -31,8 +31,8 @@ export const pagination = css({
         userSelect: 'none',
         '&:hover, &:active, &:focus': {
           outline: 0,
-        }
-      }
+        },
+      },
     },
   },
 });
