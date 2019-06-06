@@ -6,17 +6,12 @@ import { NavLink } from 'react-router-dom';
 import Icon from 'components/Icon/Icon';
 
 import styles from './styles';
-import routes, { Forms } from 'common/routes';
-import * as helper from 'common/helpers';
+import routes from 'common/routes';
 
 const Navigation: React.FC = (): ReactElement => {
   return (
     <nav>
-      <NavLink
-        activeClassName="active"
-        to={helper.stringReplacer(routes.createUser, { form: Forms.account })}
-        css={styles}
-      >
+      <NavLink activeClassName="active" to={routes.createUserBase} css={styles}>
         <Icon className="icon-add-user" />
         Add new user
       </NavLink>

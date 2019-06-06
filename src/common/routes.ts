@@ -1,5 +1,6 @@
 const routes = {
   home: '/',
+  createUserBase: '/new-user',
   createUser: '/new-user/:form',
   listOfUsers: '/users',
   viewUser: '/users/:id',
