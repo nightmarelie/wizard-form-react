@@ -2,6 +2,7 @@
 import { jsx } from '@emotion/core';
 import React from 'react';
 import { WrappedFieldProps } from 'redux-form';
+import { textMaskReturn } from 'redux-form-input-masks';
 
 import { label as labelStyle, input as inputStyle } from './styles';
 
@@ -10,7 +11,8 @@ type Props = {
   type: string;
   isRequired?: boolean;
   className?: string;
-} & WrappedFieldProps;
+} & WrappedFieldProps &
+  Partial<textMaskReturn>;
 
 export const Input: React.FC<Props> = ({
   input,

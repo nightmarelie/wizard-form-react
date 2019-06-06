@@ -2,6 +2,7 @@
 import { jsx } from '@emotion/core';
 import React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
+import { createTextMask } from 'redux-form-input-masks';
 
 // components
 import { Column } from 'components/Wrapper';
@@ -17,6 +18,10 @@ export interface OwnProps extends Partial<InjectedFormProps> {
   previousForm: () => void;
   languages: Dictionary[];
 }
+
+const phoneMask = createTextMask({
+  pattern: '+7 (999) 999-99-99',
+});
 
 type Props = OwnProps & InjectedFormProps<model.Data, OwnProps>;
 
@@ -76,6 +81,8 @@ export const ContactsForm: React.FC<Props> = ({
             label={constants.contacts.labels.phone}
             actionLabel="add phone number"
             component={Form.InputArray}
+            type="phone"
+            mask={phoneMask}
           />
 
           <Form.Button

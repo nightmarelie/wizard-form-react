@@ -7,6 +7,7 @@ import {
   FieldArray,
   GenericFieldArray,
 } from 'redux-form';
+import { textMaskReturn } from 'redux-form-input-masks';
 
 import ActionIcon from 'components/ActionIcon/ActionIcon';
 import Input from './Input';
@@ -18,7 +19,9 @@ type Props = {
   actionLabel: string;
   isRequired?: boolean;
   className: string;
-} & WrappedFieldArrayProps<any>;
+  type: string;
+  mask: textMaskReturn | null;
+} & WrappedFieldArrayProps<string>;
 
 export const FieldArrayCustom = FieldArray as new () => GenericFieldArray<
   Field,
@@ -28,8 +31,10 @@ export const FieldArrayCustom = FieldArray as new () => GenericFieldArray<
 export const InputArray: React.FC<Props> = ({
   actionLabel,
   label,
+  type,
   isRequired = false,
   fields,
+  mask,
   meta: { error },
 }): React.ReactElement<Props> => {
   return (
@@ -44,8 +49,9 @@ export const InputArray: React.FC<Props> = ({
             name={field}
             label={`${label} #${index + 1}`}
             component={Input}
-            type="input"
+            type={type}
             isRequired={isRequired}
+            {...mask}
           />
         </li>
       ))}
