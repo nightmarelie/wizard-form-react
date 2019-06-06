@@ -7,6 +7,8 @@ import { Field, InjectedFormProps } from 'redux-form';
 import { Column } from 'components/Wrapper';
 import * as Form from 'components/Form';
 
+import constants from 'common/constants/index.json';
+
 import * as model from './model';
 
 export interface OwnProps extends Partial<InjectedFormProps> {
@@ -30,13 +32,13 @@ export const ProfileForm: React.FC<Props> = ({
         <div className="w80 left">
           <Field
             name="firstName"
-            label="First name"
+            label={constants.profile.labels.firstName}
             component={Form.Input}
             type="input"
           />
           <Field
             name="lastName"
-            label="Last name"
+            label={constants.profile.labels.lastName}
             component={Form.Input}
             type="input"
           />
@@ -44,7 +46,7 @@ export const ProfileForm: React.FC<Props> = ({
           <div className="w70 left">
             <Field
               name="birthDate"
-              label="Birth date"
+              label={constants.profile.labels.birthDate}
               component={Form.DatePicker}
             />
           </div>
@@ -54,24 +56,24 @@ export const ProfileForm: React.FC<Props> = ({
         <div className="w80 right">
           <Field
             name="email"
-            label="Email"
+            label={constants.profile.labels.email}
             component={Form.Input}
             type="input"
           />
 
           <Field
             name="address"
-            label="Address"
+            label={constants.profile.labels.address}
             component={Form.Input}
             type="input"
           />
 
           <label css={Form.label} className="break-after">
-            Gender
+            {constants.profile.labels.gender}
           </label>
           <Field
             name="gender"
-            label="Male"
+            label={constants.profile.labels.male}
             component={Form.Input}
             value="male"
             type="radio"
@@ -81,7 +83,7 @@ export const ProfileForm: React.FC<Props> = ({
           />
           <Field
             name="gender"
-            label="Female"
+            label={constants.profile.labels.female}
             component={Form.Input}
             value="female"
             type="radio"
@@ -91,13 +93,13 @@ export const ProfileForm: React.FC<Props> = ({
 
           <Form.Button
             className="ver-indent left"
-            title="Back"
+            title={constants.buttons.back}
             disabled={false}
             handler={previousForm}
           />
           <Form.Button
             className="ver-indent right"
-            title="Forward"
+            title={constants.buttons.forward}
             disabled={disabled}
             type="submit"
           />

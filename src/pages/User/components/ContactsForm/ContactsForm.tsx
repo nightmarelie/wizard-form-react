@@ -7,11 +7,15 @@ import { Field, InjectedFormProps } from 'redux-form';
 import { Column } from 'components/Wrapper';
 import * as Form from 'components/Form';
 
+import constants from 'common/constants/index.json';
+import { Dictionary } from 'common/dictionaries';
+
 import * as model from './model';
 
 export interface OwnProps extends Partial<InjectedFormProps> {
   nextForm: (unlock?: boolean) => void;
   previousForm: () => void;
+  languages: Dictionary[];
 }
 
 type Props = OwnProps & InjectedFormProps<model.Data, OwnProps>;
@@ -22,6 +26,7 @@ export const ContactsForm: React.FC<Props> = ({
   pristine,
   invalid,
   submitting,
+  languages,
 }): React.ReactElement<Props> => {
   const disabled = invalid || submitting || pristine;
   return (
@@ -30,52 +35,58 @@ export const ContactsForm: React.FC<Props> = ({
         <div className="w80 left">
           <Field
             name="company"
-            label="Company"
+            label={constants.contacts.labels.company}
             component={Form.Input}
             type="input"
             isRequired={false}
           />
           <Field
             name="github"
-            label="Github link"
+            label={constants.contacts.labels.github}
             component={Form.Input}
             type="input"
           />
           <Field
             name="facebook"
-            label="Facebook link"
+            label={constants.contacts.labels.facebook}
             component={Form.Input}
             type="input"
           />
           <Field
             name="mainLanguage"
-            label="Main language"
-            component={Form.Input}
-            type="input"
+            label={constants.contacts.labels.mainLanguage}
+            component={Form.Select}
             isRequired={false}
+            isSearchable={true}
+            options={languages}
           />
         </div>
       </Column>
       <Column className="half">
         <div className="w80 right">
-          <Field name="fax" label="Fax" component={Form.Input} type="input" />
+          <Field
+            name="fax"
+            label={constants.contacts.labels.fax}
+            component={Form.Input}
+            type="input"
+          />
 
           <Form.FieldArrayCustom
             name="phones"
-            label="Phone"
+            label={constants.contacts.labels.phone}
             actionLabel="add phone number"
             component={Form.InputArray}
           />
 
           <Form.Button
             className="ver-indent left"
-            title="Back"
+            title={constants.buttons.back}
             disabled={false}
             handler={previousForm}
           />
           <Form.Button
             className="ver-indent right"
-            title="Forward"
+            title={constants.buttons.forward}
             disabled={disabled}
             type="submit"
           />

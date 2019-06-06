@@ -65,9 +65,9 @@ class WizardForm extends React.Component<Props, State> {
       activeForm: Forms.account,
       locks: {
         [Forms.account]: false,
-        [Forms.profile]: false,
-        [Forms.contacts]: false,
-        [Forms.capabilities]: false,
+        [Forms.profile]: true,
+        [Forms.contacts]: true,
+        [Forms.capabilities]: true,
       },
     };
 
@@ -165,6 +165,7 @@ class WizardForm extends React.Component<Props, State> {
         );
       }
       case Forms.contacts: {
+        const { languages } = dictionaries;
         const WizardContactsForm = this.formFactory<
           ContactsFormData,
           ContactsFormProps
@@ -173,10 +174,12 @@ class WizardForm extends React.Component<Props, State> {
           <WizardContactsForm
             nextForm={this.handleChangeForm.bind(this, Forms.capabilities)}
             previousForm={() => this.handleChangeForm(Forms.profile)}
+            languages={languages}
           />
         );
       }
       case Forms.capabilities: {
+        const { hobbies, skils } = dictionaries;
         const WizardCapabilitiesForm = this.formFactory<
           CapabilitiesFormData,
           CapabilitiesFormProps
@@ -185,7 +188,8 @@ class WizardForm extends React.Component<Props, State> {
           <WizardCapabilitiesForm
             nextForm={this.handleChangeForm.bind(this, Forms.capabilities)}
             previousForm={() => this.handleChangeForm(Forms.contacts)}
-            hobbies={dictionaries.hobbies}
+            hobbies={hobbies}
+            skils={skils}
           />
         );
       }

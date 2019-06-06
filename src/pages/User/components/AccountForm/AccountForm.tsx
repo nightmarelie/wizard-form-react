@@ -65,14 +65,14 @@ export class AccountForm extends React.Component<Props, State> {
         <Column className="half">
           <Field
             name="username"
-            label="User name"
+            label={constants.account.labels.username}
             component={Form.Input}
             type="text"
           />
 
           <Field
             name="password"
-            label="Password"
+            label={constants.account.labels.password}
             component={Form.Input}
             type={passwordType}
           />
@@ -83,7 +83,7 @@ export class AccountForm extends React.Component<Props, State> {
 
           <Field
             name="repeatPassword"
-            label="Repeat Password"
+            label={constants.account.labels.repeatPassword}
             component={Form.Input}
             type={repeatPasswordType}
           />
@@ -94,7 +94,7 @@ export class AccountForm extends React.Component<Props, State> {
 
           <Form.Button
             className="ver-indent right"
-            title={constants.forms.buttons.forward}
+            title={constants.buttons.forward}
             disabled={disabled}
             type="submit"
           />

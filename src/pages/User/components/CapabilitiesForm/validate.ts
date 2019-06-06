@@ -8,5 +8,9 @@ export const validate: (v: Data) => Errors<Data> = values => {
       'additional information should be less than 300 characters';
   }
 
+  if (values.skills && values.skills.length < 3) {
+    errors.skills = 'min ammount of skills at least 3 items';
+  }
+
   return errors;
 };

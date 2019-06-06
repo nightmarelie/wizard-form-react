@@ -60,6 +60,9 @@ export const input = css({
   margin: '4px 0 20px',
   padding: '0 32px 0 10px',
   font: Fonts.Normal,
+  '&::placeholder': {
+    color: Colors.GreyV3,
+  },
   '&[type=radio]': {
     width: 'auto',
     height: 'auto',
@@ -88,6 +91,61 @@ export const input = css({
     },
     ':checked:after': {
       backgroundColor: Colors.BlueV2,
+    },
+  },
+});
+
+export const select = css({
+  '.select-container': {
+    color: Colors.GreyV3,
+    margin: '4px 0 20px',
+    '.select-element__menu': {
+      borderRadius: 0,
+      border: 'none',
+      boxShadow: 'none',
+      '.select-element__option--is-focused': {
+        backgroundColor: Colors.LightV1,
+      },
+    },
+    '.select-element__control': {
+      borderRadius: 0,
+      border: `1px solid ${Colors.GreyV5}`,
+      padding: '6px 2px',
+      '.select-element__value-container': {
+        '.select-element__placeholder': {
+          color: 'inherit',
+        },
+        '.select-element__multi-value': {
+          backgroundColor: Colors.LightV1,
+          marginRight: '8px',
+          '.select-element__multi-value__label': {
+            color: 'inherit',
+          },
+        },
+      },
+      '.select-element__input': {
+        input: {
+          height: '100%',
+          margin: 0,
+        },
+      },
+      '.select-element__indicators': {
+        position: 'relative',
+        '.select-element__indicator-separator': {
+          width: 0,
+          height: 0,
+        },
+        '.select-element__indicator': {
+          svg: {
+            width: '15px',
+            height: '15px',
+          },
+        },
+        '.select-element__clear-indicator': {
+          position: 'absolute',
+          right: '-32px',
+        },
+      },
     },
   },
 });

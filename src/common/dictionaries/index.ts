@@ -7,201 +7,201 @@ export interface Dictionary {
 
 export const hobbies = [
   {
-    label: constants.forms.capabilities.labels.art,
+    label: constants.capabilities.labels.art,
     value: 'art',
   },
   {
-    label: constants.forms.capabilities.labels.sport,
+    label: constants.capabilities.labels.sport,
     value: 'sport',
   },
   {
-    label: constants.forms.capabilities.labels.game,
+    label: constants.capabilities.labels.game,
     value: 'game',
   },
   {
-    label: constants.forms.capabilities.labels.famale,
+    label: constants.capabilities.labels.famale,
     value: 'famale',
   },
   {
-    label: constants.forms.capabilities.labels.guitar,
+    label: constants.capabilities.labels.guitar,
     value: 'guitar',
   },
   {
-    label: constants.forms.capabilities.labels.wtf,
+    label: constants.capabilities.labels.wtf,
     value: 'wtf',
   },
 ];
 
 export const skils = [
   {
-    label: constants.forms.capabilities.labels.html,
+    label: constants.capabilities.labels.html,
     value: 'html',
   },
   {
-    label: constants.forms.capabilities.labels.css,
+    label: constants.capabilities.labels.css,
     value: 'css',
   },
   {
-    label: constants.forms.capabilities.labels.js,
+    label: constants.capabilities.labels.js,
     value: 'js',
   },
   {
-    label: constants.forms.capabilities.labels.react,
+    label: constants.capabilities.labels.react,
     value: 'react',
   },
   {
-    label: constants.forms.capabilities.labels.angular,
+    label: constants.capabilities.labels.angular,
     value: 'angular',
   },
   {
-    label: constants.forms.capabilities.labels.jquery,
+    label: constants.capabilities.labels.jquery,
     value: 'jquery',
   },
   {
-    label: constants.forms.capabilities.labels.node,
+    label: constants.capabilities.labels.node,
     value: 'node',
   },
   {
-    label: constants.forms.capabilities.labels.python,
+    label: constants.capabilities.labels.python,
     value: 'python',
   },
   {
-    label: constants.forms.capabilities.labels.php,
+    label: constants.capabilities.labels.php,
     value: 'php',
   },
   {
-    label: constants.forms.capabilities.labels.ruby,
+    label: constants.capabilities.labels.ruby,
     value: 'ruby',
   },
   {
-    label: constants.forms.capabilities.labels.sql,
+    label: constants.capabilities.labels.sql,
     value: 'sql',
   },
   {
-    label: constants.forms.capabilities.labels.backbone,
+    label: constants.capabilities.labels.backbone,
     value: 'backbone',
   },
   {
-    label: constants.forms.capabilities.labels.design,
+    label: constants.capabilities.labels.design,
     value: 'design',
   },
   {
-    label: constants.forms.capabilities.labels.management,
+    label: constants.capabilities.labels.management,
     value: 'management',
   },
   {
-    label: constants.forms.capabilities.labels.git,
+    label: constants.capabilities.labels.git,
     value: 'git',
   },
   {
-    label: constants.forms.capabilities.labels.docker,
+    label: constants.capabilities.labels.docker,
     value: 'docker',
   },
   {
-    label: constants.forms.capabilities.labels.aws,
+    label: constants.capabilities.labels.aws,
     value: 'aws',
   },
   {
-    label: constants.forms.capabilities.labels.firebase,
+    label: constants.capabilities.labels.firebase,
     value: 'firebase',
   },
 ];
 
 export const languages = [
   {
-    label: constants.forms.contacts.labels.en,
+    label: constants.contacts.labels.en,
     value: 'en',
   },
   {
-    label: constants.forms.contacts.labels.fr,
+    label: constants.contacts.labels.fr,
     value: 'fr',
   },
   {
-    label: constants.forms.contacts.labels.es,
+    label: constants.contacts.labels.es,
     value: 'es',
   },
   {
-    label: constants.forms.contacts.labels.ar,
+    label: constants.contacts.labels.ar,
     value: 'ar',
   },
   {
-    label: constants.forms.contacts.labels.cmn,
+    label: constants.contacts.labels.cmn,
     value: 'cmn',
   },
   {
-    label: constants.forms.contacts.labels.ru,
+    label: constants.contacts.labels.ru,
     value: 'ru',
   },
   {
-    label: constants.forms.contacts.labels.pt,
+    label: constants.contacts.labels.pt,
     value: 'pt',
   },
   {
-    label: constants.forms.contacts.labels.de,
+    label: constants.contacts.labels.de,
     value: 'de',
   },
   {
-    label: constants.forms.contacts.labels.ja,
+    label: constants.contacts.labels.ja,
     value: 'ja',
   },
   {
-    label: constants.forms.contacts.labels.hi,
+    label: constants.contacts.labels.hi,
     value: 'hi',
   },
   {
-    label: constants.forms.contacts.labels.ms,
+    label: constants.contacts.labels.ms,
     value: 'ms',
   },
   {
-    label: constants.forms.contacts.labels.fa,
+    label: constants.contacts.labels.fa,
     value: 'fa',
   },
   {
-    label: constants.forms.contacts.labels.sw,
+    label: constants.contacts.labels.sw,
     value: 'sw',
   },
   {
-    label: constants.forms.contacts.labels.ta,
+    label: constants.contacts.labels.ta,
     value: 'ta',
   },
   {
-    label: constants.forms.contacts.labels.it,
+    label: constants.contacts.labels.it,
     value: 'it',
   },
   {
-    label: constants.forms.contacts.labels.nl,
+    label: constants.contacts.labels.nl,
     value: 'nl',
   },
   {
-    label: constants.forms.contacts.labels.bn,
+    label: constants.contacts.labels.bn,
     value: 'bn',
   },
   {
-    label: constants.forms.contacts.labels.tr,
+    label: constants.contacts.labels.tr,
     value: 'tr',
   },
   {
-    label: constants.forms.contacts.labels.vi,
+    label: constants.contacts.labels.vi,
     value: 'vi',
   },
   {
-    label: constants.forms.contacts.labels.pl,
+    label: constants.contacts.labels.pl,
     value: 'pl',
   },
   {
-    label: constants.forms.contacts.labels.jv,
+    label: constants.contacts.labels.jv,
     value: 'jv',
   },
   {
-    label: constants.forms.contacts.labels.pa,
+    label: constants.contacts.labels.pa,
     value: 'pa',
   },
   {
-    label: constants.forms.contacts.labels.th,
+    label: constants.contacts.labels.th,
     value: 'th',
   },
   {
-    label: constants.forms.contacts.labels.ko,
+    label: constants.contacts.labels.ko,
     value: 'ko',
   },
 ];

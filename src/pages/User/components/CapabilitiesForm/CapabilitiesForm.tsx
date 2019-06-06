@@ -16,6 +16,7 @@ export interface OwnProps extends Partial<InjectedFormProps> {
   nextForm: (unlock?: boolean) => void;
   previousForm: () => void;
   hobbies: Dictionary[];
+  skils: Dictionary[];
 }
 
 type Props = OwnProps & InjectedFormProps<Data, OwnProps>;
@@ -27,6 +28,7 @@ export const CapabilitiesForm: React.FC<Props> = ({
   invalid,
   submitting,
   hobbies,
+  skils,
 }): React.ReactElement<Props> => {
   const disabled = invalid || submitting || pristine;
   return (
@@ -34,8 +36,17 @@ export const CapabilitiesForm: React.FC<Props> = ({
       <Column className="half">
         <div className="w80 left">
           <Field
+            name="skills"
+            label={constants.capabilities.labels.skils}
+            component={Form.Select}
+            isRequired={false}
+            isMulti={true}
+            isSearchable={true}
+            options={skils}
+          />
+          <Field
             name="additionalInfo"
-            label={constants.forms.capabilities.labels.info}
+            label={constants.capabilities.labels.info}
             component={Form.Textarea}
             isRequired={false}
           />
@@ -44,7 +55,7 @@ export const CapabilitiesForm: React.FC<Props> = ({
       <Column className="half">
         <div className="w80 right">
           <label css={Form.label} className="break-after">
-            {constants.forms.capabilities.labels.myHobbies}
+            {constants.capabilities.labels.myHobbies}
           </label>
           {hobbies.map(({ value, label }, index) => (
             <Field
@@ -60,13 +71,13 @@ export const CapabilitiesForm: React.FC<Props> = ({
 
           <Form.Button
             className="ver-indent left"
-            title={constants.forms.buttons.back}
+            title={constants.buttons.back}
             disabled={false}
             handler={previousForm}
           />
           <Form.Button
             className="ver-indent right finish"
-            title={constants.forms.buttons.finish}
+            title={constants.buttons.finish}
             disabled={disabled}
             type="submit"
           />
