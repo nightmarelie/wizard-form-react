@@ -265,6 +265,7 @@ export const button = css({
   },
   '&[disabled]:hover': {
     backgroundColor: Colors.RedV2,
+    cursor: 'not-allowed',
   },
   ':active, :focus': {
     outline: 'none',

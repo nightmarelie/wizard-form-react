@@ -74,6 +74,7 @@ class WizardForm extends React.Component<Props, State> {
     this.handleChangeForm = this.handleChangeForm.bind(this);
     this.renderForm = this.renderForm.bind(this);
     this.isCurrentForm = this.isCurrentForm.bind(this);
+    this.isCurrentFormLock = this.isCurrentFormLock.bind(this);
     this.handleUnlock = this.handleUnlock.bind(this);
   }
 
@@ -90,6 +91,12 @@ class WizardForm extends React.Component<Props, State> {
     const { activeForm } = this.state;
 
     return activeForm === form;
+  }
+
+  private isCurrentFormLock(form: Forms): boolean {
+    const { locks } = this.state;
+
+    return locks[form];
   }
 
   private formFactory<D = {}, P = {}>(
@@ -206,21 +213,25 @@ class WizardForm extends React.Component<Props, State> {
         <Tabs.Wrapper>
           <Tabs.Tab
             isActive={this.isCurrentForm(Forms.account)}
+            isLock={this.isCurrentFormLock(Forms.account)}
             payload="1. Account"
             handler={() => this.handleChangeForm(Forms.account)}
           />
           <Tabs.Tab
             isActive={this.isCurrentForm(Forms.profile)}
+            isLock={this.isCurrentFormLock(Forms.profile)}
             payload="2. Profile"
             handler={() => this.handleChangeForm(Forms.profile)}
           />
           <Tabs.Tab
             isActive={this.isCurrentForm(Forms.contacts)}
+            isLock={this.isCurrentFormLock(Forms.contacts)}
             payload="3. Contancts"
             handler={() => this.handleChangeForm(Forms.contacts)}
           />
           <Tabs.Tab
             isActive={this.isCurrentForm(Forms.capabilities)}
+            isLock={this.isCurrentFormLock(Forms.capabilities)}
             payload="4. Capabilities"
             handler={() => this.handleChangeForm(Forms.capabilities)}
           />

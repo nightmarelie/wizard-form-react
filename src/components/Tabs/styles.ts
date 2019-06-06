@@ -21,7 +21,13 @@ export const tab = css({
   textAlign: 'center',
   '&.active:hover': active,
   '&.active': active,
-  '&.disabled:hover': disabled,
+  '&.disabled': disabled,
+  '&.disabled:hover': [
+    disabled,
+    {
+      cursor: 'not-allowed',
+    },
+  ],
 });
 
 export const tabs = css({
