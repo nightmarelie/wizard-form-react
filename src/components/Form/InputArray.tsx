@@ -21,6 +21,7 @@ type Props = {
   className: string;
   type: string;
   mask: textMaskReturn | null;
+  limit: number;
 } & WrappedFieldArrayProps<string>;
 
 export const FieldArrayCustom = FieldArray as new () => GenericFieldArray<
@@ -32,11 +33,13 @@ export const InputArray: React.FC<Props> = ({
   actionLabel,
   label,
   type,
-  isRequired = false,
   fields,
   mask,
   meta: { error },
+  limit = 10,
+  isRequired = false,
 }): React.ReactElement<Props> => {
+  const count = fields.length + 1;
   return (
     <ul css={ulStyle}>
       {fields.map((field, index) => (
@@ -55,9 +58,11 @@ export const InputArray: React.FC<Props> = ({
           />
         </li>
       ))}
-      <ActionIcon className="action-add" handler={() => fields.push()}>
-        {actionLabel}
-      </ActionIcon>
+      {count <= limit && (
+        <ActionIcon className="action-add" handler={() => fields.push()}>
+          {actionLabel}
+        </ActionIcon>
+      )}
       {error && <li className="error">{error}</li>}
     </ul>
   );

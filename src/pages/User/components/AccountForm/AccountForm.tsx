@@ -53,12 +53,18 @@ export class AccountForm extends React.Component<Props, State> {
   }
 
   public render(): React.ReactElement {
-    const { nextForm, pristine, invalid, submitting } = this.props;
+    const {
+      nextForm,
+      pristine,
+      invalid,
+      submitting,
+      handleSubmit,
+    } = this.props;
     const { passwordType, repeatPasswordType } = this.state;
     const disabled = invalid || submitting || pristine;
 
     return (
-      <Form.Wrapper onSubmit={() => nextForm(disabled)}>
+      <Form.Wrapper onSubmit={handleSubmit(nextForm.bind(this, disabled))}>
         <Column className="half">
           <Form.ImgUpload />
         </Column>
@@ -95,7 +101,7 @@ export class AccountForm extends React.Component<Props, State> {
           <Form.Button
             className="ver-indent right"
             title={constants.buttons.forward}
-            disabled={disabled}
+            disabled={submitting}
             type="submit"
           />
         </Column>

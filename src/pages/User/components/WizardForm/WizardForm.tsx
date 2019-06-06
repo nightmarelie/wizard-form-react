@@ -11,6 +11,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import * as helper from 'common/helpers';
 import * as dictionaries from 'common/dictionaries';
 import routes, { Forms, Params as RouteParams } from 'common/routes';
+import constants from 'common/constants/index.json';
 
 // components
 import Tabs from 'components/Tabs';
@@ -125,6 +126,10 @@ class WizardForm extends React.Component<Props, State> {
     });
   }
 
+  private handleSubmit(): void {
+    alert('All data saved!');
+  }
+
   private handleChangeForm(form: Forms, lock: boolean = true): void {
     const { history } = this.props;
     const state = this.state;
@@ -193,15 +198,13 @@ class WizardForm extends React.Component<Props, State> {
         >(capabilitiesFormValidate, CapabilitiesForm);
         return (
           <WizardCapabilitiesForm
-            nextForm={this.handleChangeForm.bind(this, Forms.capabilities)}
+            nextForm={this.handleSubmit}
             previousForm={() => this.handleChangeForm(Forms.contacts)}
             hobbies={hobbies}
             skils={skils}
           />
         );
       }
-      // case Forms.capabilities:
-      //   // return this.renderFourthStep();
     }
 
     return <div />;
@@ -214,25 +217,25 @@ class WizardForm extends React.Component<Props, State> {
           <Tabs.Tab
             isActive={this.isCurrentForm(Forms.account)}
             isLock={this.isCurrentFormLock(Forms.account)}
-            payload="1. Account"
+            payload={constants.labels.accountTab}
             handler={() => this.handleChangeForm(Forms.account)}
           />
           <Tabs.Tab
             isActive={this.isCurrentForm(Forms.profile)}
             isLock={this.isCurrentFormLock(Forms.profile)}
-            payload="2. Profile"
+            payload={constants.labels.profileTab}
             handler={() => this.handleChangeForm(Forms.profile)}
           />
           <Tabs.Tab
             isActive={this.isCurrentForm(Forms.contacts)}
             isLock={this.isCurrentFormLock(Forms.contacts)}
-            payload="3. Contancts"
+            payload={constants.labels.contactsTab}
             handler={() => this.handleChangeForm(Forms.contacts)}
           />
           <Tabs.Tab
             isActive={this.isCurrentForm(Forms.capabilities)}
             isLock={this.isCurrentFormLock(Forms.capabilities)}
-            payload="4. Capabilities"
+            payload={constants.labels.capabilitiesTab}
             handler={() => this.handleChangeForm(Forms.capabilities)}
           />
         </Tabs.Wrapper>

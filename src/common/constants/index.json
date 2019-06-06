@@ -1,4 +1,12 @@
 {
+  "labels": {
+    "createUserTitle": "Adding new user",
+    "listOfUserTitle": "List of use",
+    "accountTab": "1. Account",
+    "profileTab": "2. Profile",
+    "contactsTab": "3. Contancts",
+    "capabilitiesTab": "4. Capabilities"
+  },
   "profile": {
     "labels": {
       "firstName": "First name",

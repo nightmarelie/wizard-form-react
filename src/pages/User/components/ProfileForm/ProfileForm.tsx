@@ -24,10 +24,11 @@ export const ProfileForm: React.FC<Props> = ({
   pristine,
   invalid,
   submitting,
+  handleSubmit,
 }): React.ReactElement<Props> => {
   const disabled = invalid || submitting || pristine;
   return (
-    <Form.Wrapper onSubmit={() => nextForm(disabled)}>
+    <Form.Wrapper onSubmit={handleSubmit(() => nextForm(disabled))}>
       <Column className="half">
         <div className="w80 left">
           <Field
@@ -100,7 +101,7 @@ export const ProfileForm: React.FC<Props> = ({
           <Form.Button
             className="ver-indent right"
             title={constants.buttons.forward}
-            disabled={disabled}
+            disabled={submitting}
             type="submit"
           />
         </div>

@@ -29,10 +29,11 @@ export const CapabilitiesForm: React.FC<Props> = ({
   submitting,
   hobbies,
   skils,
+  handleSubmit,
 }): React.ReactElement<Props> => {
   const disabled = invalid || submitting || pristine;
   return (
-    <Form.Wrapper onSubmit={() => nextForm(disabled)}>
+    <Form.Wrapper onSubmit={handleSubmit(() => nextForm(disabled))}>
       <Column className="half">
         <div className="w80 left">
           <Field
@@ -78,7 +79,7 @@ export const CapabilitiesForm: React.FC<Props> = ({
           <Form.Button
             className="ver-indent right finish"
             title={constants.buttons.finish}
-            disabled={disabled}
+            disabled={submitting}
             type="submit"
           />
         </div>

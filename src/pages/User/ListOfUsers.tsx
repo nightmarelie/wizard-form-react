@@ -14,7 +14,7 @@ import Avatar from 'components/Avatar/Avatar';
 import fakeData from 'common/fake-data.json';
 import routes, { Forms } from 'common/routes';
 import * as helper from 'common/helpers';
-
+import constants from 'common/constants/index.json';
 import * as global from 'common/styles/global.styles';
 
 interface State {
@@ -97,7 +97,7 @@ class ListOfUser extends React.Component<{}, State> {
     const payload = fakeData.users;
     return (
       <Container>
-        <Title title="List of user" />
+        <Title title={constants.labels.listOfUserTitle} />
         <Table.Wrapper>
           <Table.Row className="header">
             <Table.Cell className="first" payload={headers.colomnUsername} />

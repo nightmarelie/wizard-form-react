@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core';
 import React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
-import { createTextMask } from 'redux-form-input-masks';
+import { createTextMask, textMaskReturn } from 'redux-form-input-masks';
 
 // components
 import { Column } from 'components/Wrapper';
@@ -19,7 +19,7 @@ export interface OwnProps extends Partial<InjectedFormProps> {
   languages: Dictionary[];
 }
 
-const phoneMask = createTextMask({
+const phoneMask: textMaskReturn | any = createTextMask({
   pattern: '+7 (999) 999-99-99',
 });
 
@@ -32,10 +32,11 @@ export const ContactsForm: React.FC<Props> = ({
   invalid,
   submitting,
   languages,
+  handleSubmit,
 }): React.ReactElement<Props> => {
   const disabled = invalid || submitting || pristine;
   return (
-    <Form.Wrapper onSubmit={() => nextForm(disabled)}>
+    <Form.Wrapper onSubmit={handleSubmit(() => nextForm(disabled))}>
       <Column className="half">
         <div className="w80 left">
           <Field
@@ -74,6 +75,7 @@ export const ContactsForm: React.FC<Props> = ({
             label={constants.contacts.labels.fax}
             component={Form.Input}
             type="input"
+            {...phoneMask}
           />
 
           <Form.FieldArrayCustom
@@ -82,6 +84,7 @@ export const ContactsForm: React.FC<Props> = ({
             actionLabel="add phone number"
             component={Form.InputArray}
             type="phone"
+            limit={3}
             mask={phoneMask}
           />
 
@@ -94,7 +97,7 @@ export const ContactsForm: React.FC<Props> = ({
           <Form.Button
             className="ver-indent right"
             title={constants.buttons.forward}
-            disabled={disabled}
+            disabled={submitting}
             type="submit"
           />
         </div>

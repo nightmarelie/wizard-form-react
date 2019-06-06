@@ -10,6 +10,7 @@ import WizardForm from './components/WizardForm/WizardForm';
 
 // common
 import { Forms } from 'common/routes';
+import constants from 'common/constants/index.json';
 
 interface MatchParams {
   form: Forms;
@@ -25,7 +26,7 @@ class CreateUser extends React.Component<Props, {}> {
   public render(): React.ReactElement {
     return (
       <Container>
-        <Title title="Adding new user" />
+        <Title title={constants.labels.createUserTitle} />
         <WizardForm {...this.props} />
       </Container>
     );
