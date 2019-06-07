@@ -11,9 +11,10 @@ import constants from 'common/constants/index.json';
 import { Dictionary } from 'common/dictionaries';
 
 import * as model from './model';
+import * as User from 'domain/user';
 
 export interface OwnProps extends Partial<InjectedFormProps> {
-  nextForm: (unlock?: boolean) => void;
+  nextForm: (data: Partial<User.Model>, lock?: boolean) => void;
   previousForm: () => void;
   genders: Dictionary[];
 }
@@ -23,15 +24,12 @@ type Props = OwnProps & InjectedFormProps<model.Data, OwnProps>;
 export const ProfileForm: React.FC<Props> = ({
   nextForm,
   previousForm,
-  pristine,
-  invalid,
   submitting,
   handleSubmit,
   genders,
 }): React.ReactElement<Props> => {
-  const disabled = invalid || submitting || pristine;
   return (
-    <Form.Wrapper onSubmit={handleSubmit(() => nextForm(disabled))}>
+    <Form.Wrapper onSubmit={handleSubmit(data => nextForm(data, false))}>
       <Column className="half">
         <div className="w80 left">
           <Field

@@ -11,9 +11,10 @@ import constants from 'common/constants/index.json';
 import { Dictionary } from 'common/dictionaries';
 
 import { Data } from './model';
+import * as User from 'domain/user';
 
 export interface OwnProps extends Partial<InjectedFormProps> {
-  nextForm: (unlock?: boolean) => void;
+  nextForm: (data: Partial<User.Model>, unlock?: boolean) => void;
   previousForm: () => void;
   hobbies: Dictionary[];
   skils: Dictionary[];
@@ -33,7 +34,7 @@ export const CapabilitiesForm: React.FC<Props> = ({
 }): React.ReactElement<Props> => {
   const disabled = invalid || submitting || pristine;
   return (
-    <Form.Wrapper onSubmit={handleSubmit(() => nextForm(disabled))}>
+    <Form.Wrapper onSubmit={handleSubmit(data => nextForm(data, disabled))}>
       <Column className="half">
         <div className="w80 left">
           <Field

@@ -11,9 +11,10 @@ import * as Form from 'components/Form';
 import constants from 'common/constants/index.json';
 
 import * as model from './model';
+import * as User from 'domain/user';
 
 export interface OwnProps {
-  nextForm: (unlock?: boolean) => void;
+  nextForm: (data: Partial<User.Model>, lock?: boolean) => void;
 }
 
 interface State {
@@ -53,18 +54,11 @@ export class AccountForm extends React.Component<Props, State> {
   }
 
   public render(): React.ReactElement {
-    const {
-      nextForm,
-      pristine,
-      invalid,
-      submitting,
-      handleSubmit,
-    } = this.props;
+    const { nextForm, submitting, handleSubmit } = this.props;
     const { passwordType, repeatPasswordType } = this.state;
-    const disabled = invalid || submitting || pristine;
 
     return (
-      <Form.Wrapper onSubmit={handleSubmit(nextForm.bind(this, disabled))}>
+      <Form.Wrapper onSubmit={handleSubmit(data => nextForm(data, false))}>
         <Column className="half">
           <Form.ImgUpload />
         </Column>

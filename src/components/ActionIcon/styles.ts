@@ -9,15 +9,28 @@ import actionEye from 'common/images/icon-eye.svg';
 import actionEyeSlash from 'common/images/icon-eye-slash.svg';
 import actionRemove from 'common/images/icon-minus.svg';
 import actionCalendar from 'common/images/icon-calendar.svg';
+import actionClose from 'common/images/icon-close.svg';
 
 export const action = css`
   font: ${Fonts.Normal};
   color: ${Colors.GreyV3};
   display: inline-block;
   cursor: pointer;
-  opacity: 0.5;
+  opacity: 1;
   &:hover {
-    opacity: 1;
+    opacity: 0.5;
+  }
+  &.none-icon {
+    color: white;
+    font-weight: 900;
+    margin-left: 10px;
+  }
+  &.action-icon.none-icon::before {
+    content: '';
+    width: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
   }
   &.action-icon::before {
     content: '';
@@ -53,6 +66,9 @@ export const action = css`
   }
   &.action-calendar.action-icon::before {
     background-image: url(${actionCalendar});
+  }
+  &.action-close.action-icon::before {
+    background-image: url(${actionClose});
   }
   &.action-delete-danger.action-icon {
     &::before {

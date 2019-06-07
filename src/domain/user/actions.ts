@@ -1,8 +1,8 @@
-import { Model, Action as UserAction } from './model';
+import { Model, Action } from './model';
 import { createAsyncAction } from 'typesafe-actions';
 
 export const fetchRequest = createAsyncAction(
-  UserAction.FETCH_REQUEST,
-  UserAction.FETCH_SUCCESS,
-  UserAction.FETCH_ERROR,
+  Action.FETCH_REQUEST,
+  Action.FETCH_SUCCESS,
+  Action.FETCH_ERROR,
 )<string, Model[], Error>();

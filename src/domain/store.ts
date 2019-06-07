@@ -3,12 +3,19 @@ import createSagaMiddleware from 'redux-saga';
 import { routerMiddleware, RouterState } from 'connected-react-router';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { History } from 'history';
+import { FormState } from 'redux-form';
 
 import { rootSaga } from './sagas';
 import createRootReducer from './reducers';
 
+import { State as AbandonUserState } from './abandonUser/model';
+import { State as UserState } from './user/model';
+
 export interface ApplicationState {
+  form: FormState;
   router: RouterState;
+  abandonUser: AbandonUserState;
+  users: UserState;
 }
 
 export default function configureStore(

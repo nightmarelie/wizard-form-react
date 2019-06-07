@@ -1,4 +1,14 @@
-import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
+import {
+  call,
+  put,
+  takeEvery,
+  all,
+  fork,
+  ForkEffect,
+  AllEffect,
+  SimpleEffect,
+  ForkEffectDescriptor,
+} from 'redux-saga/effects';
 
 import { fetchRequest } from './actions';
 import { Model, Action } from './model';
@@ -9,7 +19,7 @@ function* handleFetch(
 ): Generator {
   try {
     const response: Model[] = yield call(
-      { context: db.users, fn: db.users.get } as any,
+      { context: db.users, fn: db.users.get },
       action.payload,
     );
 
@@ -19,10 +29,12 @@ function* handleFetch(
   }
 }
 
-function* watchFetchRequest() {
+function* watchFetchRequest(): IterableIterator<ForkEffect> {
   yield takeEvery(Action.FETCH_REQUEST, handleFetch);
 }
 
-export function* userSagas() {
+export function* sagas(): IterableIterator<
+  AllEffect<SimpleEffect<string, ForkEffectDescriptor>>
+> {
   yield all([fork(watchFetchRequest)]);
 }

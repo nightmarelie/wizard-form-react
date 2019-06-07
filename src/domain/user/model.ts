@@ -4,6 +4,14 @@ export interface Model extends Account, Profile, Contacts, Capabilities {
   /* contacts */
   /* capabilities */
   /* system */
+  locks: Locks;
+}
+
+export interface Locks {
+  account: boolean;
+  profile: boolean;
+  contacts: boolean;
+  capabilities: boolean;
 }
 
 export interface Account {
