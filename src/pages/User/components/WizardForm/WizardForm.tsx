@@ -165,6 +165,7 @@ class WizardForm extends React.Component<Props, State> {
         );
       }
       case Forms.profile: {
+        const { genders } = dictionaries;
         const WizardProfileForm = this.formFactory<
           ProfileFormData,
           ProfileFormProps
@@ -173,6 +174,7 @@ class WizardForm extends React.Component<Props, State> {
           <WizardProfileForm
             nextForm={this.handleChangeForm.bind(this, Forms.contacts)}
             previousForm={() => this.handleChangeForm(Forms.account)}
+            genders={genders}
           />
         );
       }

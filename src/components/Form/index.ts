@@ -8,3 +8,4 @@ export * from './Textarea';
 export * from './InputArray';
 export * from './DatePicker';
 export * from './Select';
+export * from './RadioGroup';

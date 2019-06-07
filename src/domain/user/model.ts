@@ -17,6 +17,7 @@ export interface Profile {
   birthDate: Date;
   email: string;
   address: string;
+  gender: string;
 }
 
 export interface Contacts {

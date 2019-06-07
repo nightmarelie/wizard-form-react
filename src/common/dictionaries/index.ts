@@ -5,6 +5,11 @@ export interface Dictionary {
   value: string;
 }
 
+export const genders = [
+  { label: constants.profile.labels.male, value: 'male' },
+  { label: constants.profile.labels.female, value: 'female' },
+];
+
 export const hobbies = [
   {
     label: constants.capabilities.labels.art,

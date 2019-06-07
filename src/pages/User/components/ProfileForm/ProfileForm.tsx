@@ -8,12 +8,14 @@ import { Column } from 'components/Wrapper';
 import * as Form from 'components/Form';
 
 import constants from 'common/constants/index.json';
+import { Dictionary } from 'common/dictionaries';
 
 import * as model from './model';
 
 export interface OwnProps extends Partial<InjectedFormProps> {
   nextForm: (unlock?: boolean) => void;
   previousForm: () => void;
+  genders: Dictionary[];
 }
 
 type Props = OwnProps & InjectedFormProps<model.Data, OwnProps>;
@@ -25,6 +27,7 @@ export const ProfileForm: React.FC<Props> = ({
   invalid,
   submitting,
   handleSubmit,
+  genders,
 }): React.ReactElement<Props> => {
   const disabled = invalid || submitting || pristine;
   return (
@@ -69,27 +72,12 @@ export const ProfileForm: React.FC<Props> = ({
             type="input"
           />
 
-          <label css={Form.label} className="break-after">
-            {constants.profile.labels.gender}
-          </label>
           <Field
+            component={Form.RadioGroup}
+            options={genders}
             name="gender"
-            label={constants.profile.labels.male}
-            component={Form.Input}
-            value="male"
-            type="radio"
-            checked={true}
+            label={constants.profile.labels.gender}
             isRequired={false}
-            className="w30"
-          />
-          <Field
-            name="gender"
-            label={constants.profile.labels.female}
-            component={Form.Input}
-            value="female"
-            type="radio"
-            isRequired={false}
-            className="w30"
           />
 
           <Form.Button
