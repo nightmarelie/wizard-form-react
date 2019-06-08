@@ -1,11 +1,4 @@
 {
-  "headers": {
-    "colomnUsername": "username",
-    "colomnCompany": "company",
-    "colomnContancts": "contacts",
-    "colomnLastUpdate": "last update",
-    "colomnAction": ""
-  },
   "users": [
     {
       "id": 1,

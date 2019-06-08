@@ -1,13 +1,21 @@
 {
   "labels": {
     "createUserTitle": "Adding new user",
-    "listOfUserTitle": "List of use",
     "accountTab": "1. Account",
     "profileTab": "2. Profile",
     "contactsTab": "3. Contancts",
     "capabilitiesTab": "4. Capabilities",
     "unsavedUserData": "You have an unsaved user data. Do you want to complete it?",
     "continue": "Continue"
+  },
+  "list": {
+    "labels": {
+      "title": "List of use",
+      "username": "username",
+      "company": "company",
+      "contacts": "contacts",
+      "lastUpdate": "last update"
+    }
   },
   "profile": {
     "labels": {

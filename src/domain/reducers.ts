@@ -1,8 +1,8 @@
 import { combineReducers, Reducer } from 'redux';
 import { History } from 'history';
 import { connectRouter } from 'connected-react-router';
-import { reducer as formReducer } from 'redux-form';
 
+import { reducer as formReducer } from 'domain/form/reducer';
 import { reducer as userReducer } from 'domain/user/reducer';
 import { reducer as abandonUserReducer } from 'domain/abandonUser/reducer';
 

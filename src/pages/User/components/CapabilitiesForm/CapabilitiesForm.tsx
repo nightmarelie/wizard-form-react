@@ -14,7 +14,7 @@ import { Data } from './model';
 import * as User from 'domain/user';
 
 export interface OwnProps extends Partial<InjectedFormProps> {
-  nextForm: (data: Partial<User.Model>, unlock?: boolean) => void;
+  nextForm: (data: Partial<User.Model>, lock?: boolean) => void;
   previousForm: () => void;
   hobbies: Dictionary[];
   skils: Dictionary[];
@@ -25,16 +25,13 @@ type Props = OwnProps & InjectedFormProps<Data, OwnProps>;
 export const CapabilitiesForm: React.FC<Props> = ({
   nextForm,
   previousForm,
-  pristine,
-  invalid,
   submitting,
   hobbies,
   skils,
   handleSubmit,
 }): React.ReactElement<Props> => {
-  const disabled = invalid || submitting || pristine;
   return (
-    <Form.Wrapper onSubmit={handleSubmit(data => nextForm(data, disabled))}>
+    <Form.Wrapper onSubmit={handleSubmit(data => nextForm(data, false))}>
       <Column className="half">
         <div className="w80 left">
           <Field

@@ -15,7 +15,7 @@ export enum Action {
   REMOVE_REQUEST = '@@abandonUser/REMOVE_REQUEST',
   REMOVE_SUCCESS = '@@abandonUser/REMOVE_SUCCESS',
   REMOVE_ERROR = '@@abandonUser/REMOVE_ERROR',
-  // Initialize From State
+  // Initialize Form State
   INITIALIZE_DATA = '@@abandonUser/INITIALIZE_DATA',
 }
 

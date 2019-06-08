@@ -18,6 +18,7 @@ import { Container } from 'components/Wrapper';
 // domain
 import * as User from 'domain/user';
 import { ApplicationState } from 'domain/store';
+import * as Form from 'domain/form';
 
 //forms
 import * as account from '../AccountForm';
@@ -30,10 +31,12 @@ type Props = {
   loading: boolean;
   errors?: boolean;
   showBar: boolean;
-  putData: (data: Partial<User.Model>) => boolean;
+  mediatePutData: (data: Partial<User.Model>) => boolean;
+  finalCreateData: (data: Partial<User.Model>) => boolean;
   clearData: () => boolean;
   initData: (data: Partial<User.Model>) => void;
   puller: (state: ApplicationState) => Partial<User.Model>;
+  resetForm?: () => void;
 } & RouteComponentProps;
 
 interface State {
@@ -46,10 +49,7 @@ interface State {
     [Forms.capabilities]: boolean;
   };
 }
-
 class WizardForm extends React.Component<Props, State> {
-  public static WIZARD_FORM_NAME: string = 'addEditUser';
-
   public constructor(props: Props) {
     super(props);
 
@@ -65,12 +65,12 @@ class WizardForm extends React.Component<Props, State> {
     };
 
     this.handleChangeForm = this.handleChangeForm.bind(this);
+    this.handleSubmitForm = this.handleSubmitForm.bind(this);
     this.renderForm = this.renderForm.bind(this);
     this.isCurrentForm = this.isCurrentForm.bind(this);
     this.isCurrentFormLock = this.isCurrentFormLock.bind(this);
 
     this.handleClose = this.handleClose.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInitializeForm = this.handleInitializeForm.bind(this);
   }
 
@@ -98,7 +98,7 @@ class WizardForm extends React.Component<Props, State> {
   ): React.ComponentType<P> {
     return this.connectWithInitializer<D, P>(
       reduxForm<D, P>({
-        form: WizardForm.WIZARD_FORM_NAME,
+        form: Form.Model.FORM_NAME,
         destroyOnUnmount: false,
         forceUnregisterOnUnmount: true,
         enableReinitialize: true,
@@ -134,12 +134,23 @@ class WizardForm extends React.Component<Props, State> {
     });
   }
 
-  private handleSubmit(
+  private handleSubmitForm(
     form: Forms,
     data: Partial<User.Model>,
-    unlock: boolean = true,
+    lock: boolean = true,
   ): void {
-    console.log(data);
+    const { history, finalCreateData } = this.props;
+    const locks = {
+      ...this.state.locks,
+      [form]: lock,
+    };
+
+    finalCreateData({
+      ...data,
+      locks,
+    });
+
+    history.push(routes.listOfUsers);
   }
 
   private handleChangeForm(
@@ -147,7 +158,7 @@ class WizardForm extends React.Component<Props, State> {
     data?: Partial<User.Model>,
     lock: boolean = true,
   ): void {
-    const { history, putData } = this.props;
+    const { history, mediatePutData } = this.props;
     const state = this.state;
     const locks = {
       ...state.locks,
@@ -159,7 +170,7 @@ class WizardForm extends React.Component<Props, State> {
     }
 
     if (data) {
-      putData({
+      mediatePutData({
         ...data,
         locks,
       });
@@ -236,7 +247,7 @@ class WizardForm extends React.Component<Props, State> {
         >(capabilities.validate, capabilities.CapabilitiesForm);
         return (
           <WizardCapabilitiesForm
-            nextForm={this.handleSubmit.bind(this, Forms.capabilities)}
+            nextForm={this.handleSubmitForm.bind(this, Forms.capabilities)}
             previousForm={() => this.handleChangeForm(Forms.contacts)}
             hobbies={hobbies}
             skils={skils}
