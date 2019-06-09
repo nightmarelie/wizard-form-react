@@ -22,7 +22,7 @@ export interface CreateUserParams {
 }
 
 export interface ViewUserParams {
-  id: number;
+  id: string;
 }
 
 export default routes;

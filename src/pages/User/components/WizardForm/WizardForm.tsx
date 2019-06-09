@@ -4,9 +4,8 @@ import { RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // common
-import * as helper from 'common/helpers';
 import * as dictionaries from 'common/dictionaries';
-import routes, { Forms, CreateUserParams as RouteParams } from 'common/routes';
+import { Forms, CreateUserParams as RouteParams } from 'common/routes';
 import constants from 'common/constants/index.json';
 
 // components
@@ -28,16 +27,17 @@ import * as capabilities from '../CapabilitiesForm';
 
 type Props = {
   data: Partial<User.Model>;
+  routeHandler: (form: Forms) => string;
   loading: boolean;
   errors?: boolean;
   showBar: boolean;
-  mediatePutData: (data: Partial<User.Model>) => boolean;
-  finalCreateData: (data: Partial<User.Model>) => boolean;
-  clearData: () => boolean;
+  mediateHandleData: (data: Partial<User.Model>) => void;
+  finalHandleData: (data: Partial<User.Model>) => void;
+  clearData?: () => boolean;
   initData: (data: Partial<User.Model>) => void;
   puller: (state: ApplicationState) => Partial<User.Model>;
   resetForm?: () => void;
-} & RouteComponentProps;
+} & RouteComponentProps<RouteParams>;
 
 interface State {
   activeForm: Forms;
@@ -75,11 +75,18 @@ class WizardForm extends React.Component<Props, State> {
   }
 
   public componentDidMount(): void {
-    const { form } = this.props.match.params as RouteParams;
-    const { activeForm } = this.state;
-
-    if (activeForm !== form) {
-      this.handleChangeForm(form);
+    const {
+      match: {
+        params: { form },
+      },
+      data,
+      loading,
+    } = this.props;
+    if (data && data.locks && !loading) {
+      this.setState({
+        locks: data.locks!,
+        activeForm: form,
+      });
     }
   }
 
@@ -126,7 +133,7 @@ class WizardForm extends React.Component<Props, State> {
     const state = this.state;
     const { clearData } = this.props;
 
-    const result = await clearData();
+    const result = await clearData!();
 
     this.setState({
       ...state,
@@ -139,18 +146,16 @@ class WizardForm extends React.Component<Props, State> {
     data: Partial<User.Model>,
     lock: boolean = true,
   ): void {
-    const { history, finalCreateData } = this.props;
+    const { finalHandleData } = this.props;
     const locks = {
       ...this.state.locks,
       [form]: lock,
     };
 
-    finalCreateData({
+    finalHandleData({
       ...data,
       locks,
     });
-
-    history.push(routes.listOfUsers);
   }
 
   private handleChangeForm(
@@ -158,7 +163,7 @@ class WizardForm extends React.Component<Props, State> {
     data?: Partial<User.Model>,
     lock: boolean = true,
   ): void {
-    const { history, mediatePutData } = this.props;
+    const { history, mediateHandleData, routeHandler } = this.props;
     const state = this.state;
     const locks = {
       ...state.locks,
@@ -170,7 +175,7 @@ class WizardForm extends React.Component<Props, State> {
     }
 
     if (data) {
-      mediatePutData({
+      mediateHandleData({
         ...data,
         locks,
       });
@@ -178,11 +183,11 @@ class WizardForm extends React.Component<Props, State> {
 
     this.setState({
       ...state,
-      activeForm: Forms[form as keyof typeof Forms] ? form : Forms.account,
+      activeForm: Forms[form] ? form : Forms.account,
       locks,
     });
 
-    history.push(helper.stringReplacer(routes.createUser, { form }));
+    history.push(routeHandler(form));
   }
 
   private async handleInitializeForm(data: Partial<User.Model>): Promise<void> {

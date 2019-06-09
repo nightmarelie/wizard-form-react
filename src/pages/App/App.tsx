@@ -20,6 +20,7 @@ import Header from 'components/Header/Header';
 import ListOfUser from 'pages/User/ListOfUsers';
 import CreateUser from 'pages/User/CreateUser';
 import ViewUser from 'pages/User/ViewUser';
+import EditUser from 'pages/User/EditUser';
 
 const App: React.FC = () => {
   return (
@@ -36,6 +37,7 @@ const App: React.FC = () => {
         <Route exact path={routes.listOfUsers} component={ListOfUser} />
         <Route path={routes.createUser} component={CreateUser} />
         <Route exact path={routes.viewUser} component={ViewUser} />
+        <Route path={routes.editUser} component={EditUser} />
       </Switch>
     </Router>
   );

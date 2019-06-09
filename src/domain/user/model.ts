@@ -57,9 +57,9 @@ export enum Action {
   CREATE_SUCCESS = '@@user/CREATE_SUCCESS',
   CREATE_ERROR = '@@user/CREATE_ERROR',
   // edit
-  EDIT_REQUEST = '@@user/EDIT_REQUEST',
-  EDIT_SUCCESS = '@@user/EDIT_SUCCESS',
-  EDIT_ERROR = '@@user/EDIT_ERROR',
+  UPDATE_REQUEST = '@@user/UPDATE_REQUEST',
+  UPDATE_SUCCESS = '@@user/UPDATE_SUCCESS',
+  UPDATE_ERROR = '@@user/UPDATE_ERROR',
   // get one
   FETCH_REQUEST = '@@user/FETCH_REQUEST',
   FETCH_SUCCESS = '@@user/FETCH_SUCCESS',
@@ -85,7 +85,7 @@ export interface State {
   readonly errors?: string;
 }
 
-export interface EditPayload {
+export interface UpdatePayload {
   readonly id: number;
   readonly data: Model;
 }

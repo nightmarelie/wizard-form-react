@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import React, { ReactElement } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -36,14 +36,14 @@ interface State {
   };
 }
 
-interface Props {
+type Props = {
   data: User.Model[];
   loading: boolean;
   errors?: boolean;
   headers: { [key: string]: string };
   fetchAllData: () => User.Model[];
   removeData: (id: number) => boolean;
-}
+} & RouteComponentProps;
 
 class ListOfUser extends React.Component<Props, State> {
   public static defaultProps = {
@@ -110,7 +110,7 @@ class ListOfUser extends React.Component<Props, State> {
     const offset = Math.ceil(selected * pagination.perPage);
 
     this.setState({ pagination: { ...pagination, offset } }, () => {
-      // load data from db
+      this.props.fetchAllData();
     });
   };
 
@@ -130,7 +130,7 @@ class ListOfUser extends React.Component<Props, State> {
 
   public render(): React.ReactElement {
     const { tryToDeleteUser, pagination } = this.state;
-    const { headers, data, loading, removeData } = this.props;
+    const { headers, data, loading, removeData, history } = this.props;
 
     return (
       <Container>
@@ -179,7 +179,17 @@ class ListOfUser extends React.Component<Props, State> {
                     }
                   />
                   <Table.Cell className="last" payload="">
-                    <ActionIcon className="action-edit" />
+                    <ActionIcon
+                      className="action-edit"
+                      handler={() =>
+                        history.push(
+                          helper.stringReplacer(routes.editUser, {
+                            id: user.id,
+                            form: Forms.account,
+                          }),
+                        )
+                      }
+                    />
                     <ActionIcon
                       handler={() => this.handleUserDelete(user.id)}
                       className="action-delete"

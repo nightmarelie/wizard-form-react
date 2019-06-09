@@ -1,4 +1,4 @@
-import { Model, Action, EditPayload } from './model';
+import { Model, Action, UpdatePayload } from './model';
 import { createAsyncAction, createStandardAction } from 'typesafe-actions';
 
 export const fetch = createAsyncAction(
@@ -25,10 +25,10 @@ export const create = createAsyncAction(
   Action.CREATE_ERROR,
 )<Model, boolean, Error>();
 
-export const edit = createAsyncAction(
-  Action.CREATE_REQUEST,
-  Action.CREATE_SUCCESS,
-  Action.CREATE_ERROR,
-)<EditPayload, boolean, Error>();
+export const update = createAsyncAction(
+  Action.UPDATE_REQUEST,
+  Action.UPDATE_SUCCESS,
+  Action.UPDATE_ERROR,
+)<UpdatePayload, Model, Error>();
 
 export const initData = createStandardAction(Action.INITIALIZE_DATA)<Model>();

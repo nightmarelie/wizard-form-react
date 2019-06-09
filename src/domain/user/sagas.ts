@@ -10,7 +10,7 @@ import {
   ForkEffectDescriptor,
 } from 'redux-saga/effects';
 
-import { fetch, fetchAll, create, edit, remove } from './actions';
+import { fetch, fetchAll, create, update, remove } from './actions';
 import { Model, Action } from './model';
 import db from 'database';
 
@@ -31,20 +31,21 @@ function* handleCreate(action: ReturnType<typeof create.request>): Generator {
   }
 }
 
-function* handleEdit(action: ReturnType<typeof edit.request>): Generator {
+function* handleUpdate(action: ReturnType<typeof update.request>): Generator {
   try {
-    yield call(
-      { context: db.users, fn: db.users.update },
-      {
-        ...action.payload,
-        updateAt: Date.now(),
-      },
-      action.payload.id,
+    yield call({ context: db.users, fn: db.users.update }, +action.payload.id, {
+      ...action.payload.data,
+      updateAt: Date.now(),
+    });
+
+    const response: Model = yield call(
+      { context: db.users, fn: db.users.get },
+      +action.payload.id,
     );
 
-    yield put(edit.success(true));
+    yield put(update.success(response));
   } catch (err) {
-    yield put(edit.failure(err));
+    yield put(update.failure(err));
   }
 }
 
@@ -99,8 +100,8 @@ function* watchCreateRequest(): IterableIterator<ForkEffect> {
   yield takeEvery(Action.CREATE_REQUEST, handleCreate);
 }
 
-function* watchEditRequest(): IterableIterator<ForkEffect> {
-  yield takeEvery(Action.EDIT_REQUEST, handleEdit);
+function* watchUpdateRequest(): IterableIterator<ForkEffect> {
+  yield takeEvery(Action.UPDATE_REQUEST, handleUpdate);
 }
 
 function* watchFetchRequest(): IterableIterator<ForkEffect> {
@@ -120,7 +121,7 @@ export function* sagas(): IterableIterator<
 > {
   yield all([
     fork(watchCreateRequest),
-    fork(watchEditRequest),
+    fork(watchUpdateRequest),
     fork(watchFetchRequest),
     fork(watchFetchAllRequest),
     fork(watchRemoveRequest),

@@ -14,9 +14,10 @@ import ActionIcon from 'components/ActionIcon/ActionIcon';
 import Avatar from 'components/Avatar/Avatar';
 
 // common
-import routes, { ViewUserParams as RouteParams } from 'common/routes';
+import routes, { ViewUserParams as RouteParams, Forms } from 'common/routes';
 import constants from 'common/constants/index.json';
 import { Dictionary, hobbies, languages } from 'common/dictionaries';
+import * as helper from 'common/helpers';
 
 // domain
 import { ApplicationState } from 'domain/store';
@@ -27,13 +28,35 @@ type Props = {
   loading: boolean;
   errors?: boolean;
   fetchData: (id: number) => boolean;
-} & RouteComponentProps;
+} & RouteComponentProps<RouteParams>;
 
 class ViewUser extends React.Component<Props> {
+  public constructor(props: Props) {
+    super(props);
+    this.handleNavigateTo = this.handleNavigateTo.bind(this);
+  }
+
   public componentDidMount(): void {
-    const { id } = this.props.match.params as RouteParams;
-    const { fetchData } = this.props;
-    fetchData(id);
+    const {
+      match: { params },
+      fetchData,
+    } = this.props;
+
+    fetchData(+params.id);
+  }
+
+  private handleNavigateTo(form: Forms): void {
+    const {
+      match: { params },
+      history,
+    } = this.props;
+
+    history.push(
+      helper.stringReplacer(routes.editUser, {
+        id: params.id,
+        form: form,
+      }),
+    );
   }
 
   public render(): React.ReactElement {
@@ -57,7 +80,10 @@ class ViewUser extends React.Component<Props> {
                   <Table.Row>
                     <Table.Cell>
                       {`${constants.view.labels.account} `}
-                      <ActionIcon className="action-edit" />
+                      <ActionIcon
+                        className="action-edit"
+                        handler={() => this.handleNavigateTo(Forms.account)}
+                      />
                     </Table.Cell>
                     <Table.Cell>
                       <Table.Wrapper className="info">
@@ -81,7 +107,10 @@ class ViewUser extends React.Component<Props> {
                   <Table.Row>
                     <Table.Cell>
                       {`${constants.view.labels.personal} `}
-                      <ActionIcon className="action-edit" />
+                      <ActionIcon
+                        className="action-edit"
+                        handler={() => this.handleNavigateTo(Forms.profile)}
+                      />
                     </Table.Cell>
                     <Table.Cell>
                       <Table.Wrapper className="info">
@@ -131,7 +160,10 @@ class ViewUser extends React.Component<Props> {
                   <Table.Row>
                     <Table.Cell>
                       {`${constants.view.labels.contacts} `}
-                      <ActionIcon className="action-edit" />
+                      <ActionIcon
+                        className="action-edit"
+                        handler={() => this.handleNavigateTo(Forms.contacts)}
+                      />
                     </Table.Cell>
                     <Table.Cell>
                       <Table.Wrapper className="info">
@@ -192,7 +224,12 @@ class ViewUser extends React.Component<Props> {
                   <Table.Row className="section-row">
                     <Table.Cell>
                       {`${constants.view.labels.capabilities} `}
-                      <ActionIcon className="action-edit" />
+                      <ActionIcon
+                        className="action-edit"
+                        handler={() =>
+                          this.handleNavigateTo(Forms.capabilities)
+                        }
+                      />
                     </Table.Cell>
                     <Table.Cell>
                       <Table.Wrapper className="info">

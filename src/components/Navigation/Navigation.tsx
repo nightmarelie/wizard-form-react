@@ -15,7 +15,12 @@ const Navigation: React.FC = (): ReactElement => {
         <Icon className="icon-add-user" />
         Add new user
       </NavLink>
-      <NavLink activeClassName="active" to={routes.listOfUsers} css={styles}>
+      <NavLink
+        exact
+        activeClassName="active"
+        to={routes.listOfUsers}
+        css={styles}
+      >
         <Icon className="icon-list-user" />
         List of user
       </NavLink>

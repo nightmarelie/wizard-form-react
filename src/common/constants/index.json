@@ -1,6 +1,7 @@
 {
   "labels": {
     "createUserTitle": "Adding new user",
+    "editTitle": "Editing",
     "accountTab": "1. Account",
     "profileTab": "2. Profile",
     "contactsTab": "3. Contancts",
@@ -23,7 +24,8 @@
       "account": "Account",
       "personal": "Personal",
       "contacts": "Contacts",
-      "capabilities": "Capabilities"
+      "capabilities": "Capabilities",
+      "profile": "User Profile"
     }
   },
   "profile": {
