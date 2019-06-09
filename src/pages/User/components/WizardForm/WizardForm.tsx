@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 // common
 import * as helper from 'common/helpers';
 import * as dictionaries from 'common/dictionaries';
-import routes, { Forms, Params as RouteParams } from 'common/routes';
+import routes, { Forms, CreateUserParams as RouteParams } from 'common/routes';
 import constants from 'common/constants/index.json';
 
 // components
@@ -240,7 +240,7 @@ class WizardForm extends React.Component<Props, State> {
         );
       }
       case Forms.capabilities: {
-        const { hobbies, skils } = dictionaries;
+        const { hobbies, skills } = dictionaries;
         const WizardCapabilitiesForm = this.formFactory<
           capabilities.Data,
           capabilities.OwnProps
@@ -250,7 +250,7 @@ class WizardForm extends React.Component<Props, State> {
             nextForm={this.handleSubmitForm.bind(this, Forms.capabilities)}
             previousForm={() => this.handleChangeForm(Forms.contacts)}
             hobbies={hobbies}
-            skils={skils}
+            skills={skills}
           />
         );
       }

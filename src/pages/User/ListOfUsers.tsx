@@ -143,7 +143,7 @@ class ListOfUser extends React.Component<Props, State> {
             <Table.Cell payload={headers.lastUpdate} />
             <Table.Cell className="last" payload="" />
           </Table.Row>
-          {!loading && typeof data === 'object' && data.length > 0 ? (
+          {!loading && data && data.length > 0 ? (
             <React.Fragment>
               <Table.Row>
                 <Table.Cell className="separator" />

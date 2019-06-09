@@ -17,8 +17,12 @@ export enum Forms {
   capabilities = 'capabilities',
 }
 
-export interface Params {
+export interface CreateUserParams {
   form: Forms;
+}
+
+export interface ViewUserParams {
+  id: number;
 }
 
 export default routes;

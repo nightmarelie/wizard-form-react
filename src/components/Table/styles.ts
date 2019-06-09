@@ -9,9 +9,17 @@ const section = css({
   td: {
     verticalAlign: 'top',
   },
+  '.section-row td': {
+    width: '85px',
+  },
   '&.info': {
+    'td:first-of-type': {
+      width: '125px',
+    },
+    'td:last-child': {
+      width: '153px',
+    },
     td: {
-      width: '50%',
       paddingBottom: '15px',
       '&:last-child': {
         color: Colors.GreyV3,

@@ -17,7 +17,7 @@ export const remove = createAsyncAction(
   Action.REMOVE_REQUEST,
   Action.REMOVE_SUCCESS,
   Action.REMOVE_ERROR,
-)<number, boolean, Error>();
+)<number, Model[], Error>();
 
 export const create = createAsyncAction(
   Action.CREATE_REQUEST,

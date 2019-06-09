@@ -52,7 +52,7 @@ function* handleFetch(action: ReturnType<typeof fetch.request>): Generator {
   try {
     const response: Model = yield call(
       { context: db.users, fn: db.users.get },
-      action.payload,
+      +action.payload,
     );
 
     yield put(fetch.success(response));
@@ -84,7 +84,12 @@ function* handleRemove(action: ReturnType<typeof remove.request>): Generator {
       action.payload,
     );
 
-    yield put(remove.success(true));
+    const response: Model[] = yield call({
+      context: db.users,
+      fn: db.users.toArray,
+    });
+
+    yield put(remove.success(response));
   } catch (err) {
     yield put(remove.failure(err));
   }

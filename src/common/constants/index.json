@@ -17,6 +17,15 @@
       "lastUpdate": "last update"
     }
   },
+  "view": {
+    "labels": {
+      "list": "Users list",
+      "account": "Account",
+      "personal": "Personal",
+      "contacts": "Contacts",
+      "capabilities": "Capabilities"
+    }
+  },
   "profile": {
     "labels": {
       "firstName": "First name",
@@ -72,9 +81,10 @@
   },
   "capabilities": {
     "labels": {
-      "skils": "Skills",
+      "skills": "Skills",
       "info": "Additional information",
       "myHobbies": "My hobbies",
+      "hobbies": "Hobbies",
       "art": "Art",
       "sport": "Sport, fitness, aerobica and staff like that",
       "game": "I just want to play games, I’m not living in this life",

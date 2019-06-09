@@ -17,7 +17,7 @@ export interface OwnProps extends Partial<InjectedFormProps> {
   nextForm: (data: Partial<User.Model>, lock?: boolean) => void;
   previousForm: () => void;
   hobbies: Dictionary[];
-  skils: Dictionary[];
+  skills: Dictionary[];
 }
 
 type Props = OwnProps & InjectedFormProps<Data, OwnProps>;
@@ -27,7 +27,7 @@ export const CapabilitiesForm: React.FC<Props> = ({
   previousForm,
   submitting,
   hobbies,
-  skils,
+  skills,
   handleSubmit,
 }): React.ReactElement<Props> => {
   return (
@@ -36,12 +36,12 @@ export const CapabilitiesForm: React.FC<Props> = ({
         <div className="w80 left">
           <Field
             name="skills"
-            label={constants.capabilities.labels.skils}
+            label={constants.capabilities.labels.skills}
             component={Form.Select}
             isRequired={false}
             isMulti={true}
             isSearchable={true}
-            options={skils}
+            options={skills}
           />
           <Field
             name="additionalInfo"

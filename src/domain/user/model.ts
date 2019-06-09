@@ -10,6 +10,11 @@ export interface Model extends Account, Profile, Contacts, Capabilities {
   createdAt: Date;
 }
 
+interface Dictionary {
+  label: string;
+  value: string;
+}
+
 export interface Locks {
   account: boolean;
   profile: boolean;
@@ -37,12 +42,12 @@ export interface Contacts {
   facebook: string;
   github: string;
   phones: string[];
-  mainLanguage: string;
+  mainLanguage: Dictionary;
 }
 
 export interface Capabilities {
-  skills: string[];
-  hobies: string[];
+  skills: Dictionary[];
+  hobbies: { [key: string]: boolean };
   additionalInfo: string;
 }
 

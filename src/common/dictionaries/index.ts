@@ -37,7 +37,7 @@ export const hobbies = [
   },
 ];
 
-export const skils = [
+export const skills = [
   {
     label: constants.capabilities.labels.html,
     value: 'html',
