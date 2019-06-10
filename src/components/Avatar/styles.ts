@@ -10,9 +10,9 @@ export const avatar = css({
   display: 'inline-block',
   verticalAlign: 'middle',
   margin: '0 15px',
-  backgroundPosition: 'center 20px',
+  backgroundPosition: 'center 15px',
   backgroundRepeat: 'no-repeat',
-  backgroundSize: '115px',
+  backgroundSize: 'contain',
   border: `3px solid ${Colors.BlueV3}`,
   '&.avatar-small': {
     width: '40px',

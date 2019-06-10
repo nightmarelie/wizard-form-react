@@ -72,7 +72,11 @@ class ViewUser extends React.Component<Props> {
             />
             <Container className="content-wrapper preview-wrapper">
               <Column className="half left">
-                <Avatar />
+                <Avatar
+                  image={
+                    data.image ? URL.createObjectURL(data.image) : undefined
+                  }
+                />
               </Column>
               <Column className="half right">
                 <Table.Wrapper>

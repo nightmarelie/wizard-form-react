@@ -161,7 +161,14 @@ class ListOfUser extends React.Component<Props, State> {
                       })}
                       className="navigate"
                     >
-                      <Avatar className="avatar-small" />
+                      <Avatar
+                        className="avatar-small"
+                        image={
+                          user.image
+                            ? URL.createObjectURL(user.image)
+                            : undefined
+                        }
+                      />
                       {user.username}
                     </Link>
                   </Table.Cell>

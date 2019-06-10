@@ -23,6 +23,7 @@ export interface Locks {
 }
 
 export interface Account {
+  image: File;
   username: string;
   password: string;
 }

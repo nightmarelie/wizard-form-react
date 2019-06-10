@@ -42,6 +42,13 @@ export const form = css({
   '.break-after': {
     marginBottom: '10px',
   },
+  '.error': {
+    color: Colors.RedV2,
+    position: 'absolute',
+    bottom: '6px',
+    left: '12px',
+    font: Fonts.Small,
+  },
 });
 
 const icon = css({
@@ -222,13 +229,6 @@ export const label = css({
   display: 'inline-block',
   width: '100%',
   position: 'relative',
-  '.error': {
-    color: Colors.RedV2,
-    position: 'absolute',
-    bottom: '6px',
-    left: '12px',
-    font: Fonts.Small,
-  },
   '&.required:after': {
     content: '""',
     width: '10px',
@@ -281,6 +281,7 @@ export const button = css({
 export const download = css({
   display: 'inline-block',
   textAlign: 'center',
+  position: 'relative',
   '.preview': {
     width: '171px',
     height: '171px',
@@ -288,6 +289,14 @@ export const download = css({
     borderRadius: '171px',
     marginBottom: '10px',
     display: 'block',
+  },
+  '.dropzone': {
+    outline: 'none',
+    border: `3px dashed ${Colors.LightV1}`,
+    padding: '10px',
+  },
+  '.error': {
+    bottom: '-15px',
   },
 });
 

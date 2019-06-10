@@ -28,7 +28,7 @@ class Database extends Dexie {
     super(databaseName);
     this.version(1).stores({
       users:
-        '++id,&username,password,firstName,lastName,birthDate,&email,address,company,fax,facebook,github,phones,mainLanguage,skills,hobbies,additionalInfo,updateAt,createdAt,locks',
+        '++id,image,&username,password,firstName,lastName,birthDate,&email,address,company,fax,facebook,github,phones,mainLanguage,skills,hobbies,additionalInfo,updateAt,createdAt,locks',
       abandonUser: '++',
     });
     this.users = this.table('users');

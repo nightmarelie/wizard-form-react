@@ -60,7 +60,7 @@ export class AccountForm extends React.Component<Props, State> {
     return (
       <Form.Wrapper onSubmit={handleSubmit(data => nextForm(data, false))}>
         <Column className="half">
-          <Form.ImgUpload />
+          <Field name="image" component={Form.ImgUpload} />
         </Column>
         <Column className="half">
           <Field
