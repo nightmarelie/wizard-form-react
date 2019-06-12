@@ -7,24 +7,31 @@ import { Field, InjectedFormProps } from 'redux-form';
 import { Column } from 'components/Wrapper';
 import * as Form from 'components/Form';
 
+// common
 import constants from 'common/constants/index.json';
-import { Dictionary } from 'common/dictionaries';
+import * as dictionaries from 'common/dictionaries';
 
 import { Data } from './model';
 import * as User from 'domain/user';
 
-export interface OwnProps extends Partial<InjectedFormProps> {
+export type OwnProps = {
   nextForm: (data: Partial<User.Model>, lock?: boolean) => void;
-  previousForm: () => void;
-  hobbies: Dictionary[];
-  skills: Dictionary[];
-}
+  prevForm: () => void;
+} & Partial<InjectedFormProps> &
+  Partial<DefaultProps>;
+
+const defaultProps = {
+  hobbies: dictionaries.hobbies,
+  skills: dictionaries.skills,
+};
+
+type DefaultProps = Readonly<typeof defaultProps>;
 
 type Props = OwnProps & InjectedFormProps<Data, OwnProps>;
 
-export const CapabilitiesForm: React.FC<Props> = ({
+const CapabilitiesForm: React.FC<Props> = ({
   nextForm,
-  previousForm,
+  prevForm,
   submitting,
   hobbies,
   skills,
@@ -56,7 +63,7 @@ export const CapabilitiesForm: React.FC<Props> = ({
           <label css={Form.label} className="break-after">
             {constants.capabilities.labels.myHobbies}
           </label>
-          {hobbies.map(({ value, label }, index) => (
+          {hobbies!.map(({ value, label }, index) => (
             <Field
               key={index}
               name={`hobbies.${value}`}
@@ -72,7 +79,7 @@ export const CapabilitiesForm: React.FC<Props> = ({
             className="ver-indent left"
             title={constants.buttons.back}
             disabled={false}
-            handler={previousForm}
+            handler={prevForm}
           />
           <Form.Button
             className="ver-indent right finish"
@@ -85,3 +92,7 @@ export const CapabilitiesForm: React.FC<Props> = ({
     </Form.Wrapper>
   );
 };
+
+CapabilitiesForm.defaultProps = defaultProps;
+
+export { CapabilitiesForm as Form };

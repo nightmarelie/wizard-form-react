@@ -6,24 +6,30 @@ import { Field, InjectedFormProps } from 'redux-form';
 // components
 import { Column } from 'components/Wrapper';
 import * as Form from 'components/Form';
-
+// common
 import constants from 'common/constants/index.json';
-import { Dictionary } from 'common/dictionaries';
+import * as dictionaries from 'common/dictionaries';
 
 import * as model from './model';
 import * as User from 'domain/user';
 
-export interface OwnProps extends Partial<InjectedFormProps> {
+export type OwnProps = {
   nextForm: (data: Partial<User.Model>, lock?: boolean) => void;
-  previousForm: () => void;
-  genders: Dictionary[];
-}
+  prevForm: () => void;
+} & Partial<InjectedFormProps> &
+  Partial<DefaultProps>;
+
+const defaultProps = {
+  genders: dictionaries.genders,
+};
+
+type DefaultProps = Readonly<typeof defaultProps>;
 
 type Props = OwnProps & InjectedFormProps<model.Data, OwnProps>;
 
-export const ProfileForm: React.FC<Props> = ({
+const ProfileForm: React.FC<Props> = ({
   nextForm,
-  previousForm,
+  prevForm,
   submitting,
   handleSubmit,
   genders,
@@ -82,7 +88,7 @@ export const ProfileForm: React.FC<Props> = ({
             className="ver-indent left"
             title={constants.buttons.back}
             disabled={false}
-            handler={previousForm}
+            handler={prevForm}
           />
           <Form.Button
             className="ver-indent right"
@@ -95,3 +101,7 @@ export const ProfileForm: React.FC<Props> = ({
     </Form.Wrapper>
   );
 };
+
+ProfileForm.defaultProps = defaultProps;
+
+export { ProfileForm as Form };

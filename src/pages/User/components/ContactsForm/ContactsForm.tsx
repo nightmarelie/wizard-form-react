@@ -8,17 +8,24 @@ import { createTextMask, textMaskReturn } from 'redux-form-input-masks';
 import { Column } from 'components/Wrapper';
 import * as Form from 'components/Form';
 
+// common
 import constants from 'common/constants/index.json';
-import { Dictionary } from 'common/dictionaries';
+import * as dictionaries from 'common/dictionaries';
 
 import * as model from './model';
 import * as User from 'domain/user';
 
-export interface OwnProps extends Partial<InjectedFormProps> {
+export type OwnProps = {
   nextForm: (data: Partial<User.Model>, lock?: boolean) => void;
-  previousForm: () => void;
-  languages: Dictionary[];
-}
+  prevForm: () => void;
+} & Partial<InjectedFormProps> &
+  Partial<DefaultProps>;
+
+const defaultProps = {
+  languages: dictionaries.languages,
+};
+
+type DefaultProps = Readonly<typeof defaultProps>;
 
 const phoneMask: textMaskReturn | any = createTextMask({
   pattern: '+7 (999) 999-99-99',
@@ -26,9 +33,9 @@ const phoneMask: textMaskReturn | any = createTextMask({
 
 type Props = OwnProps & InjectedFormProps<model.Data, OwnProps>;
 
-export const ContactsForm: React.FC<Props> = ({
+const ContactsForm: React.FC<Props> = ({
   nextForm,
-  previousForm,
+  prevForm,
   submitting,
   languages,
   handleSubmit,
@@ -90,7 +97,7 @@ export const ContactsForm: React.FC<Props> = ({
             className="ver-indent left"
             title={constants.buttons.back}
             disabled={false}
-            handler={previousForm}
+            handler={prevForm}
           />
           <Form.Button
             className="ver-indent right"
@@ -103,3 +110,7 @@ export const ContactsForm: React.FC<Props> = ({
     </Form.Wrapper>
   );
 };
+
+ContactsForm.defaultProps = defaultProps;
+
+export { ContactsForm as Form };

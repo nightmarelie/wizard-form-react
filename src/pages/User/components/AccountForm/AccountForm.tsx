@@ -24,7 +24,7 @@ interface State {
 
 type Props = OwnProps & InjectedFormProps<model.Data, OwnProps>;
 
-export class AccountForm extends React.Component<Props, State> {
+class AccountForm extends React.Component<Props, State> {
   public constructor(props: Props) {
     super(props);
 
@@ -103,3 +103,5 @@ export class AccountForm extends React.Component<Props, State> {
     );
   }
 }
+
+export { AccountForm as Form };
