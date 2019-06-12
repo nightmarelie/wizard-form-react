@@ -90,3 +90,9 @@ export interface UpdatePayload {
   readonly id: number;
   readonly data: Model;
 }
+
+export interface FetchPayload {
+  readonly criteria: number | { [key: string]: string };
+  readonly resolve?: (value: Model | PromiseLike<Model>) => Promise<Model>;
+  readonly reject?: (reason?: any) => Promise<Model>;
+}

@@ -304,6 +304,13 @@ class WizardForm extends React.Component<Props, State> {
     const { data } = this.props;
     const { isBarVisible, activeForm, locks } = this.state;
     const { tabs, forms } = this.config;
+    const currentForm = forms
+      .filter(f => f.key === activeForm)
+      .map(f => {
+        const Wizard = this.formFactory(f.component, f.config);
+        return <Wizard key={f.i} {...f.navigation} {...f} />;
+      })
+      .find(f => !!f);
 
     return (
       <Container>
@@ -329,13 +336,7 @@ class WizardForm extends React.Component<Props, State> {
             </ActionIcon>
           </Bar>
         )}
-        {forms
-          .filter(f => f.key === activeForm)
-          .map(f => {
-            const Wizard = this.formFactory(f.component, f.config);
-            return <Wizard key={f.i} {...f.navigation} {...f} />;
-          })
-          .find(f => !!f)}
+        {currentForm}
       </Container>
     );
   }

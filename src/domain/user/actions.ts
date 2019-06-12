@@ -1,11 +1,11 @@
-import { Model, Action, UpdatePayload } from './model';
+import { Model, Action, UpdatePayload, FetchPayload } from './model';
 import { createAsyncAction, createStandardAction } from 'typesafe-actions';
 
 export const fetch = createAsyncAction(
   Action.FETCH_REQUEST,
   Action.FETCH_SUCCESS,
   Action.FETCH_ERROR,
-)<number, Model, Error>();
+)<FetchPayload, Model, Error>();
 
 export const fetchAll = createAsyncAction(
   Action.FETCH_ALL_REQUEST,

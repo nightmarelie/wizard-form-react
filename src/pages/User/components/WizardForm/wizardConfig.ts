@@ -31,6 +31,8 @@ export const forms: Form[] = [
     component: account.Form,
     config: {
       validate: account.validate,
+      asyncValidate: account.asyncValidate,
+      asyncBlurFields: ['username'],
     },
   },
   {
@@ -52,6 +54,8 @@ export const forms: Form[] = [
     component: profile.Form,
     config: {
       validate: profile.validate,
+      asyncValidate: profile.asyncValidate,
+      asyncBlurFields: ['email'],
       initialValues: { gender: 'male' },
     },
   },

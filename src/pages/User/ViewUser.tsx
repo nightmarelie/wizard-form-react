@@ -289,7 +289,7 @@ const mapStateToProps: (s: ApplicationState) => void = ({ users }) => ({
 });
 
 const mapDispatchToProps: (d: Dispatch) => void = dispatch => ({
-  fetchData: (id: number) => dispatch(User.fetch.request(id)),
+  fetchData: (id: number) => dispatch(User.fetch.request({ criteria: id })),
 });
 
 export default connect(

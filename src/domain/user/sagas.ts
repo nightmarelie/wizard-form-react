@@ -50,14 +50,21 @@ function* handleUpdate(action: ReturnType<typeof update.request>): Generator {
 }
 
 function* handleFetch(action: ReturnType<typeof fetch.request>): Generator {
+  let { criteria, resolve, reject } = action.payload;
   try {
+    if (typeof criteria === 'string') {
+      criteria = +criteria;
+    }
+
     const response: Model = yield call(
       { context: db.users, fn: db.users.get },
-      +action.payload,
+      criteria,
     );
 
+    resolve && resolve(response);
     yield put(fetch.success(response));
   } catch (err) {
+    reject && reject(err);
     yield put(fetch.failure(err));
   }
 }
