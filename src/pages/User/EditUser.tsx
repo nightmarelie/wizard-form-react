@@ -90,7 +90,7 @@ class EditUser extends React.Component<Props, {}> {
         {!loading && data && (
           <WizardForm
             {...this.props}
-            showBar={false}
+            isCreateMode={false}
             finalHandleData={dataHandler}
             mediateHandleData={dataHandler}
             routeHandler={(form: Forms) =>

@@ -6,6 +6,8 @@ import { Field, InjectedFormProps } from 'redux-form';
 // components
 import { Column } from 'components/Wrapper';
 import * as Form from 'components/Form';
+import Buttons from '../Buttons/Buttons';
+
 // common
 import constants from 'common/constants/index.json';
 import * as dictionaries from 'common/dictionaries';
@@ -16,6 +18,7 @@ import * as User from 'domain/user';
 export type OwnProps = {
   nextForm: (data: Partial<User.Model>, lock?: boolean) => void;
   prevForm: () => void;
+  buttons: Form.ButtonConfig[];
 } & Partial<InjectedFormProps> &
   Partial<DefaultProps>;
 
@@ -29,10 +32,10 @@ type Props = OwnProps & InjectedFormProps<model.Data, OwnProps>;
 
 const ProfileForm: React.FC<Props> = ({
   nextForm,
-  prevForm,
   submitting,
   handleSubmit,
   genders,
+  buttons,
 }): React.ReactElement<Props> => {
   return (
     <Form.Wrapper onSubmit={handleSubmit(data => nextForm(data, false))}>
@@ -84,18 +87,7 @@ const ProfileForm: React.FC<Props> = ({
             isRequired={false}
           />
 
-          <Form.Button
-            className="ver-indent left"
-            title={constants.buttons.back}
-            disabled={false}
-            handler={prevForm}
-          />
-          <Form.Button
-            className="ver-indent right"
-            title={constants.buttons.forward}
-            disabled={submitting}
-            type="submit"
-          />
+          <Buttons payload={buttons} isDisabled={submitting} />
         </div>
       </Column>
     </Form.Wrapper>

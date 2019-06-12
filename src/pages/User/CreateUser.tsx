@@ -74,7 +74,7 @@ class CreateUser extends React.Component<Props, {}> {
         <Title title={constants.labels.createUserTitle} />
         <WizardForm
           {...this.props}
-          showBar={!!data}
+          isBarVisible={!!data}
           finalHandleData={this.handleFinalData}
           routeHandler={(form: Forms) =>
             helper.stringReplacer(routes.createUser, {

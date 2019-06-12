@@ -13,6 +13,7 @@ import Tabs from 'components/Tabs';
 import Bar from 'components/Bar/Bar';
 import ActionIcon from 'components/ActionIcon/ActionIcon';
 import { Container } from 'components/Wrapper';
+import { ButtonConfig } from 'components/Form/Button';
 
 // domain
 import * as User from 'domain/user';
@@ -23,31 +24,33 @@ import * as Form from 'domain/form';
 import * as conf from './wizardConfig';
 
 interface Config {
-  forms: ConfigForm[];
-  tabs: ConfigTab[];
-  locks: ConfigLock;
+  forms: FormConfig[];
+  tabs: TabConfig[];
+  locks: LockConfig;
 }
 
-type ConfigForm = {
+type FormConfig = {
   i: number;
   navigation: conf.Navigation;
+  buttons: ButtonConfig[];
 } & conf.Form;
 
-interface ConfigTab {
+interface TabConfig {
   i: number;
   key: Forms;
   title: string;
   handler: Function;
 }
 
-type ConfigLock = { [key in Forms]: boolean };
+type LockConfig = { [key in Forms]: boolean };
 
 type Props = {
+  isCreateMode: boolean;
   data: Partial<User.Model>;
   routeHandler: (form: Forms) => string;
   loading: boolean;
   errors?: boolean;
-  showBar: boolean;
+  isBarVisible: boolean;
   mediateHandleData: (data: Partial<User.Model>) => void;
   finalHandleData: (data: Partial<User.Model>) => void;
   clearData?: () => boolean;
@@ -58,81 +61,26 @@ type Props = {
 
 interface State {
   activeForm: Forms;
-  hideBar: boolean;
-  locks: ConfigLock;
+  isBarVisible: boolean;
+  locks: LockConfig;
 }
 class WizardForm extends React.Component<Props, State> {
   private config: Config;
 
+  public static defaultProps = {
+    isBarVisible: false,
+    isCreateMode: true,
+  };
+
   public constructor(props: Props) {
     super(props);
 
-    this.config = this.getConfig();
+    this.config = this.getConfig(props.isCreateMode);
     this.state = {
       activeForm: this.config.forms[0].key,
-      hideBar: props.showBar,
+      isBarVisible: props.isBarVisible,
       locks: this.config.locks,
     };
-  }
-
-  private getConfig(): Config {
-    const { order, forms } = conf;
-    const result = forms
-      .sort(
-        (a: conf.Form, b: conf.Form) =>
-          order.indexOf(a.key) - order.indexOf(b.key),
-      )
-      .map((f, i, forms) => {
-        const prevIndex = i - 1 >= 0 ? i - 1 : 0;
-        const lastIndex = forms.length - 1;
-        const nexIndex = i + 1 <= lastIndex ? i + 1 : lastIndex;
-        const form = {
-          ...f,
-          i,
-          navigation: {
-            nextForm:
-              lastIndex === i
-                ? this.handleSubmitForm.bind(this, forms[lastIndex].key)
-                : this.handleNextForm.bind(this, forms[nexIndex].key),
-            prevForm:
-              prevIndex >= 0 && i > 0
-                ? () => this.handleFormNav(forms[prevIndex].key)
-                : undefined,
-          },
-          // TODO: add buttons
-        };
-        const tab = {
-          i,
-          key: f.key,
-          title: `${i + 1}. ${helper.capitalize(f.key)}`,
-          handler: this.handleFormNav.bind(this, f.key),
-        };
-        const lock: Partial<ConfigLock> = {
-          [f.key]: i !== 0,
-        };
-        return {
-          form,
-          tab,
-          lock,
-        };
-      })
-      .reduce(
-        (
-          p: Config,
-          n: { form: ConfigForm; tab: ConfigTab; lock: Partial<ConfigLock> },
-        ) => ({
-          forms: [...p.forms, n.form],
-          tabs: [...p.tabs, n.tab],
-          locks: { ...p.locks, ...n.lock },
-        }),
-        {
-          forms: [],
-          tabs: [],
-          locks: ({} as any) as ConfigLock,
-        },
-      );
-
-    return result;
   }
 
   public componentDidMount(): void {
@@ -149,6 +97,110 @@ class WizardForm extends React.Component<Props, State> {
         activeForm: form,
       });
     }
+  }
+
+  public componentDidUpdate(prevProps: Props): void {
+    const { isBarVisible } = this.props;
+    if (isBarVisible !== prevProps.isBarVisible) {
+      this.setState({ isBarVisible });
+    }
+  }
+
+  private getConfig(isCreateMode: boolean): Config {
+    const { order, forms } = conf;
+    const result = forms
+      .sort(
+        (a: conf.Form, b: conf.Form) =>
+          order.indexOf(a.key) - order.indexOf(b.key),
+      )
+      .map((f, i, forms) => {
+        const prevIndex = i - 1 >= 0 ? i - 1 : 0;
+        const lastIndex = forms.length - 1;
+        const nexIndex = i + 1 <= lastIndex ? i + 1 : lastIndex;
+        const isFirstStep = prevIndex >= 0 && i > 0 && isCreateMode;
+        const isLastStep = lastIndex === i;
+        const nextForm = isLastStep
+          ? this.handleSubmitForm.bind(this, forms[lastIndex].key)
+          : this.handleNextForm.bind(this, forms[nexIndex].key);
+        const prevForm = isFirstStep
+          ? () => this.handleFormNav(forms[prevIndex].key)
+          : undefined;
+
+        const form = {
+          ...f,
+          i,
+          navigation: {
+            nextForm,
+            prevForm,
+          },
+          buttons: this.createButtons(
+            isCreateMode,
+            isFirstStep,
+            isLastStep,
+            prevForm,
+          ),
+        };
+        const tab = {
+          i,
+          key: f.key,
+          title: `${i + 1}. ${helper.capitalize(f.key)}`,
+          handler: this.handleFormNav.bind(this, f.key),
+        };
+        const lock: Partial<LockConfig> = {
+          [f.key]: i !== 0,
+        };
+        return {
+          form,
+          tab,
+          lock,
+        };
+      })
+      .reduce(
+        (
+          p: Config,
+          n: { form: FormConfig; tab: TabConfig; lock: Partial<LockConfig> },
+        ) => ({
+          forms: [...p.forms, n.form],
+          tabs: [...p.tabs, n.tab],
+          locks: { ...p.locks, ...n.lock },
+        }),
+        {
+          forms: [],
+          tabs: [],
+          locks: ({} as any) as LockConfig,
+        },
+      );
+
+    return result;
+  }
+
+  private createButtons(
+    isCreateMode: boolean,
+    isFirstStep: boolean,
+    isLastStep: boolean,
+    prevForm?: () => void,
+  ): ButtonConfig[] {
+    const backButton = {
+      title: constants.buttons.back,
+      handler: prevForm,
+      className: `left`,
+      type: 'button',
+      handleDisabled: (isDisabled: boolean) => isDisabled,
+    };
+    const forwardButton = {
+      title: isCreateMode
+        ? isLastStep
+          ? constants.buttons.finish
+          : constants.buttons.forward
+        : constants.buttons.save,
+      className: `right ${isCreateMode && isLastStep ? 'finish' : ''}`,
+      type: 'submit',
+      handleDisabled: (isDisabled: boolean) => isDisabled,
+    };
+
+    return [isFirstStep ? backButton : undefined, forwardButton].filter(
+      b => !!b,
+    ) as ButtonConfig[];
   }
 
   private formFactory<D, P>(
@@ -184,7 +236,7 @@ class WizardForm extends React.Component<Props, State> {
     this.props.clearData!();
 
     this.setState({
-      hideBar: true,
+      isBarVisible: false,
     });
   };
 
@@ -220,12 +272,13 @@ class WizardForm extends React.Component<Props, State> {
   };
 
   private handleNextForm = (form: Forms, data: Partial<User.Model>): void => {
+    const { mediateHandleData, isCreateMode } = this.props;
     const locks = {
       ...this.state.locks,
       [form]: false,
     };
 
-    this.props.mediateHandleData({
+    mediateHandleData({
       ...data,
       locks,
     });
@@ -234,7 +287,7 @@ class WizardForm extends React.Component<Props, State> {
       {
         locks,
       },
-      () => this.handleFormNav(form),
+      isCreateMode ? () => this.handleFormNav(form) : undefined,
     );
   };
 
@@ -243,13 +296,13 @@ class WizardForm extends React.Component<Props, State> {
 
     this.setState({
       locks: data.locks!,
-      hideBar: true,
+      isBarVisible: false,
     });
   };
 
   public render(): React.ReactElement {
-    const { data, showBar } = this.props;
-    const { hideBar, activeForm, locks } = this.state;
+    const { data } = this.props;
+    const { isBarVisible, activeForm, locks } = this.state;
     const { tabs, forms } = this.config;
 
     return (
@@ -265,7 +318,7 @@ class WizardForm extends React.Component<Props, State> {
             />
           ))}
         </Tabs.Wrapper>
-        {showBar && typeof data === 'object' && !hideBar && (
+        {isBarVisible && typeof data === 'object' && (
           <Bar closeHandler={this.handleClose}>
             {constants.labels.unsavedUserData}
             <ActionIcon
@@ -280,7 +333,7 @@ class WizardForm extends React.Component<Props, State> {
           .filter(f => f.key === activeForm)
           .map(f => {
             const Wizard = this.formFactory(f.component, f.config);
-            return <Wizard key={f.i} {...f.navigation} />;
+            return <Wizard key={f.i} {...f.navigation} {...f} />;
           })
           .find(f => !!f)}
       </Container>

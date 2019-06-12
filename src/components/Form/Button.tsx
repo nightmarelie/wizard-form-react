@@ -12,6 +12,14 @@ interface Props {
   handler?: (event: React.MouseEvent) => void;
 }
 
+export interface ButtonConfig {
+  title: string;
+  className: string;
+  type: 'button' | 'submit';
+  handler?: () => void;
+  handleDisabled: (isDisabled: boolean) => boolean;
+}
+
 export const Button: React.FC<Props> = ({
   title,
   handler,
