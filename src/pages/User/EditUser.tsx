@@ -90,7 +90,7 @@ class EditUser extends React.Component<Props, {}> {
         {!loading && data && (
           <WizardForm
             {...this.props}
-            showBar={false}
+            isCreateMode={false}
             finalHandleData={dataHandler}
             mediateHandleData={dataHandler}
             routeHandler={(form: Forms) =>
@@ -113,7 +113,7 @@ const mapStateToProps: (s: ApplicationState) => void = ({ users }) => ({
 });
 
 const mapDispatchToProps: (d: Dispatch) => void = dispatch => ({
-  fetchData: (id: number) => dispatch(User.fetch.request(id)),
+  fetchData: (id: number) => dispatch(User.fetch.request({ criteria: id })),
   updateData: (id: number, data: User.Model) =>
     dispatch(User.update.request({ id, data })),
   initData: (data: User.Model) => dispatch(User.initData(data)),

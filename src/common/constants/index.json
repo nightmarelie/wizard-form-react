@@ -116,6 +116,7 @@
   "buttons": {
     "back": "Back",
     "finish": "Finish",
-    "forward": "Forward"
+    "forward": "Forward",
+    "save": "Save"
   }
 }

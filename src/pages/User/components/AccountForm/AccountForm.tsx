@@ -7,6 +7,7 @@ import { Field, InjectedFormProps } from 'redux-form';
 import { Column } from 'components/Wrapper';
 import ActionIcon from 'components/ActionIcon/ActionIcon';
 import * as Form from 'components/Form';
+import Buttons from '../Buttons/Buttons';
 
 import constants from 'common/constants/index.json';
 
@@ -15,6 +16,8 @@ import * as User from 'domain/user';
 
 export interface OwnProps {
   nextForm: (data: Partial<User.Model>, lock?: boolean) => void;
+  prevForm: () => void;
+  buttons: Form.ButtonConfig[];
 }
 
 interface State {
@@ -24,7 +27,7 @@ interface State {
 
 type Props = OwnProps & InjectedFormProps<model.Data, OwnProps>;
 
-export class AccountForm extends React.Component<Props, State> {
+class AccountForm extends React.Component<Props, State> {
   public constructor(props: Props) {
     super(props);
 
@@ -32,29 +35,26 @@ export class AccountForm extends React.Component<Props, State> {
       passwordType: 'password',
       repeatPasswordType: 'password',
     };
-
-    this.handleShowHidePass = this.handleShowHidePass.bind(this);
-    this.getPassClassName = this.getPassClassName.bind(this);
   }
 
-  private getPassClassName(
+  private getPassClassName = (
     field: 'passwordType' | 'repeatPasswordType',
-  ): string {
+  ): string => {
     return this.state[field] === 'input' ? 'action-eye-slash' : 'action-eye';
-  }
+  };
 
-  private handleShowHidePass(
+  private handleShowHidePass = (
     field: 'passwordType' | 'repeatPasswordType',
-  ): void {
+  ): void => {
     const state = this.state;
     this.setState({
       ...state,
       [field]: state[field] === 'input' ? 'password' : 'input',
     });
-  }
+  };
 
   public render(): React.ReactElement {
-    const { nextForm, submitting, handleSubmit } = this.props;
+    const { nextForm, submitting, handleSubmit, buttons } = this.props;
     const { passwordType, repeatPasswordType } = this.state;
 
     return (
@@ -92,14 +92,11 @@ export class AccountForm extends React.Component<Props, State> {
             handler={() => this.handleShowHidePass('repeatPasswordType')}
           />
 
-          <Form.Button
-            className="ver-indent right"
-            title={constants.buttons.forward}
-            disabled={submitting}
-            type="submit"
-          />
+          <Buttons payload={buttons} isDisabled={submitting} />
         </Column>
       </Form.Wrapper>
     );
   }
 }
+
+export { AccountForm as Form };

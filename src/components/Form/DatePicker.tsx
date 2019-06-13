@@ -24,19 +24,18 @@ type Props = {
 
 export class DatePicker extends React.Component<Props, {}> {
   public static defaultProps = {
-    dateFormat: 'dd/MM/yyy',
+    dateFormat: 'MM/DD/YYYY',
     isRequired: true,
     className: '',
   };
 
   public constructor(props: Props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  private handleChange(date: Date): void {
-    this.props.input.onChange(moment(date).format('DD/MM/YYYY'));
-  }
+  private handleChange = (date: Date): void => {
+    this.props.input.onChange(moment(date).format(this.props.dateFormat));
+  };
 
   public render(): React.ReactElement {
     const {
@@ -60,11 +59,11 @@ export class DatePicker extends React.Component<Props, {}> {
         {label}
         <ReactDatePicker
           css={inputStyle}
+          {...input}
           dateFormat={dateFormat}
-          selected={value ? new Date() : null}
+          selected={value ? moment(value).toDate() : null}
           onChange={this.handleChange}
           placeholderText={dateFormat}
-          onBlur={this.props.input.onBlur}
         />
         <ActionIcon className="icon action-calendar" />
         {touched && error && <span className="error">{error}</span>}

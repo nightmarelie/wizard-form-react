@@ -10,6 +10,7 @@ type Props = {
   label: string;
   type: string;
   isRequired?: boolean;
+  isBefore?: boolean;
   className?: string;
 } & WrappedFieldProps &
   Partial<textMaskReturn>;
@@ -20,15 +21,18 @@ export const Input: React.FC<Props> = ({
   type,
   isRequired = true,
   className = '',
+  isBefore = true,
   meta: { touched, error },
 }): React.ReactElement<Props> => {
+  const span = <span>{label}</span>;
   return (
     <label
       css={labelStyle}
       className={`${className} ${isRequired ? 'required' : ''}`}
     >
-      {label}
+      {isBefore ? span : ''}
       <input css={inputStyle} {...input} type={type} />
+      {!isBefore ? span : ''}
       {touched && error && <span className="error">{error}</span>}
     </label>
   );

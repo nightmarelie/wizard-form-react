@@ -221,6 +221,22 @@ export const textarea = css({
   resize: 'none',
 });
 
+export const autocomplete = css({
+  '&.autocomplete-dropdown-container': {
+    position: 'absolute',
+    top: '65px',
+    backgroundColor: 'white',
+    width: '100%',
+    zIndex: 9999,
+    '.suggestion-item': {
+      cursor: 'pointer',
+    },
+    '.suggestion-item-active': {
+      backgroundColor: Colors.GreyV2,
+    },
+  },
+});
+
 export const label = css({
   font: Fonts.Normal,
   color: Colors.GreyV3,
@@ -246,6 +262,9 @@ export const label = css({
   },
   '&.date-picker-container': {
     '.icon': icon,
+  },
+  '[type=radio]:checked + span': {
+    fontWeight: 'bold',
   },
 });
 

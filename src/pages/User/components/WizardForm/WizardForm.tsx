@@ -1,36 +1,57 @@
 import React from 'react';
-import { reduxForm, InjectedFormProps, FormErrors } from 'redux-form';
+import { reduxForm, InjectedFormProps, ConfigProps } from 'redux-form';
 import { RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // common
-import * as dictionaries from 'common/dictionaries';
 import { Forms, CreateUserParams as RouteParams } from 'common/routes';
 import constants from 'common/constants/index.json';
+import * as helper from 'common/helpers';
 
 // components
 import Tabs from 'components/Tabs';
 import Bar from 'components/Bar/Bar';
 import ActionIcon from 'components/ActionIcon/ActionIcon';
 import { Container } from 'components/Wrapper';
+import { ButtonConfig } from 'components/Form/Button';
 
 // domain
 import * as User from 'domain/user';
 import { ApplicationState } from 'domain/store';
 import * as Form from 'domain/form';
 
-//forms
-import * as account from '../AccountForm';
-import * as profile from '../ProfileForm';
-import * as contacts from '../ContactsForm';
-import * as capabilities from '../CapabilitiesForm';
+// conlfig
+import * as conf from './wizardConfig';
+
+interface Config {
+  forms: FormConfig[];
+  tabs: TabConfig[];
+  locks: LockConfig;
+}
+
+type FormConfig = {
+  i: number;
+  navigation: conf.Navigation;
+  buttons: ButtonConfig[];
+  element: React.ReactElement;
+} & conf.Form;
+
+interface TabConfig {
+  i: number;
+  key: Forms;
+  title: string;
+  handler: Function;
+}
+
+type LockConfig = { [key in Forms]: boolean };
 
 type Props = {
+  isCreateMode: boolean;
   data: Partial<User.Model>;
   routeHandler: (form: Forms) => string;
   loading: boolean;
   errors?: boolean;
-  showBar: boolean;
+  isBarVisible: boolean;
   mediateHandleData: (data: Partial<User.Model>) => void;
   finalHandleData: (data: Partial<User.Model>) => void;
   clearData?: () => boolean;
@@ -41,37 +62,26 @@ type Props = {
 
 interface State {
   activeForm: Forms;
-  hideBar: boolean;
-  locks: {
-    [Forms.account]: boolean;
-    [Forms.profile]: boolean;
-    [Forms.contacts]: boolean;
-    [Forms.capabilities]: boolean;
-  };
+  isBarVisible: boolean;
+  locks: LockConfig;
 }
 class WizardForm extends React.Component<Props, State> {
+  private config: Config;
+
+  public static defaultProps = {
+    isBarVisible: false,
+    isCreateMode: true,
+  };
+
   public constructor(props: Props) {
     super(props);
 
+    this.config = this.getConfig(props.isCreateMode);
     this.state = {
-      activeForm: Forms.account,
-      hideBar: props.showBar,
-      locks: {
-        [Forms.account]: false,
-        [Forms.profile]: true,
-        [Forms.contacts]: true,
-        [Forms.capabilities]: true,
-      },
+      activeForm: this.config.forms[0].key,
+      isBarVisible: props.isBarVisible,
+      locks: this.config.locks,
     };
-
-    this.handleChangeForm = this.handleChangeForm.bind(this);
-    this.handleSubmitForm = this.handleSubmitForm.bind(this);
-    this.renderForm = this.renderForm.bind(this);
-    this.isCurrentForm = this.isCurrentForm.bind(this);
-    this.isCurrentFormLock = this.isCurrentFormLock.bind(this);
-
-    this.handleClose = this.handleClose.bind(this);
-    this.handleInitializeForm = this.handleInitializeForm.bind(this);
   }
 
   public componentDidMount(): void {
@@ -90,28 +100,135 @@ class WizardForm extends React.Component<Props, State> {
     }
   }
 
-  private isCurrentForm(form: Forms): boolean {
-    return this.state.activeForm === form;
+  public componentDidUpdate(prevProps: Props): void {
+    const { isBarVisible } = this.props;
+    if (isBarVisible !== prevProps.isBarVisible) {
+      this.setState({ isBarVisible });
+    }
   }
 
-  private isCurrentFormLock(form: Forms): boolean {
-    return this.state.locks[form];
+  private getConfig(isCreateMode: boolean): Config {
+    const { order, forms } = conf;
+    const result = forms
+      .sort(
+        (a: conf.Form, b: conf.Form) =>
+          order.indexOf(a.key) - order.indexOf(b.key),
+      )
+      .map((f, i, forms) => {
+        const prevIndex = i - 1 >= 0 ? i - 1 : 0;
+        const lastIndex = forms.length - 1;
+        const nexIndex = i + 1 <= lastIndex ? i + 1 : lastIndex;
+        const isFirstStep = prevIndex >= 0 && i > 0 && isCreateMode;
+        const isLastStep = lastIndex === i;
+        const nextForm = isLastStep
+          ? this.handleSubmitForm.bind(this, forms[lastIndex].key)
+          : this.handleNextForm.bind(this, forms[nexIndex].key);
+        const prevForm = isFirstStep
+          ? () => this.handleFormNav(forms[prevIndex].key)
+          : undefined;
+
+        const form = {
+          ...f,
+          i,
+          navigation: {
+            nextForm,
+            prevForm,
+          },
+          buttons: this.createButtons(
+            isCreateMode,
+            isFirstStep,
+            isLastStep,
+            prevForm,
+          ),
+        };
+        const tab = {
+          i,
+          key: f.key,
+          title: `${i + 1}. ${helper.capitalize(f.key)}`,
+          handler: this.handleFormNav.bind(this, f.key),
+        };
+        const lock: Partial<LockConfig> = {
+          [f.key]: i !== 0,
+        };
+        return {
+          form,
+          tab,
+          lock,
+        };
+      })
+      // prerender
+      .map(n => {
+        const form = n.form;
+        const Wizard = this.formFactory(form.component, form.config);
+        const element = <Wizard key={form.i} {...form.navigation} {...form} />;
+        return {
+          ...n,
+          form: {
+            ...n.form,
+            element,
+          },
+        };
+      })
+      .reduce(
+        (
+          p: Config,
+          n: { form: FormConfig; tab: TabConfig; lock: Partial<LockConfig> },
+        ) => ({
+          forms: [...p.forms, n.form],
+          tabs: [...p.tabs, n.tab],
+          locks: { ...p.locks, ...n.lock },
+        }),
+        {
+          forms: [],
+          tabs: [],
+          locks: ({} as any) as LockConfig,
+        },
+      );
+
+    return result;
+  }
+
+  private createButtons(
+    isCreateMode: boolean,
+    isFirstStep: boolean,
+    isLastStep: boolean,
+    prevForm?: () => void,
+  ): ButtonConfig[] {
+    const backButton = {
+      title: constants.buttons.back,
+      handler: prevForm,
+      className: `left`,
+      type: 'button',
+      handleDisabled: (isDisabled: boolean) => isDisabled,
+    };
+    const forwardButton = {
+      title: isCreateMode
+        ? isLastStep
+          ? constants.buttons.finish
+          : constants.buttons.forward
+        : constants.buttons.save,
+      className: `right ${isCreateMode && isLastStep ? 'finish' : ''}`,
+      type: 'submit',
+      handleDisabled: (isDisabled: boolean) => isDisabled,
+    };
+
+    return [isFirstStep ? backButton : undefined, forwardButton].filter(
+      b => !!b,
+    ) as ButtonConfig[];
   }
 
   private formFactory<D, P>(
-    validate: (values: D, props: P) => FormErrors<D, string>,
     form: React.ComponentType<P & InjectedFormProps<D, P, string>>,
-    initialValues?: Partial<D>,
+    config: Partial<ConfigProps<D, P, string>>,
   ): React.ComponentType<P> {
     return this.connectWithInitializer<D, P>(
       reduxForm<D, P>({
+        ...config,
         form: Form.Model.FORM_NAME,
         destroyOnUnmount: false,
         forceUnregisterOnUnmount: true,
         enableReinitialize: true,
         keepDirtyOnReinitialize: true,
-        validate,
-        initialValues,
       })(form),
     );
   }
@@ -129,23 +246,19 @@ class WizardForm extends React.Component<Props, State> {
     )(form);
   }
 
-  private async handleClose(): Promise<void> {
-    const state = this.state;
-    const { clearData } = this.props;
-
-    const result = await clearData!();
+  private handleClose = (): void => {
+    this.props.clearData!();
 
     this.setState({
-      ...state,
-      hideBar: result,
+      isBarVisible: false,
     });
-  }
+  };
 
-  private handleSubmitForm(
+  private handleSubmitForm = (
     form: Forms,
     data: Partial<User.Model>,
     lock: boolean = true,
-  ): void {
+  ): void => {
     const { finalHandleData } = this.props;
     const locks = {
       ...this.state.locks,
@@ -156,145 +269,74 @@ class WizardForm extends React.Component<Props, State> {
       ...data,
       locks,
     });
-  }
+  };
 
-  private handleChangeForm(
-    form: Forms,
-    data?: Partial<User.Model>,
-    lock: boolean = true,
-  ): void {
-    const { history, mediateHandleData, routeHandler } = this.props;
-    const state = this.state;
-    const locks = {
-      ...state.locks,
-      [form]: false,
-    };
+  private handleFormNav = (form: Forms): void => {
+    const { history, routeHandler } = this.props;
 
-    if (state.locks[form] && lock) {
+    if (this.state.locks[form]) {
       return;
     }
 
-    if (data) {
-      mediateHandleData({
-        ...data,
-        locks,
-      });
-    }
-
     this.setState({
-      ...state,
-      activeForm: Forms[form] ? form : Forms.account,
-      locks,
+      activeForm: Forms[form],
     });
 
     history.push(routeHandler(form));
-  }
+  };
 
-  private async handleInitializeForm(data: Partial<User.Model>): Promise<void> {
-    const { initData } = this.props;
+  private handleNextForm = (form: Forms, data: Partial<User.Model>): void => {
+    const { mediateHandleData, isCreateMode } = this.props;
+    const locks = {
+      ...this.state.locks,
+      [form]: false,
+    };
 
-    await initData(data);
+    mediateHandleData({
+      ...data,
+      locks,
+    });
+
+    this.setState(
+      {
+        locks,
+      },
+      isCreateMode ? () => this.handleFormNav(form) : undefined,
+    );
+  };
+
+  private handleInitializeForm = (data: Partial<User.Model>): void => {
+    this.props.initData(data);
 
     this.setState({
       locks: data.locks!,
-      hideBar: true,
+      isBarVisible: false,
     });
-  }
-
-  private renderForm(): React.ReactElement {
-    const { activeForm: form } = this.state;
-
-    switch (form) {
-      case Forms.account: {
-        const WizardAccountForm = this.formFactory<
-          account.Data,
-          account.OwnProps
-        >(account.validate, account.AccountForm);
-        return (
-          <WizardAccountForm
-            nextForm={this.handleChangeForm.bind(this, Forms.profile)}
-          />
-        );
-      }
-      case Forms.profile: {
-        const { genders } = dictionaries;
-        const WizardProfileForm = this.formFactory<
-          profile.Data,
-          profile.OwnProps
-        >(profile.validate, profile.ProfileForm, { gender: 'male' });
-        return (
-          <WizardProfileForm
-            nextForm={this.handleChangeForm.bind(this, Forms.contacts)}
-            previousForm={() => this.handleChangeForm(Forms.account)}
-            genders={genders}
-          />
-        );
-      }
-      case Forms.contacts: {
-        const { languages } = dictionaries;
-        const WizardContactsForm = this.formFactory<
-          contacts.Data,
-          contacts.OwnProps
-        >(contacts.validate, contacts.ContactsForm);
-        return (
-          <WizardContactsForm
-            nextForm={this.handleChangeForm.bind(this, Forms.capabilities)}
-            previousForm={() => this.handleChangeForm(Forms.profile)}
-            languages={languages}
-          />
-        );
-      }
-      case Forms.capabilities: {
-        const { hobbies, skills } = dictionaries;
-        const WizardCapabilitiesForm = this.formFactory<
-          capabilities.Data,
-          capabilities.OwnProps
-        >(capabilities.validate, capabilities.CapabilitiesForm);
-        return (
-          <WizardCapabilitiesForm
-            nextForm={this.handleSubmitForm.bind(this, Forms.capabilities)}
-            previousForm={() => this.handleChangeForm(Forms.contacts)}
-            hobbies={hobbies}
-            skills={skills}
-          />
-        );
-      }
-    }
-  }
+  };
 
   public render(): React.ReactElement {
-    const { data, showBar } = this.props;
-    const { hideBar } = this.state;
+    const { data } = this.props;
+    const { isBarVisible, activeForm, locks } = this.state;
+    const { tabs, forms } = this.config;
+    const currentForm = forms
+      .filter(f => f.key === activeForm)
+      .map(f => f.element)
+      .find(f => !!f);
 
     return (
       <Container>
         <Tabs.Wrapper>
-          <Tabs.Tab
-            isActive={this.isCurrentForm(Forms.account)}
-            isLock={this.isCurrentFormLock(Forms.account)}
-            payload={constants.labels.accountTab}
-            handler={() => this.handleChangeForm(Forms.account)}
-          />
-          <Tabs.Tab
-            isActive={this.isCurrentForm(Forms.profile)}
-            isLock={this.isCurrentFormLock(Forms.profile)}
-            payload={constants.labels.profileTab}
-            handler={() => this.handleChangeForm(Forms.profile)}
-          />
-          <Tabs.Tab
-            isActive={this.isCurrentForm(Forms.contacts)}
-            isLock={this.isCurrentFormLock(Forms.contacts)}
-            payload={constants.labels.contactsTab}
-            handler={() => this.handleChangeForm(Forms.contacts)}
-          />
-          <Tabs.Tab
-            isActive={this.isCurrentForm(Forms.capabilities)}
-            isLock={this.isCurrentFormLock(Forms.capabilities)}
-            payload={constants.labels.capabilitiesTab}
-            handler={() => this.handleChangeForm(Forms.capabilities)}
-          />
+          {tabs.map(t => (
+            <Tabs.Tab
+              key={t.i}
+              isActive={activeForm === t.key}
+              isLock={locks[t.key]}
+              payload={t.title}
+              handler={() => t.handler()}
+            />
+          ))}
         </Tabs.Wrapper>
-        {showBar && typeof data === 'object' && !hideBar && (
+        {isBarVisible && typeof data === 'object' && (
           <Bar closeHandler={this.handleClose}>
             {constants.labels.unsavedUserData}
             <ActionIcon
@@ -305,8 +347,7 @@ class WizardForm extends React.Component<Props, State> {
             </ActionIcon>
           </Bar>
         )}
-
-        {this.renderForm()}
+        {currentForm}
       </Container>
     );
   }

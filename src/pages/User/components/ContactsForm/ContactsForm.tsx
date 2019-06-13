@@ -7,18 +7,27 @@ import { createTextMask, textMaskReturn } from 'redux-form-input-masks';
 // components
 import { Column } from 'components/Wrapper';
 import * as Form from 'components/Form';
+import Buttons from '../Buttons/Buttons';
 
+// common
 import constants from 'common/constants/index.json';
-import { Dictionary } from 'common/dictionaries';
+import * as dictionaries from 'common/dictionaries';
 
 import * as model from './model';
 import * as User from 'domain/user';
 
-export interface OwnProps extends Partial<InjectedFormProps> {
+export type OwnProps = {
   nextForm: (data: Partial<User.Model>, lock?: boolean) => void;
-  previousForm: () => void;
-  languages: Dictionary[];
-}
+  prevForm: () => void;
+  buttons: Form.ButtonConfig[];
+} & Partial<InjectedFormProps> &
+  Partial<DefaultProps>;
+
+const defaultProps = {
+  languages: dictionaries.languages,
+};
+
+type DefaultProps = Readonly<typeof defaultProps>;
 
 const phoneMask: textMaskReturn | any = createTextMask({
   pattern: '+7 (999) 999-99-99',
@@ -26,12 +35,12 @@ const phoneMask: textMaskReturn | any = createTextMask({
 
 type Props = OwnProps & InjectedFormProps<model.Data, OwnProps>;
 
-export const ContactsForm: React.FC<Props> = ({
+const ContactsForm: React.FC<Props> = ({
   nextForm,
-  previousForm,
   submitting,
   languages,
   handleSubmit,
+  buttons,
 }): React.ReactElement<Props> => {
   return (
     <Form.Wrapper onSubmit={handleSubmit(data => nextForm(data, false))}>
@@ -86,20 +95,13 @@ export const ContactsForm: React.FC<Props> = ({
             mask={phoneMask}
           />
 
-          <Form.Button
-            className="ver-indent left"
-            title={constants.buttons.back}
-            disabled={false}
-            handler={previousForm}
-          />
-          <Form.Button
-            className="ver-indent right"
-            title={constants.buttons.forward}
-            disabled={submitting}
-            type="submit"
-          />
+          <Buttons payload={buttons} isDisabled={submitting} />
         </div>
       </Column>
     </Form.Wrapper>
   );
 };
+
+ContactsForm.defaultProps = defaultProps;
+
+export { ContactsForm as Form };

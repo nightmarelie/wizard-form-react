@@ -48,7 +48,7 @@ export class ImgUpload extends React.Component<Props, {}> {
       input,
       meta: { touched, error },
     } = this.props;
-    const image = input.value;
+    const image = input.value ? URL.createObjectURL(input.value) : undefined;
     return (
       <div css={styles}>
         <input type="hidden" disabled {...input} />
@@ -57,10 +57,7 @@ export class ImgUpload extends React.Component<Props, {}> {
             return (
               <div {...getRootProps({ className: 'dropzone' })}>
                 <input {...getInputProps({ multiple: false })} />
-                <Avatar
-                  className="preview"
-                  image={image ? URL.createObjectURL(image) : undefined}
-                />
+                <Avatar className="preview" image={image} />
                 <ActionIcon
                   className="action-add"
                   handler={e => handler && handler(e)}
