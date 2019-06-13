@@ -230,9 +230,11 @@ export const autocomplete = css({
     zIndex: 9999,
     '.suggestion-item': {
       cursor: 'pointer',
+      lineHeight: '26px',
+      height: '26px',
     },
     '.suggestion-item-active': {
-      backgroundColor: Colors.GreyV2,
+      backgroundColor: Colors.LightV1,
     },
   },
 });
