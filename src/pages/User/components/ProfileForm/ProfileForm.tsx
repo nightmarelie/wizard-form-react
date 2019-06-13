@@ -75,7 +75,7 @@ const ProfileForm: React.FC<Props> = ({
           <Field
             name="address"
             label={constants.profile.labels.address}
-            component={Form.Input}
+            component={Form.PlacesAutocomplete}
             type="input"
           />
 

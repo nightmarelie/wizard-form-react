@@ -33,6 +33,7 @@ type FormConfig = {
   i: number;
   navigation: conf.Navigation;
   buttons: ButtonConfig[];
+  element: React.ReactElement;
 } & conf.Form;
 
 interface TabConfig {
@@ -153,6 +154,19 @@ class WizardForm extends React.Component<Props, State> {
           form,
           tab,
           lock,
+        };
+      })
+      // prerender
+      .map(n => {
+        const form = n.form;
+        const Wizard = this.formFactory(form.component, form.config);
+        const element = <Wizard key={form.i} {...form.navigation} {...form} />;
+        return {
+          ...n,
+          form: {
+            ...n.form,
+            element,
+          },
         };
       })
       .reduce(
@@ -306,10 +320,7 @@ class WizardForm extends React.Component<Props, State> {
     const { tabs, forms } = this.config;
     const currentForm = forms
       .filter(f => f.key === activeForm)
-      .map(f => {
-        const Wizard = this.formFactory(f.component, f.config);
-        return <Wizard key={f.i} {...f.navigation} {...f} />;
-      })
+      .map(f => f.element)
       .find(f => !!f);
 
     return (

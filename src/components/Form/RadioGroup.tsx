@@ -43,6 +43,7 @@ export const RadioGroup: React.FC<Props> = ({
           value={option.value}
           type="radio"
           isRequired={false}
+          isBefore={false}
           className="w30"
         />
       ))}
