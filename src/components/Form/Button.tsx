@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import React, { ReactElement } from 'react';
+import cn from 'classnames';
 
 import { button as styles } from './styles';
 
@@ -30,7 +31,7 @@ export const Button: React.FC<Props> = ({
   return (
     <button
       css={styles}
-      className={`${className} ${disabled ? '' : 'active'}`}
+      className={cn(className, { active: !disabled })}
       onClick={handler}
       disabled={disabled}
       type={type}

@@ -12,12 +12,14 @@ import { BreadcrumbTitle } from 'components/Title';
 import * as Table from 'components/Table';
 import ActionIcon from 'components/ActionIcon/ActionIcon';
 import Avatar from 'components/Avatar/Avatar';
+import Link from 'components/Link/Link';
 
 // common
 import routes, { ViewUserParams as RouteParams, Forms } from 'common/routes';
 import constants from 'common/constants/index.json';
 import { Dictionary, hobbies, languages } from 'common/dictionaries';
 import * as helper from 'common/helpers';
+import * as global from 'common/styles/global.styles';
 
 // domain
 import { ApplicationState } from 'domain/store';
@@ -31,11 +33,6 @@ type Props = {
 } & RouteComponentProps<RouteParams>;
 
 class ViewUser extends React.Component<Props> {
-  public constructor(props: Props) {
-    super(props);
-    this.handleNavigateTo = this.handleNavigateTo.bind(this);
-  }
-
   public componentDidMount(): void {
     const {
       match: { params },
@@ -45,7 +42,7 @@ class ViewUser extends React.Component<Props> {
     fetchData(+params.id);
   }
 
-  private handleNavigateTo(form: Forms): void {
+  private handleNavigateTo = (form: Forms): void => {
     const {
       match: { params },
       history,
@@ -57,7 +54,7 @@ class ViewUser extends React.Component<Props> {
         form: form,
       }),
     );
-  }
+  };
 
   public render(): React.ReactElement {
     const { data, loading } = this.props;
@@ -187,13 +184,17 @@ class ViewUser extends React.Component<Props> {
                           <Table.Cell>
                             {constants.contacts.labels.github}:
                           </Table.Cell>
-                          <Table.Cell>{data.github}</Table.Cell>
+                          <Table.Cell>
+                            <Link href={data.github} />
+                          </Table.Cell>
                         </Table.Row>
                         <Table.Row>
                           <Table.Cell>
                             {constants.contacts.labels.facebook}:
                           </Table.Cell>
-                          <Table.Cell>{data.facebook}</Table.Cell>
+                          <Table.Cell>
+                            <Link href={data.facebook} />
+                          </Table.Cell>
                         </Table.Row>
                         <Table.Row>
                           <Table.Cell>
@@ -266,7 +267,9 @@ class ViewUser extends React.Component<Props> {
                           <Table.Cell>
                             {constants.capabilities.labels.info}:
                           </Table.Cell>
-                          <Table.Cell>{data.additionalInfo}</Table.Cell>
+                          <Table.Cell>
+                            <pre css={global.pre}>{data.additionalInfo}</pre>
+                          </Table.Cell>
                         </Table.Row>
                       </Table.Wrapper>
                     </Table.Cell>

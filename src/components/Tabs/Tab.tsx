@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import React from 'react';
+import cn from 'classnames';
 
 import { tab as styles } from './styles';
 
@@ -20,7 +21,7 @@ const Tab: React.FC<Props> = ({
   return (
     <div
       css={styles}
-      className={`tab ${isActive ? 'active' : ''} ${isLock ? 'disabled' : ''}`}
+      className={cn('tab', { active: isActive, disabled: isLock })}
       role="cell"
       onClick={handler}
     >

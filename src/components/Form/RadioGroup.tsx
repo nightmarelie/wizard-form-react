@@ -3,6 +3,7 @@ import { jsx } from '@emotion/core';
 import React from 'react';
 import { WrappedFieldProps, Field } from 'redux-form';
 import { textMaskReturn } from 'redux-form-input-masks';
+import cn from 'classnames';
 
 import { label as labelStyle } from './styles';
 import { Dictionary } from 'common/dictionaries';
@@ -30,7 +31,7 @@ export const RadioGroup: React.FC<Props> = ({
     <React.Fragment>
       <label
         css={labelStyle}
-        className={`break-after ${className} ${isRequired ? 'required' : ''}`}
+        className={cn('break-after', className, { required: isRequired })}
       >
         {label}
       </label>

@@ -4,6 +4,7 @@ import React from 'react';
 
 import ReactPlacesAutocomplete from 'react-places-autocomplete';
 import { WrappedFieldProps } from 'redux-form';
+import cn from 'classnames';
 
 import {
   autocomplete as autocompleteStyle,
@@ -29,7 +30,7 @@ export const PlacesAutocomplete: React.FC<Props> = ({
       {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
         <label
           css={labelStyle}
-          className={`${className} ${isRequired ? 'required' : ''}`}
+          className={cn(className, { required: isRequired })}
         >
           <span>{label}</span>
           <input

@@ -4,6 +4,7 @@ import React from 'react';
 import { WrappedFieldProps } from 'redux-form';
 import ReactDatePicker from 'react-datepicker';
 import moment from 'moment';
+import cn from 'classnames';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -29,10 +30,6 @@ export class DatePicker extends React.Component<Props, {}> {
     className: '',
   };
 
-  public constructor(props: Props) {
-    super(props);
-  }
-
   private handleChange = (date: Date): void => {
     this.props.input.onChange(moment(date).format(this.props.dateFormat));
   };
@@ -52,9 +49,9 @@ export class DatePicker extends React.Component<Props, {}> {
     return (
       <label
         css={[labelStyle, datePickerStyle]}
-        className={`date-picker-container ${className} ${
-          isRequired ? 'required' : ''
-        }`}
+        className={cn('date-picker-container', className, {
+          required: isRequired,
+        })}
       >
         {label}
         <ReactDatePicker

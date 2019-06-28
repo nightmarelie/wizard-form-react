@@ -40,12 +40,6 @@ class EditUser extends React.Component<Props, {}> {
     puller: (state: ApplicationState) => state.users.initDate,
   };
 
-  public constructor(props: Props) {
-    super(props);
-
-    this.handleFinalData = this.handleFinalData.bind(this);
-  }
-
   public componentDidMount(): void {
     const {
       match: { params },
@@ -62,11 +56,9 @@ class EditUser extends React.Component<Props, {}> {
     }
   }
 
-  private handleFinalData(id: number, data: Partial<User.Model>): void {
-    const { updateData } = this.props;
-
-    updateData(id, data);
-  }
+  private handleFinalData = (id: number, data: Partial<User.Model>): void => {
+    this.props.updateData(id, data);
+  };
 
   public render(): React.ReactElement {
     const {

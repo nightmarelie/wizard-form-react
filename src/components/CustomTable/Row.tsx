@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import React from 'react';
+import cn from 'classnames';
 
 import { flexRow as styles } from './styles';
 
@@ -18,7 +19,7 @@ const Row: React.FC<Props> = ({
   return (
     <div
       css={styles}
-      className={`flex-row ${className} ${isShifted ? 'shift' : ''}`}
+      className={cn('flex-row', className, { shift: isShifted })}
       role="rowgroup"
     >
       {children}

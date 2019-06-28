@@ -73,4 +73,10 @@ export const h2 = css({
   paddingBottom: '70px',
 });
 
+export const pre = css({
+  textDecoration: 'none',
+  fontFamily: 'inherit',
+  font: Fonts.Normal,
+});
+
 export default [customFont, reset, body];

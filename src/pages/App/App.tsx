@@ -38,6 +38,7 @@ const App: React.FC = () => {
         <Route path={routes.createUser} component={CreateUser} />
         <Route exact path={routes.viewUser} component={ViewUser} />
         <Route path={routes.editUser} component={EditUser} />
+        <Route path={routes.other} component={() => <h1>Not found</h1>} />
       </Switch>
     </Router>
   );

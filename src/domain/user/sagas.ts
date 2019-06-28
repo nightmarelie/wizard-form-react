@@ -36,6 +36,7 @@ function* handleUpdate(action: ReturnType<typeof update.request>): Generator {
     yield call({ context: db.users, fn: db.users.update }, +action.payload.id, {
       ...action.payload.data,
       updateAt: Date.now(),
+      id: action.payload.id,
     });
 
     const response: Model = yield call(

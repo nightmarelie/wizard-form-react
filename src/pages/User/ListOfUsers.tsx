@@ -69,9 +69,6 @@ class ListOfUser extends React.Component<Props, State> {
         pageCount: 1,
       },
     };
-
-    this.handleCancel = this.handleCancel.bind(this);
-    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   public componentDidUpdate(prevProps: Props): void {
@@ -114,13 +111,13 @@ class ListOfUser extends React.Component<Props, State> {
     });
   };
 
-  private handleCancel(event: KeyboardEvent): void {
+  private handleCancel = (event: KeyboardEvent): void => {
     if (event.keyCode === 27) {
       this.setState({
         tryToDeleteUser: 0,
       });
     }
-  }
+  };
 
   private handleUserDelete(userId: number): void {
     this.setState({

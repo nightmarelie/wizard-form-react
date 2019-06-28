@@ -3,6 +3,7 @@ import { jsx } from '@emotion/core';
 import React from 'react';
 import { WrappedFieldProps } from 'redux-form';
 import ReactSelect from 'react-select';
+import cn from 'classnames';
 
 import { label as labelStyle, select as SelectStyle } from './styles';
 import { Dictionary } from 'common/dictionaries';
@@ -30,7 +31,7 @@ export const Select: React.FC<Props> = ({
   return (
     <label
       css={[labelStyle, SelectStyle]}
-      className={`${className} ${isRequired ? 'required' : ''}`}
+      className={cn(className, { required: isRequired })}
     >
       {label}
       <ReactSelect

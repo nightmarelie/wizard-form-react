@@ -3,6 +3,7 @@ import { jsx } from '@emotion/core';
 import React from 'react';
 import { WrappedFieldProps } from 'redux-form';
 import { textMaskReturn } from 'redux-form-input-masks';
+import cn from 'classnames';
 
 import { label as labelStyle, input as inputStyle } from './styles';
 
@@ -26,10 +27,7 @@ export const Input: React.FC<Props> = ({
 }): React.ReactElement<Props> => {
   const span = <span>{label}</span>;
   return (
-    <label
-      css={labelStyle}
-      className={`${className} ${isRequired ? 'required' : ''}`}
-    >
+    <label css={labelStyle} className={cn(className, { required: isRequired })}>
       {isBefore ? span : ''}
       <input css={inputStyle} {...input} type={type} />
       {!isBefore ? span : ''}

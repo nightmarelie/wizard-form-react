@@ -46,17 +46,13 @@ class CreateUser extends React.Component<Props, {}> {
     puller: (state: ApplicationState) => state.abandonUser.initDate,
   };
 
-  public constructor(props: Props) {
-    super(props);
-
-    this.handleFinalData = this.handleFinalData.bind(this);
-  }
-
   public componentDidMount(): void {
-    this.props.fetchData();
+    const { fetchData, resetForm } = this.props;
+    resetForm();
+    fetchData();
   }
 
-  private handleFinalData(data: Partial<User.Model>): void {
+  private handleFinalData = (data: Partial<User.Model>): void => {
     const { createData, clearData, resetForm, history } = this.props;
 
     createData(data);
@@ -64,7 +60,7 @@ class CreateUser extends React.Component<Props, {}> {
     resetForm();
 
     history.push(routes.listOfUsers);
-  }
+  };
 
   public render(): React.ReactElement {
     const { data } = this.props;
