@@ -5,6 +5,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import onClickOutside from 'react-onclickoutside';
 
 import { Container } from 'components/Wrapper';
 import Table from 'components/CustomTable';
@@ -117,6 +118,12 @@ class ListOfUser extends React.Component<Props, State> {
         tryToDeleteUser: 0,
       });
     }
+  };
+
+  private handleClickOutside = (_: MouseEvent): void => {
+    this.setState({
+      tryToDeleteUser: 0,
+    });
   };
 
   private handleUserDelete(userId: number): void {
@@ -251,4 +258,4 @@ const mapDispatchToProps: (d: Dispatch) => void = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ListOfUser);
+)(onClickOutside(ListOfUser));
