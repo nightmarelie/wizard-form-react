@@ -1,5 +1,6 @@
 import Dexie from 'dexie';
 import { User, AbandonUser } from './entities';
+import { generate } from './seeds/user.seed';
 
 type GetCtx = { [P in 'get']: (this: GetCtx, ...args: any[]) => any };
 type ClearCtx = { [P in 'clear']: (this: GetCtx, ...args: any[]) => any };
@@ -37,5 +38,8 @@ class Database extends Dexie {
 }
 
 const db = new Database('wizard-form-react'); // TODO: transfer to configs
+
+// load users to the system
+Promise.resolve(generate());
 
 export default db;

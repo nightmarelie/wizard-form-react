@@ -167,11 +167,7 @@ class ListOfUser extends React.Component<Props, State> {
                     >
                       <Avatar
                         className="avatar-small"
-                        image={
-                          user.image
-                            ? URL.createObjectURL(user.image)
-                            : undefined
-                        }
+                        image={helper.imgToUrl(user.image)}
                       />
                       {user.username}
                     </Link>

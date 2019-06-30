@@ -17,7 +17,7 @@ const section = css({
       width: '125px',
     },
     'td:last-child': {
-      width: '153px',
+      maxWidth: '153px',
     },
     td: {
       paddingBottom: '15px',

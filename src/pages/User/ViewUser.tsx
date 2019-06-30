@@ -42,6 +42,12 @@ class ViewUser extends React.Component<Props> {
     fetchData(+params.id);
   }
 
+  private convertPhoneFormat(phone: string): string {
+    return (
+      phone && phone.replace(/(\d{3})(\d{3})(\d{2})(\d{2})/, '+7 ($1) $2-$3-$4')
+    );
+  }
+
   private handleNavigateTo = (form: Forms): void => {
     const {
       match: { params },
@@ -69,11 +75,7 @@ class ViewUser extends React.Component<Props> {
             />
             <Container className="content-wrapper preview-wrapper">
               <Column className="half left">
-                <Avatar
-                  image={
-                    data.image ? URL.createObjectURL(data.image) : undefined
-                  }
-                />
+                <Avatar image={helper.imgToUrl(data.image)} />
               </Column>
               <Column className="half right">
                 <Table.Wrapper>
@@ -178,7 +180,9 @@ class ViewUser extends React.Component<Props> {
                           <Table.Cell>
                             {constants.contacts.labels.fax}:
                           </Table.Cell>
-                          <Table.Cell>{data.fax}</Table.Cell>
+                          <Table.Cell>
+                            {this.convertPhoneFormat(data.fax)}
+                          </Table.Cell>
                         </Table.Row>
                         <Table.Row>
                           <Table.Cell>
@@ -216,9 +220,11 @@ class ViewUser extends React.Component<Props> {
                           data.phones.map((phone, i) => (
                             <Table.Row key={i}>
                               <Table.Cell>
-                                {`${constants.contacts.labels.phone} #${i}:`}
+                                {`${constants.contacts.labels.phone} #${++i}:`}
                               </Table.Cell>
-                              <Table.Cell>{phone}</Table.Cell>
+                              <Table.Cell>
+                                {this.convertPhoneFormat(phone)}
+                              </Table.Cell>
                             </Table.Row>
                           ))}
                       </Table.Wrapper>

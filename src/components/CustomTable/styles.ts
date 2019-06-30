@@ -38,10 +38,18 @@ export const flexRow = css({
   flexFlow: 'row wrap',
   color: Colors.GreyV1,
   font: Fonts.Normal,
+  transition: 'all .5s',
+  width: '100%',
   '&:nth-of-type(odd)': {
     '.flex-cell': {
       background: Colors.LightV1,
     },
+  },
+  '& .first': {
+    textAlign: 'center',
+    justifyContent: 'start',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
   },
   '&.empty': {
     padding: '150px 360px 135px',
@@ -51,12 +59,12 @@ export const flexRow = css({
       background: Colors.BlueV2,
       color: 'white',
       fontWeight: 'bold',
+      justifyContent: 'center',
     },
   },
   '&.shift': {
-    left: '-90px',
+    marginLeft: '-90px',
     overflow: 'inherit',
-    transition: 'all 1s linear',
   },
   '&.shift .last': {
     textIndent: '-99999px',
@@ -66,5 +74,6 @@ export const flexRow = css({
   },
   '&.shift .danger': {
     opacity: 1,
+    marginLeft: '-90px',
   },
 });

@@ -77,6 +77,8 @@ export const pre = css({
   textDecoration: 'none',
   fontFamily: 'inherit',
   font: Fonts.Normal,
+  margin: 0,
+  padding: 0,
 });
 
 export default [customFont, reset, body];

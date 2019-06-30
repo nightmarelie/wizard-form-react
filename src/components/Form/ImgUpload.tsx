@@ -7,6 +7,7 @@ import Dropzone from 'react-dropzone';
 import { download as styles } from './styles';
 import ActionIcon from 'components/ActionIcon/ActionIcon';
 import Avatar from 'components/Avatar/Avatar';
+import * as helper from 'common/helpers';
 
 type Props = {
   name: string;
@@ -48,7 +49,7 @@ export class ImgUpload extends React.Component<Props, {}> {
       input,
       meta: { touched, error },
     } = this.props;
-    const image = input.value ? URL.createObjectURL(input.value) : undefined;
+    const image = helper.imgToUrl(input.value);
     return (
       <div css={styles}>
         <input type="hidden" disabled {...input} />

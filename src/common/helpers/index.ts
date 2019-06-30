@@ -29,3 +29,7 @@ export const promisify: <T>(
 export const throwObject: (o: { [key: string]: string }) => never = obj => {
   throw Object.assign({}, obj);
 };
+
+export const imgToUrl: (i: File) => string | undefined = image => {
+  return image ? URL.createObjectURL(image) : undefined;
+};
