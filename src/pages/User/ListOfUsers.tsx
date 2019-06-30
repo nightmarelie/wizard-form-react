@@ -136,8 +136,19 @@ class ListOfUser extends React.Component<Props, State> {
 
   private handleUserDelete = (userId: number): void => {
     const { removeData, fetchAllData } = this.props;
-    removeData(userId);
-    fetchAllData(this.fetchMeta());
+    this.setState(
+      state => ({
+        pagination: {
+          ...state.pagination,
+          offset: 0,
+          currentPage: 0,
+        },
+      }),
+      () => {
+        removeData(userId);
+        fetchAllData(this.fetchMeta());
+      },
+    );
   };
 
   private handleSearchBy = (
@@ -146,7 +157,6 @@ class ListOfUser extends React.Component<Props, State> {
     const value = event.target.value;
     this.setState(
       state => ({
-        ...state,
         searchValue: value,
         pagination: {
           ...state.pagination,
