@@ -14,6 +14,7 @@ import Pagination from 'components/Pagination/Pagination';
 import ActionIcon from 'components/ActionIcon/ActionIcon';
 import LinkButton from 'components/LinkButton/LinkButton';
 import Avatar from 'components/Avatar/Avatar';
+import RowInput from 'components/Form/RowInput';
 
 // common
 import routes, { Forms } from 'common/routes';
@@ -139,12 +140,37 @@ class ListOfUser extends React.Component<Props, State> {
     fetchAllData(this.fetchMeta());
   };
 
+  private handleSearchBy = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    const value = event.target.value;
+    this.setState(
+      state => ({
+        ...state,
+        searchValue: value,
+        pagination: {
+          ...state.pagination,
+          offset: 0,
+          currentPage: 0,
+        },
+      }),
+      () => {
+        this.props.fetchAllData(this.fetchMeta());
+      },
+    );
+  };
+
   public render(): React.ReactElement {
     const { tryToDeleteUser } = this.state;
     const { headers, data, history, pagination } = this.props;
     return (
       <Container>
         <Title title={constants.list.labels.title} />
+        <RowInput
+          name="username"
+          label={constants.list.labels.search}
+          handler={this.handleSearchBy}
+        />
         <Table.Wrapper>
           <Table.Row className="header">
             <Table.Cell className="first" payload={headers.username} />

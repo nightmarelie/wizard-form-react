@@ -15,7 +15,8 @@
       "username": "username",
       "company": "company",
       "contacts": "contacts",
-      "lastUpdate": "last update"
+      "lastUpdate": "last update",
+      "search": "Search by username"
     }
   },
   "view": {

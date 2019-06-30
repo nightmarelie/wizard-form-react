@@ -9,12 +9,6 @@ const length = 60;
 
 class User implements BaseUser {
   public id: number = 0;
-  public locks = {
-    account: false,
-    profile: false,
-    contacts: false,
-    capabilities: false,
-  };
   public updateAt: Date = new Date();
   public createdAt: Date = new Date();
   public username: string = '';
@@ -33,8 +27,14 @@ class User implements BaseUser {
   public additionalInfo: string = '';
   public image: File = null as any;
   public mainLanguage = null as any;
-  public skills = [] as any;
+  public skills = null as any;
   public hobbies = null as any;
+  public locks = {
+    account: false,
+    profile: false,
+    contacts: false,
+    capabilities: false,
+  };
 }
 
 async function createFile(imageUrl: string): Promise<File> {

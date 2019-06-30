@@ -10,3 +10,4 @@ export * from './DatePicker';
 export * from './Select';
 export * from './RadioGroup';
 export * from './PlacesAutocomplete';
+export * from './RowInput';

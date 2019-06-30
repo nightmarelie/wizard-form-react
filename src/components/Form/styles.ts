@@ -102,6 +102,13 @@ export const input = css({
   },
 });
 
+export const rowInput = [
+  input,
+  css({
+    width: '200px',
+  }),
+];
+
 export const select = css({
   '.select-container': {
     color: Colors.GreyV3,
@@ -269,6 +276,15 @@ export const label = css({
     fontWeight: 'bold',
   },
 });
+
+export const rowLabel = [
+  label,
+  css({
+    width: 'auto',
+    marginRight: '10px',
+    fontWeight: 'bold',
+  }),
+];
 
 export const button = css({
   padding: '12px 24px',

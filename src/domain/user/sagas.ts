@@ -10,6 +10,8 @@ import {
   ForkEffectDescriptor,
 } from 'redux-saga/effects';
 
+import Dexie from 'dexie';
+
 import { fetch, fetchAll, create, update, remove } from './actions';
 import { Model, Action } from './model';
 import db from 'database';
@@ -77,10 +79,15 @@ function* handleFetchAll(
 ): Generator {
   const {
     pagination: { perPage, offset },
+    searchValue = '',
   } = action.payload;
   try {
-    const total: number = yield db.users.count();
-    const response: Model[] = yield db.users
+    const where = (
+      users: Dexie.Table<Model, number>,
+    ): Dexie.Collection<Model, number> =>
+      users.where('username').startsWithIgnoreCase(searchValue);
+    const total: number = yield where(db.users).count();
+    const response: Model[] = yield where(db.users)
       .offset(offset)
       .limit(perPage)
       .toArray();
