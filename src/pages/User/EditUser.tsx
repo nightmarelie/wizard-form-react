@@ -37,7 +37,7 @@ type Props = {
 class EditUser extends React.Component<Props, {}> {
   public static defaultProps = {
     loading: false,
-    puller: (state: ApplicationState) => state.users.initDate,
+    puller: (state: ApplicationState) => state.users.initData,
   };
 
   public componentDidMount(): void {

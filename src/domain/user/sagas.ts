@@ -14,6 +14,8 @@ import { fetch, fetchAll, create, update, remove } from './actions';
 import { Model, Action } from './model';
 import db from 'database';
 
+import * as helper from 'common/helpers';
+
 function* handleCreate(action: ReturnType<typeof create.request>): Generator {
   try {
     yield call(
@@ -70,14 +72,34 @@ function* handleFetch(action: ReturnType<typeof fetch.request>): Generator {
   }
 }
 
-function* handleFetchAll(): Generator {
+function* handleFetchAll(
+  action: ReturnType<typeof fetchAll.request>,
+): Generator {
+  const {
+    pagination: { perPage, offset },
+  } = action.payload;
   try {
-    const response: Model[] = yield call({
-      context: db.users,
-      fn: db.users.toArray,
-    });
-
-    yield put(fetchAll.success(response));
+    const total: number = yield db.users.count();
+    const response: Model[] = yield db.users
+      .offset(offset)
+      .limit(perPage)
+      .toArray();
+    yield put(
+      fetchAll.success({
+        data: response.map(u => ({
+          ...u,
+          imageUrl: helper.imgToUrl(u.image),
+        })),
+        meta: {
+          ...action.payload,
+          pagination: {
+            ...action.payload.pagination,
+            total,
+            pageCount: Math.ceil(total / perPage),
+          },
+        },
+      }),
+    );
   } catch (err) {
     yield put(fetchAll.failure(err));
   }
@@ -93,12 +115,7 @@ function* handleRemove(action: ReturnType<typeof remove.request>): Generator {
       action.payload,
     );
 
-    const response: Model[] = yield call({
-      context: db.users,
-      fn: db.users.toArray,
-    });
-
-    yield put(remove.success(response));
+    yield put(remove.success(true));
   } catch (err) {
     yield put(remove.failure(err));
   }

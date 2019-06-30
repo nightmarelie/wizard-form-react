@@ -3,7 +3,7 @@ import { State, Action } from './model';
 
 const initialState: State = {
   data: undefined,
-  initDate: {},
+  initData: {},
   errors: undefined,
   meta: {
     loading: false,
@@ -25,7 +25,7 @@ const reducer: Reducer<State> = (state = initialState, action) => {
     case Action.REMOVE_ERROR:
       return { ...state, meta: { loading: false }, errors: action.payload };
     case Action.INITIALIZE_DATA:
-      return { ...state, initDate: action.payload };
+      return { ...state, initData: action.payload };
     default: {
       return state;
     }

@@ -5,7 +5,7 @@ import { User as BaseUser } from '../entities/user.entity';
 import { genders, languages, hobbies } from 'common/dictionaries';
 import moment from 'moment';
 
-const length = 30;
+const length = 60;
 
 class User implements BaseUser {
   public id: number = 0;

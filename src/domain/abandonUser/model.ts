@@ -20,7 +20,7 @@ export enum Action {
 }
 
 export interface State {
-  readonly initDate: Model;
+  readonly initData: Model;
   readonly data?: Model;
   readonly meta: {
     loading: boolean;

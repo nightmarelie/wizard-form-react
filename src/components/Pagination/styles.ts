@@ -9,7 +9,6 @@ export const pagination = css({
     li: {
       color: 'black',
       float: 'left',
-      padding: '6px 12px',
       textDecoration: 'none',
       listStyle: 'none',
       // transition: 'background-color .2s',
@@ -23,8 +22,9 @@ export const pagination = css({
         border: `1px solid ${Colors.BlueV2}`,
       },
       a: {
+        display: 'inline-block',
         margin: 0,
-        padding: 0,
+        padding: '6px 12px',
         border: 0,
         font: 'inherit',
         verticalAlign: 'baseline',

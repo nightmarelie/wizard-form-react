@@ -43,7 +43,7 @@ type Props = {
 class CreateUser extends React.Component<Props, {}> {
   public static defaultProps = {
     loading: false,
-    puller: (state: ApplicationState) => state.abandonUser.initDate,
+    puller: (state: ApplicationState) => state.abandonUser.initData,
   };
 
   public componentDidMount(): void {

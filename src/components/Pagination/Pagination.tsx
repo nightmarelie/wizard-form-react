@@ -11,6 +11,7 @@ type Props = {
 
 const defaultProps = {
   pageCount: 0,
+  currentPage: 0,
   marginPagesDisplayed: 2,
   pageRangeDisplayed: 5,
 };
@@ -20,6 +21,7 @@ type DefaultProps = Readonly<typeof defaultProps>;
 const Pagination: React.FC<Props> = ({
   handler,
   pageCount,
+  currentPage,
   marginPagesDisplayed,
   pageRangeDisplayed,
 }): React.ReactElement<Props> => {
@@ -35,6 +37,7 @@ const Pagination: React.FC<Props> = ({
         marginPagesDisplayed={marginPagesDisplayed!}
         pageRangeDisplayed={pageRangeDisplayed!}
         onPageChange={handler}
+        forcePage={currentPage}
       />
     </div>
   );

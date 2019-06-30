@@ -3,10 +3,17 @@ import { State, Action } from './model';
 
 const initialState: State = {
   data: undefined,
-  initDate: {} as any,
+  initData: {} as any,
   errors: undefined,
   meta: {
     loading: false,
+    searchValue: '',
+    pagination: {
+      perPage: 12,
+      offset: 0,
+      pageCount: 1,
+      total: 0,
+    },
   },
 };
 
@@ -17,21 +24,34 @@ const reducer: Reducer<State> = (state = initialState, action) => {
     case Action.FETCH_REQUEST:
     case Action.FETCH_ALL_REQUEST:
     case Action.REMOVE_REQUEST:
-      return { ...state, meta: { loading: true } };
+      return { ...state, meta: { ...state.meta, loading: true } };
     case Action.CREATE_SUCCESS:
     case Action.UPDATE_SUCCESS:
     case Action.FETCH_SUCCESS:
-    case Action.FETCH_ALL_SUCCESS:
     case Action.REMOVE_SUCCESS:
-      return { ...state, meta: { loading: false }, data: action.payload };
+      return {
+        ...state,
+        meta: { ...state.meta, loading: false },
+        data: action.payload,
+      };
+    case Action.FETCH_ALL_SUCCESS:
+      return {
+        ...state,
+        meta: { ...action.payload.meta, loading: false },
+        data: action.payload.data,
+      };
     case Action.CREATE_ERROR:
     case Action.UPDATE_ERROR:
     case Action.FETCH_ERROR:
     case Action.FETCH_ALL_ERROR:
     case Action.REMOVE_ERROR:
-      return { ...state, meta: { loading: false }, errors: action.payload };
+      return {
+        ...state,
+        meta: { ...state.meta, loading: false },
+        errors: action.payload,
+      };
     case Action.INITIALIZE_DATA:
-      return { ...state, initDate: action.payload };
+      return { ...state, initData: action.payload };
     default: {
       return state;
     }

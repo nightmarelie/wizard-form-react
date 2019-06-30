@@ -1,4 +1,11 @@
-import { Model, Action, UpdatePayload, FetchPayload } from './model';
+import {
+  Model,
+  Action,
+  UpdatePayload,
+  FetchPayload,
+  Metadata,
+  DataWithMeta,
+} from './model';
 import { createAsyncAction, createStandardAction } from 'typesafe-actions';
 
 export const fetch = createAsyncAction(
@@ -11,13 +18,13 @@ export const fetchAll = createAsyncAction(
   Action.FETCH_ALL_REQUEST,
   Action.FETCH_ALL_SUCCESS,
   Action.FETCH_ALL_ERROR,
-)<undefined, Model[], Error>();
+)<Metadata, DataWithMeta, Error>();
 
 export const remove = createAsyncAction(
   Action.REMOVE_REQUEST,
   Action.REMOVE_SUCCESS,
   Action.REMOVE_ERROR,
-)<number, Model[], Error>();
+)<number, boolean, Error>();
 
 export const create = createAsyncAction(
   Action.CREATE_REQUEST,

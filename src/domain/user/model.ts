@@ -24,6 +24,7 @@ export interface Locks {
 
 export interface Account {
   image: File;
+  imageUrl?: string;
   username: string;
   password: string;
 }
@@ -78,11 +79,9 @@ export enum Action {
 }
 
 export interface State {
-  readonly initDate: Model;
+  readonly initData: Model;
   readonly data?: Model | Model[];
-  readonly meta: {
-    loading: boolean;
-  };
+  readonly meta: Metadata;
   readonly errors?: string;
 }
 
@@ -95,4 +94,20 @@ export interface FetchPayload {
   readonly criteria: number | { [key: string]: string };
   readonly resolve?: (value: Model | PromiseLike<Model>) => Promise<Model>;
   readonly reject?: (reason?: any) => Promise<Model>;
+}
+
+export interface Metadata {
+  loading: boolean;
+  searchValue?: string;
+  pagination: {
+    perPage: number;
+    offset: number;
+    pageCount: number;
+    total: number;
+  };
+}
+
+export interface DataWithMeta {
+  data: Model[];
+  meta: Metadata;
 }

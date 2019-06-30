@@ -30,10 +30,13 @@ interface State {
   loading: boolean;
   errors?: boolean;
   tryToDeleteUser: number;
+  searchValue: string;
   pagination: {
     perPage: number;
     offset: number;
     pageCount: number;
+    total: number;
+    currentPage: number;
   };
 }
 
@@ -42,8 +45,15 @@ type Props = {
   loading: boolean;
   errors?: boolean;
   headers: { [key: string]: string };
-  fetchAllData: () => User.Model[];
+  fetchAllData: (meta: User.Metadata) => User.DataWithMeta;
   removeData: (id: number) => boolean;
+  pagination: {
+    perPage: number;
+    offset: number;
+    pageCount: number;
+    total: number;
+    currentPage: number;
+  };
 } & RouteComponentProps;
 
 class ListOfUser extends React.Component<Props, State> {
@@ -64,38 +74,26 @@ class ListOfUser extends React.Component<Props, State> {
       loading: false,
       errors: undefined,
       tryToDeleteUser: 0,
-      pagination: {
-        perPage: 12,
-        offset: 0,
-        pageCount: 1,
-      },
+      searchValue: '',
+      pagination: props.pagination,
     };
-  }
-
-  public componentDidUpdate(prevProps: Props): void {
-    if (this.props.data !== prevProps.data) {
-      const pagination = this.state.pagination;
-      this.setState({
-        pagination: {
-          ...pagination,
-          pageCount: this.colculatePageCount(
-            this.props.data.length,
-            pagination.perPage,
-          ),
-        },
-      });
-    }
   }
 
   public componentDidMount(): void {
     document.addEventListener('keydown', this.handleCancel, false);
     // fetch all users
-    this.props.fetchAllData();
+    this.props.fetchAllData(this.fetchMeta());
   }
 
-  private colculatePageCount(total: number, perPage: number): number {
-    return Math.ceil(total / perPage);
-  }
+  private fetchMeta = (): User.Metadata => {
+    const { pagination, loading, searchValue } = this.state;
+
+    return {
+      pagination,
+      loading,
+      searchValue,
+    };
+  };
 
   public componentWillUnmount(): void {
     document.removeEventListener('keydown', this.handleCancel, false);
@@ -107,9 +105,12 @@ class ListOfUser extends React.Component<Props, State> {
     const pagination = this.state.pagination;
     const offset = Math.ceil(selected * pagination.perPage);
 
-    this.setState({ pagination: { ...pagination, offset } }, () => {
-      this.props.fetchAllData();
-    });
+    this.setState(
+      { pagination: { ...pagination, offset, currentPage: selected } },
+      () => {
+        this.props.fetchAllData(this.fetchMeta());
+      },
+    );
   };
 
   private handleCancel = (event: KeyboardEvent): void => {
@@ -126,16 +127,21 @@ class ListOfUser extends React.Component<Props, State> {
     });
   };
 
-  private handleUserDelete(userId: number): void {
+  private handleTryToUserDelete(userId: number): void {
     this.setState({
       tryToDeleteUser: userId,
     });
   }
 
-  public render(): React.ReactElement {
-    const { tryToDeleteUser, pagination } = this.state;
-    const { headers, data, loading, removeData, history } = this.props;
+  private handleUserDelete = (userId: number): void => {
+    const { removeData, fetchAllData } = this.props;
+    removeData(userId);
+    fetchAllData(this.fetchMeta());
+  };
 
+  public render(): React.ReactElement {
+    const { tryToDeleteUser } = this.state;
+    const { headers, data, history, pagination } = this.props;
     return (
       <Container>
         <Title title={constants.list.labels.title} />
@@ -147,7 +153,7 @@ class ListOfUser extends React.Component<Props, State> {
             <Table.Cell payload={headers.lastUpdate} />
             <Table.Cell className="last" payload="" />
           </Table.Row>
-          {!loading && data && data.length > 0 ? (
+          {data && data.length > 0 ? (
             <React.Fragment>
               <Table.Row>
                 <Table.Cell className="separator" />
@@ -165,10 +171,7 @@ class ListOfUser extends React.Component<Props, State> {
                       })}
                       className="navigate"
                     >
-                      <Avatar
-                        className="avatar-small"
-                        image={helper.imgToUrl(user.image)}
-                      />
+                      <Avatar className="avatar-small" image={user.imageUrl} />
                       {user.username}
                     </Link>
                   </Table.Cell>
@@ -198,13 +201,13 @@ class ListOfUser extends React.Component<Props, State> {
                       }
                     />
                     <ActionIcon
-                      handler={() => this.handleUserDelete(user.id)}
+                      handler={() => this.handleTryToUserDelete(user.id)}
                       className="action-delete"
                     />
                   </Table.Cell>
                   <Table.Cell className="danger" payload="">
                     <ActionIcon
-                      handler={() => removeData(user.id)}
+                      handler={() => this.handleUserDelete(user.id)}
                       className="action-delete-danger"
                     >
                       delete
@@ -216,6 +219,7 @@ class ListOfUser extends React.Component<Props, State> {
                 <Table.Cell className="separator">
                   <Pagination
                     pageCount={pagination.pageCount}
+                    currentPage={pagination.currentPage}
                     handler={this.handlePageClick}
                   />
                 </Table.Cell>
@@ -244,10 +248,11 @@ const mapStateToProps: (s: ApplicationState) => void = ({ users }) => ({
   data: !users.data ? [] : users.data,
   loading: users.meta.loading,
   errors: users.errors,
+  pagination: users.meta.pagination,
 });
 
 const mapDispatchToProps: (d: Dispatch) => void = dispatch => ({
-  fetchAllData: () => dispatch(User.fetchAll.request()),
+  fetchAllData: (meta: User.Metadata) => dispatch(User.fetchAll.request(meta)),
   removeData: (id: number) => dispatch(User.remove.request(id)),
 });
 
