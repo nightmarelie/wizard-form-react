@@ -308,11 +308,22 @@ class WizardForm extends React.Component<Props, State> {
   private handleInitializeForm = (data: Partial<User.Model>): void => {
     this.props.initData(data);
 
-    this.setState({
-      locks: data.locks!,
-      isBarVisible: false,
-    });
+    this.setState(
+      {
+        locks: data.locks!,
+        isBarVisible: false,
+      },
+      () => this.handleFormNav(this.calculateForm(data.locks!)),
+    );
   };
+
+  private calculateForm(locks: User.Locks): Forms {
+    return this.config.forms
+      .map(f => f.key)
+      .filter(k => !locks[k])
+      .reverse()
+      .find(f => !!f)!;
+  }
 
   public render(): React.ReactElement {
     const { data } = this.props;
