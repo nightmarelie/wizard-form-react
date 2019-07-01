@@ -12,7 +12,8 @@ class User implements BaseUser {
   public updateAt: Date = new Date();
   public createdAt: Date = new Date();
   public username: string = '';
-  public password: string = '****';
+  public password: string = '******';
+  public repeatPassword: string = '******';
   public firstName: string = '';
   public lastName: string = '';
   public birthDate: Date = new Date();

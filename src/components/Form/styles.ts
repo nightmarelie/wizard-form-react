@@ -353,7 +353,7 @@ export const ul = css({
 });
 
 export const crop = css({
-  textAlign: 'center',
+  textAlign: 'left',
   padding: '15px',
   color: Colors.GreyV3,
   button: {

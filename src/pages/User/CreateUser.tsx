@@ -53,12 +53,19 @@ class CreateUser extends React.Component<Props, {}> {
     fetchData();
   }
 
+  public componentWillUnmount(): void {
+    const { resetForm, initForm } = this.props;
+    initForm();
+    resetForm();
+  }
+
   private handleFinalData = (data: Partial<User.Model>): void => {
-    const { createData, clearData, resetForm, history } = this.props;
+    const { createData, clearData, resetForm, history, initForm } = this.props;
 
     createData(data);
     clearData();
     resetForm();
+    initForm();
 
     history.push(routes.listOfUsers);
   };

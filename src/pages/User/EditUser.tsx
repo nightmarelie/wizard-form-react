@@ -5,10 +5,12 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { reset, initialize } from 'redux-form';
 
 // domain
 import { ApplicationState } from 'domain/store';
 import * as User from 'domain/user';
+import * as Form from 'domain/form';
 
 // components
 import { Container } from 'components/Wrapper';
@@ -32,6 +34,8 @@ type Props = {
   updateData: (id: number, data: Partial<User.Model>) => void;
   initData: (data: Partial<User.Model>) => void;
   puller: (state: ApplicationState) => User.Model;
+  resetForm: () => void;
+  initForm: () => void;
 } & RouteComponentProps<MatchParams>;
 
 class EditUser extends React.Component<Props, {}> {
@@ -44,16 +48,24 @@ class EditUser extends React.Component<Props, {}> {
     const {
       match: { params },
       fetchData,
+      resetForm,
+      initForm,
     } = this.props;
 
+    initForm();
+    resetForm();
     fetchData(+params.id);
   }
 
-  public componentDidUpdate(prevProps: Props): void {
+  public componentDidUpdate(): void {
     const { data, initData } = this.props;
-    if (data !== prevProps.data) {
-      initData(data);
-    }
+    initData(data);
+  }
+
+  public componentWillUnmount(): void {
+    const { resetForm, initForm } = this.props;
+    initForm();
+    resetForm();
   }
 
   private handleFinalData = (id: number, data: Partial<User.Model>): void => {
@@ -66,7 +78,6 @@ class EditUser extends React.Component<Props, {}> {
         params: { id },
       },
       data,
-      loading,
     } = this.props;
 
     const dataHandler = this.handleFinalData.bind(this, +id);
@@ -79,7 +90,7 @@ class EditUser extends React.Component<Props, {}> {
           })}
           breadcrumbTitle={constants.view.labels.profile}
         />
-        {!loading && data && (
+        {data && (
           <WizardForm
             {...this.props}
             isCreateMode={false}
@@ -109,6 +120,8 @@ const mapDispatchToProps: (d: Dispatch) => void = dispatch => ({
   updateData: (id: number, data: User.Model) =>
     dispatch(User.update.request({ id, data })),
   initData: (data: User.Model) => dispatch(User.initData(data)),
+  resetForm: () => dispatch(reset(Form.Model.FORM_NAME)),
+  initForm: () => dispatch(initialize(Form.Model.FORM_NAME, {})),
 });
 
 export default connect(
