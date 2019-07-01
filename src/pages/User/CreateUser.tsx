@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { reset } from 'redux-form';
+import { reset, initialize } from 'redux-form';
 
 // domain
 import { ApplicationState } from 'domain/store';
@@ -38,6 +38,7 @@ type Props = {
   puller: (state: ApplicationState) => AbandonUser.Model;
   createData: (data: Partial<User.Model>) => boolean;
   resetForm: () => void;
+  initForm: () => void;
 } & RouteComponentProps<MatchParams>;
 
 class CreateUser extends React.Component<Props, {}> {
@@ -47,8 +48,8 @@ class CreateUser extends React.Component<Props, {}> {
   };
 
   public componentDidMount(): void {
-    const { fetchData, resetForm } = this.props;
-    resetForm();
+    const { fetchData, initForm } = this.props;
+    initForm();
     fetchData();
   }
 
@@ -97,6 +98,7 @@ const mapDispatchToProps: (d: Dispatch) => void = dispatch => ({
   initData: (data: AbandonUser.Model) => dispatch(AbandonUser.initData(data)),
   createData: (data: User.Model) => dispatch(User.create.request(data)),
   resetForm: () => dispatch(reset(Form.Model.FORM_NAME)),
+  initForm: () => dispatch(initialize(Form.Model.FORM_NAME, {})),
 });
 
 export default connect(

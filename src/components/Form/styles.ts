@@ -351,3 +351,12 @@ export const ul = css({
     ],
   },
 });
+
+export const crop = css({
+  textAlign: 'center',
+  padding: '15px',
+  color: Colors.GreyV3,
+  button: {
+    marginBottom: '15px',
+  },
+});
