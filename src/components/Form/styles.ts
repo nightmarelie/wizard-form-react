@@ -22,7 +22,6 @@ export const form = css({
     float: 'right',
     margin: '-50px 5px 0 -25px',
     position: 'relative',
-    zIndex: 2,
   },
   '.right': {
     float: 'right',
@@ -353,10 +352,26 @@ export const ul = css({
 });
 
 export const crop = css({
-  textAlign: 'left',
+  textAlign: 'center',
   padding: '15px',
   color: Colors.GreyV3,
   button: {
-    marginBottom: '15px',
+    margin: '15px',
   },
+  '.ReactCrop': {
+    maxHeight: '500px',
+  },
+});
+
+export const modal = css({
+  top: '50%',
+  left: '50%',
+  right: 'auto',
+  bottom: 'auto',
+  marginRight: '-50%',
+  transform: 'translate(-50%, -50%)',
+  position: 'absolute',
+  backgroundColor: Colors.LightV1,
+  border: `1px solid ${Colors.GreyV5}`,
+  outline: 'none',
 });

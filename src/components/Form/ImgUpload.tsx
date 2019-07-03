@@ -10,11 +10,20 @@ import Dropzone from 'react-dropzone';
 import ReactCrop, { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
-import { download as downloadStyles, crop as cropStyle } from './styles';
+// modal
+import Modal from 'react-modal';
+
+import {
+  download as downloadStyles,
+  crop as cropStyle,
+  modal as modalStyle,
+} from './styles';
 import ActionIcon from 'components/ActionIcon/ActionIcon';
 import Avatar from 'components/Avatar/Avatar';
 import * as helper from 'common/helpers';
 import Button from './Button';
+
+Modal.setAppElement('#root');
 
 type Props = {
   name: string;
@@ -25,7 +34,7 @@ interface State {
   croppedImageSrc?: string;
   imageSrc?: string;
   crop: Crop;
-  cropped: boolean;
+  isModalOpen: boolean;
 }
 
 export class ImgUpload extends React.PureComponent<Props, State> {
@@ -39,7 +48,7 @@ export class ImgUpload extends React.PureComponent<Props, State> {
         width: 170,
         aspect: 1 / 1,
       },
-      cropped: false,
+      isModalOpen: false,
     };
 
     this.handleCropImage = this.handleCropImage.bind(this);
@@ -87,7 +96,7 @@ export class ImgUpload extends React.PureComponent<Props, State> {
     onBlur(file);
     onChange(file);
     this.setState({
-      cropped: false,
+      isModalOpen: false,
     });
   };
 
@@ -153,9 +162,18 @@ export class ImgUpload extends React.PureComponent<Props, State> {
     if (this.imageRef && crop.width && crop.height) {
       const file = await this.getCroppedImg(this.imageRef, crop);
       onChange(file);
-      this.setState({ cropped: true });
+      this.setState({ isModalOpen: false });
     }
   }
+
+  private handleOpenModal = (event: React.MouseEvent): void => {
+    event.stopPropagation();
+    this.setState({ isModalOpen: true });
+  };
+
+  private handleCloseModal = (): void => {
+    this.setState({ isModalOpen: false });
+  };
 
   public render(): React.ReactElement {
     const {
@@ -163,47 +181,66 @@ export class ImgUpload extends React.PureComponent<Props, State> {
       input,
       meta: { touched, error },
     } = this.props;
-    const { imageSrc, crop, croppedImageSrc, cropped } = this.state;
+    const { imageSrc, crop, isModalOpen } = this.state;
     return (
-      <React.Fragment>
-        <div css={downloadStyles}>
-          <input type="hidden" disabled {...input} />
-          <Dropzone onDrop={this.handleOnDrop}>
-            {({ getRootProps, getInputProps }) => {
-              return (
-                <div {...getRootProps({ className: 'dropzone' })}>
-                  <input {...getInputProps({ multiple: false })} />
-                  <Avatar className="preview" image={croppedImageSrc} />
+      <div css={downloadStyles}>
+        <input type="hidden" disabled {...input} />
+        <Dropzone onDrop={this.handleOnDrop}>
+          {({ getRootProps, getInputProps }) => {
+            return (
+              <div {...getRootProps({ className: 'dropzone' })}>
+                <input {...getInputProps({ multiple: false })} />
+                <Avatar className="preview" image={imageSrc} />
+                {!imageSrc ? (
                   <ActionIcon
                     className="action-add"
                     handler={e => handler && handler(e)}
                   >
                     add avatar
                   </ActionIcon>
-                </div>
-              );
-            }}
-          </Dropzone>
-          {touched && error && <span className="error">{error}</span>}
-        </div>
-        {!cropped && imageSrc && (
-          <div css={cropStyle}>
-            <Button
-              title="Crop image"
-              disabled={false}
-              handler={this.handleCropImage}
-            />
-            <br />
-            <ReactCrop
-              crop={crop}
-              src={imageSrc!}
-              onChange={this.handleOnCropChange}
-              onComplete={this.handleOnCropComplete}
-              onImageLoaded={this.handleOnImageLoaded}
-            />
-          </div>
+                ) : (
+                  <ActionIcon
+                    className="action-edit"
+                    handler={this.handleOpenModal}
+                  >
+                    edit avatar
+                  </ActionIcon>
+                )}
+              </div>
+            );
+          }}
+        </Dropzone>
+        {touched && error && <span className="error">{error}</span>}
+        {imageSrc && (
+          <Modal
+            css={modalStyle}
+            isOpen={isModalOpen}
+            onRequestClose={this.handleCloseModal}
+          >
+            <div css={cropStyle}>
+              <h2>Crop your image</h2>
+              <ReactCrop
+                crop={crop}
+                src={imageSrc!}
+                onChange={this.handleOnCropChange}
+                onComplete={this.handleOnCropComplete}
+                onImageLoaded={this.handleOnImageLoaded}
+              />
+              <br />
+              <Button
+                title="Crop image"
+                disabled={false}
+                handler={this.handleCropImage}
+              />
+              <Button
+                title="Close"
+                disabled={false}
+                handler={this.handleCloseModal}
+              />
+            </div>
+          </Modal>
         )}
-      </React.Fragment>
+      </div>
     );
   }
 }
