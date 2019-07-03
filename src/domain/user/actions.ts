@@ -5,6 +5,7 @@ import {
   FetchPayload,
   Metadata,
   DataWithMeta,
+  RemovePayload,
 } from './model';
 import { createAsyncAction, createStandardAction } from 'typesafe-actions';
 
@@ -24,13 +25,13 @@ export const remove = createAsyncAction(
   Action.REMOVE_REQUEST,
   Action.REMOVE_SUCCESS,
   Action.REMOVE_ERROR,
-)<number, boolean, Error>();
+)<RemovePayload, DataWithMeta, Error>();
 
 export const create = createAsyncAction(
   Action.CREATE_REQUEST,
   Action.CREATE_SUCCESS,
   Action.CREATE_ERROR,
-)<Model, boolean, Error>();
+)<Model, DataWithMeta, Error>();
 
 export const update = createAsyncAction(
   Action.UPDATE_REQUEST,

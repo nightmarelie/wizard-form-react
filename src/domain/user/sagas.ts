@@ -13,27 +13,10 @@ import {
 import Dexie from 'dexie';
 
 import { fetch, fetchAll, create, update, remove } from './actions';
-import { Model, Action } from './model';
+import { Model, Action, DefaultMetadata } from './model';
 import db from 'database';
 
 import * as helper from 'common/helpers';
-
-function* handleCreate(action: ReturnType<typeof create.request>): Generator {
-  try {
-    yield call(
-      { context: db.users, fn: db.users.add },
-      {
-        ...action.payload,
-        createdAt: Date.now(),
-        updateAt: Date.now(),
-      },
-    );
-
-    yield put(create.success(true));
-  } catch (err) {
-    yield put(create.failure(err));
-  }
-}
 
 function* handleUpdate(action: ReturnType<typeof update.request>): Generator {
   try {
@@ -112,17 +95,34 @@ function* handleFetchAll(
   }
 }
 
+function* handleCreate(action: ReturnType<typeof create.request>): Generator {
+  try {
+    yield call(
+      { context: db.users, fn: db.users.add },
+      {
+        ...action.payload,
+        createdAt: Date.now(),
+        updateAt: Date.now(),
+      },
+    );
+
+    yield handleFetchAll(fetchAll.request(new DefaultMetadata()));
+  } catch (err) {
+    yield put(create.failure(err));
+  }
+}
+
 function* handleRemove(action: ReturnType<typeof remove.request>): Generator {
+  const { id, meta: matainfo } = action.payload;
   try {
     yield call(
       {
         context: db.users,
         fn: db.users.delete,
       },
-      action.payload,
+      +id,
     );
-
-    yield put(remove.success(true));
+    yield handleFetchAll(fetchAll.request(matainfo));
   } catch (err) {
     yield put(remove.failure(err));
   }

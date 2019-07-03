@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import onClickOutside from 'react-onclickoutside';
 
+// components
 import { Container } from 'components/Wrapper';
 import Table from 'components/CustomTable';
 import { Title } from 'components/Title/Title';
@@ -15,6 +16,7 @@ import ActionIcon from 'components/ActionIcon/ActionIcon';
 import LinkButton from 'components/LinkButton/LinkButton';
 import Avatar from 'components/Avatar/Avatar';
 import RowInput from 'components/Form/RowInput';
+import Spinner from 'components/Spinner/Spinner';
 
 // common
 import routes, { Forms } from 'common/routes';
@@ -43,11 +45,11 @@ interface State {
 
 type Props = {
   data: User.Model[];
-  loading: boolean;
+  isLoading: boolean;
   errors?: boolean;
   headers: { [key: string]: string };
   fetchAllData: (meta: User.Metadata) => User.DataWithMeta;
-  removeData: (id: number) => boolean;
+  removeData: (payload: User.RemovePayload) => boolean;
   pagination: {
     perPage: number;
     offset: number;
@@ -59,7 +61,7 @@ type Props = {
 
 class ListOfUser extends React.Component<Props, State> {
   public static defaultProps = {
-    loading: false,
+    isLoading: true,
     headers: {
       username: constants.list.labels.username,
       company: constants.list.labels.company,
@@ -84,6 +86,31 @@ class ListOfUser extends React.Component<Props, State> {
     document.addEventListener('keydown', this.handleCancel, false);
     // fetch all users
     this.props.fetchAllData(this.fetchMeta());
+  }
+
+  public componentDidUpdate(prevProps: Props): void {
+    const { data, pagination, fetchAllData } = this.props;
+
+    if (
+      data &&
+      data.length === 0 &&
+      pagination.currentPage > 0 &&
+      prevProps.data !== data
+    ) {
+      const currentPage = pagination.currentPage - 1;
+      this.setState(
+        {
+          pagination: {
+            ...pagination,
+            offset: Math.ceil(currentPage * pagination.perPage),
+            currentPage: currentPage,
+          },
+        },
+        () => {
+          fetchAllData(this.fetchMeta());
+        },
+      );
+    }
   }
 
   private fetchMeta = (): User.Metadata => {
@@ -136,19 +163,8 @@ class ListOfUser extends React.Component<Props, State> {
 
   private handleUserDelete = (userId: number): void => {
     const { removeData, fetchAllData } = this.props;
-    this.setState(
-      state => ({
-        pagination: {
-          ...state.pagination,
-          offset: 0,
-          currentPage: 0,
-        },
-      }),
-      () => {
-        removeData(userId);
-        fetchAllData(this.fetchMeta());
-      },
-    );
+    removeData({ id: userId, meta: this.fetchMeta() });
+    fetchAllData(this.fetchMeta());
   };
 
   private handleSearchBy = (
@@ -172,7 +188,7 @@ class ListOfUser extends React.Component<Props, State> {
 
   public render(): React.ReactElement {
     const { tryToDeleteUser } = this.state;
-    const { headers, data, history, pagination } = this.props;
+    const { headers, data, history, pagination, isLoading } = this.props;
     return (
       <Container>
         <Title title={constants.list.labels.title} />
@@ -261,6 +277,8 @@ class ListOfUser extends React.Component<Props, State> {
                 </Table.Cell>
               </Table.Row>
             </React.Fragment>
+          ) : isLoading ? (
+            <Spinner isLoading={isLoading} />
           ) : (
             <Table.Row className="empty">
               <Table.Cell className="separator">
@@ -275,6 +293,7 @@ class ListOfUser extends React.Component<Props, State> {
             </Table.Row>
           )}
         </Table.Wrapper>
+        <Spinner isLoading={isLoading} />
       </Container>
     );
   }
@@ -282,14 +301,15 @@ class ListOfUser extends React.Component<Props, State> {
 
 const mapStateToProps: (s: ApplicationState) => void = ({ users }) => ({
   data: !users.data ? [] : users.data,
-  loading: users.meta.loading,
+  isLoading: users.meta.loading,
   errors: users.errors,
   pagination: users.meta.pagination,
 });
 
 const mapDispatchToProps: (d: Dispatch) => void = dispatch => ({
   fetchAllData: (meta: User.Metadata) => dispatch(User.fetchAll.request(meta)),
-  removeData: (id: number) => dispatch(User.remove.request(id)),
+  removeData: (payload: User.RemovePayload) =>
+    dispatch(User.remove.request(payload)),
 });
 
 export default connect(

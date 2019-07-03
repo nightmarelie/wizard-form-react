@@ -96,6 +96,11 @@ export interface FetchPayload {
   readonly reject?: (reason?: any) => Promise<Model>;
 }
 
+export interface RemovePayload {
+  readonly id: number;
+  readonly meta: Metadata;
+}
+
 export interface Metadata {
   loading: boolean;
   searchValue?: string;
@@ -104,6 +109,16 @@ export interface Metadata {
     offset: number;
     pageCount: number;
     total: number;
+  };
+}
+
+export class DefaultMetadata {
+  public loading = true;
+  public pagination = {
+    perPage: 12,
+    offset: 0,
+    pageCount: 0,
+    total: 0,
   };
 }
 

@@ -28,7 +28,7 @@ type MatchParams = {
 
 type Props = {
   data: User.Model;
-  loading: boolean;
+  isLoading: boolean;
   errors?: boolean;
   fetchData: (id: number) => User.Model;
   updateData: (id: number, data: Partial<User.Model>) => void;
@@ -40,7 +40,7 @@ type Props = {
 
 class EditUser extends React.Component<Props, {}> {
   public static defaultProps = {
-    loading: false,
+    isLoading: true,
     puller: (state: ApplicationState) => state.users.initData,
   };
 
@@ -111,7 +111,7 @@ class EditUser extends React.Component<Props, {}> {
 
 const mapStateToProps: (s: ApplicationState) => void = ({ users }) => ({
   data: users.data,
-  loading: users.meta.loading,
+  isLoading: users.meta.loading,
   errors: users.errors,
 });
 

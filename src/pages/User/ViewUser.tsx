@@ -13,6 +13,7 @@ import * as Table from 'components/Table';
 import ActionIcon from 'components/ActionIcon/ActionIcon';
 import Avatar from 'components/Avatar/Avatar';
 import Link from 'components/Link/Link';
+import Spinner from 'components/Spinner/Spinner';
 
 // common
 import routes, { ViewUserParams as RouteParams, Forms } from 'common/routes';
@@ -27,7 +28,7 @@ import * as User from 'domain/user';
 
 type Props = {
   data: User.Model;
-  loading: boolean;
+  isLoading: boolean;
   errors?: boolean;
   fetchData: (id: number) => boolean;
 } & RouteComponentProps<RouteParams>;
@@ -63,10 +64,10 @@ class ViewUser extends React.Component<Props> {
   };
 
   public render(): React.ReactElement {
-    const { data, loading } = this.props;
+    const { data, isLoading } = this.props;
     return (
       <Container>
-        {!loading && data && (
+        {data && (
           <React.Fragment>
             <BreadcrumbTitle
               title={data.username}
@@ -286,6 +287,7 @@ class ViewUser extends React.Component<Props> {
             </Container>
           </React.Fragment>
         )}
+        <Spinner isLoading={isLoading} />
       </Container>
     );
   }
@@ -293,7 +295,7 @@ class ViewUser extends React.Component<Props> {
 
 const mapStateToProps: (s: ApplicationState) => void = ({ users }) => ({
   data: users.data,
-  loading: users.meta.loading,
+  isLoading: users.meta.loading,
   errors: users.errors,
 });
 

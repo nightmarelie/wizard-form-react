@@ -14,6 +14,7 @@ import Bar from 'components/Bar/Bar';
 import ActionIcon from 'components/ActionIcon/ActionIcon';
 import { Container } from 'components/Wrapper';
 import { ButtonConfig } from 'components/Form/Button';
+import Spinner from 'components/Spinner/Spinner';
 
 // domain
 import * as User from 'domain/user';
@@ -49,7 +50,7 @@ type Props = {
   isCreateMode: boolean;
   data: Partial<User.Model>;
   routeHandler: (form: Forms) => string;
-  loading: boolean;
+  isLoading: boolean;
   errors?: boolean;
   isBarVisible: boolean;
   mediateHandleData: (data: Partial<User.Model>) => void;
@@ -90,9 +91,9 @@ class WizardForm extends React.Component<Props, State> {
         params: { form },
       },
       data,
-      loading,
+      isLoading,
     } = this.props;
-    if (data && data.locks && !loading) {
+    if (data && data.locks && !isLoading) {
       this.setState({
         locks: data.locks!,
         activeForm: form,
@@ -326,7 +327,7 @@ class WizardForm extends React.Component<Props, State> {
   }
 
   public render(): React.ReactElement {
-    const { data } = this.props;
+    const { data, isLoading } = this.props;
     const { isBarVisible, activeForm, locks } = this.state;
     const { tabs, forms } = this.config;
     const currentForm = forms
@@ -359,6 +360,7 @@ class WizardForm extends React.Component<Props, State> {
           </Bar>
         )}
         {currentForm}
+        <Spinner isLoading={isLoading} />
       </Container>
     );
   }

@@ -16,7 +16,7 @@ interface Props {
 }
 
 export const BreadcrumbTitle: React.FC<Props> = ({
-  title,
+  title = 'User name',
   breadcrumbTitle,
   breadcrumbLink,
 }): React.ReactElement<Props> => {

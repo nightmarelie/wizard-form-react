@@ -29,7 +29,7 @@ interface MatchParams {
 
 type Props = {
   data: AbandonUser.Model;
-  loading: boolean;
+  isLoading: boolean;
   errors?: boolean;
   fetchData: () => AbandonUser.Model;
   mediateHandleData: (data: AbandonUser.Model) => void;
@@ -43,7 +43,7 @@ type Props = {
 
 class CreateUser extends React.Component<Props, {}> {
   public static defaultProps = {
-    loading: false,
+    isLoading: true,
     puller: (state: ApplicationState) => state.abandonUser.initData,
   };
 
@@ -93,7 +93,7 @@ class CreateUser extends React.Component<Props, {}> {
 
 const mapStateToProps: (s: ApplicationState) => void = ({ abandonUser }) => ({
   data: abandonUser.data,
-  loading: abandonUser.meta.loading,
+  isLoading: abandonUser.meta.loading,
   errors: abandonUser.errors,
 });
 
