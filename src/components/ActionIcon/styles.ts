@@ -17,8 +17,11 @@ export const action = css`
   display: inline-block;
   cursor: pointer;
   opacity: 1;
+  transform: scale(1);
+  transition: transform 0.1s ease-in-out;
   &:hover {
     opacity: 0.5;
+    transform: scale(1.1);
   }
   &.none-icon {
     color: white;

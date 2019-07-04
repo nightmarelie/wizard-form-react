@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import onClickOutside from 'react-onclickoutside';
 import { debounce } from 'throttle-debounce';
+import qs from 'query-string';
 
 // components
 import { Container } from 'components/Wrapper';
@@ -28,6 +29,12 @@ import * as global from 'common/styles/global.styles';
 // domain
 import { ApplicationState } from 'domain/store';
 import * as User from 'domain/user';
+
+interface QueryString {
+  currentPage: string;
+  perPage: string;
+  searchValue: string;
+}
 
 interface State {
   data: User.Model[];
@@ -69,6 +76,7 @@ class ListOfUser extends React.Component<Props, State> {
       contacts: constants.list.labels.contacts,
       lastUpdate: constants.list.labels.lastUpdate,
     },
+    ...User.DefaultMetadata.create(),
   };
 
   public constructor(props: Props) {
@@ -88,8 +96,27 @@ class ListOfUser extends React.Component<Props, State> {
 
   public componentDidMount(): void {
     document.addEventListener('keydown', this.handleCancel, false);
-    // fetch all users
-    this.props.fetchAllData(this.fetchMeta());
+
+    const {
+      location: { search },
+      fetchAllData,
+    } = this.props;
+    const query: QueryString = (qs.parse(search) as any) as QueryString;
+
+    this.setState(
+      state => ({
+        searchValue: query.searchValue || state.searchValue,
+        pagination: {
+          ...state.pagination,
+          currentPage: +query.currentPage || state.pagination.currentPage,
+          perPage: +query.perPage || state.pagination.perPage,
+        },
+      }),
+      () => {
+        this.pushToHistory();
+        fetchAllData(this.fetchMeta());
+      },
+    );
   }
 
   public componentDidUpdate(prevProps: Props): void {
@@ -101,13 +128,11 @@ class ListOfUser extends React.Component<Props, State> {
       pagination.currentPage > 0 &&
       prevProps.data !== data
     ) {
-      const currentPage = pagination.currentPage - 1;
       this.setState(
         {
           pagination: {
             ...pagination,
-            offset: Math.ceil(currentPage * pagination.perPage),
-            currentPage: currentPage,
+            currentPage: pagination.currentPage - 1,
           },
         },
         () => {
@@ -135,14 +160,33 @@ class ListOfUser extends React.Component<Props, State> {
     selected,
   }) => {
     const pagination = this.state.pagination;
-    const offset = Math.ceil(selected * pagination.perPage);
 
     this.setState(
-      { pagination: { ...pagination, offset, currentPage: selected } },
+      { pagination: { ...pagination, currentPage: selected } },
       () => {
+        this.pushToHistory();
         this.props.fetchAllData(this.fetchMeta());
       },
     );
+  };
+
+  private pushToHistory = (): void => {
+    const {
+      history: { push },
+    } = this.props;
+    const {
+      pagination: { perPage, currentPage },
+      searchValue,
+    } = this.state;
+
+    push({
+      pathname: routes.listOfUsers,
+      search: qs.stringify({
+        searchValue,
+        perPage,
+        currentPage,
+      }),
+    });
   };
 
   private handleCancel = (event: KeyboardEvent): void => {
@@ -184,18 +228,18 @@ class ListOfUser extends React.Component<Props, State> {
         searchValue: value,
         pagination: {
           ...state.pagination,
-          offset: 0,
           currentPage: 0,
         },
       }),
       () => {
+        this.pushToHistory();
         this.searchBy(this.fetchMeta());
       },
     );
   };
 
   public render(): React.ReactElement {
-    const { tryToDeleteUser } = this.state;
+    const { tryToDeleteUser, searchValue } = this.state;
     const { headers, data, history, pagination, isLoading } = this.props;
     return (
       <Container>
@@ -204,6 +248,7 @@ class ListOfUser extends React.Component<Props, State> {
           name="username"
           label={constants.list.labels.search}
           handler={this.handleSearchBy}
+          value={searchValue}
         />
         <Table.Wrapper>
           <Table.Row className="header">

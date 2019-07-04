@@ -7,6 +7,7 @@ import { rowLabel as labelStyle, rowInput as inputStyle } from './styles';
 interface Props {
   name: string;
   label: string;
+  value: string;
   handler?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -14,6 +15,7 @@ export const RowInput: React.FC<Props> = ({
   name,
   label,
   handler,
+  value,
 }): React.ReactElement<Props> => {
   return (
     <React.Fragment>
@@ -26,6 +28,7 @@ export const RowInput: React.FC<Props> = ({
         css={inputStyle}
         type="text"
         onChange={handler}
+        value={value}
       />
     </React.Fragment>
   );

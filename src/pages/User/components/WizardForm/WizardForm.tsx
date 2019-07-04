@@ -149,7 +149,7 @@ class WizardForm extends React.Component<Props, State> {
           handler: this.handleFormNav.bind(this, f.key),
         };
         const lock: Partial<LockConfig> = {
-          [f.key]: i !== 0,
+          [f.key]: i !== 0 && isCreateMode,
         };
         return {
           form,

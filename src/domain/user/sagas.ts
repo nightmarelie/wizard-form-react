@@ -61,9 +61,11 @@ function* handleFetchAll(
   action: ReturnType<typeof fetchAll.request>,
 ): Generator {
   const {
-    pagination: { perPage, offset },
+    pagination: { perPage, currentPage },
     searchValue = '',
   } = action.payload;
+
+  const offset = Math.ceil(currentPage * perPage);
   try {
     const where = (
       users: Dexie.Table<Model, number>,
@@ -106,7 +108,7 @@ function* handleCreate(action: ReturnType<typeof create.request>): Generator {
       },
     );
 
-    yield handleFetchAll(fetchAll.request(new DefaultMetadata()));
+    yield handleFetchAll(fetchAll.request(DefaultMetadata.create()));
   } catch (err) {
     yield put(create.failure(err));
   }

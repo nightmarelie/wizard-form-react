@@ -14,6 +14,8 @@ export const avatar = css({
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'contain',
   border: `3px solid ${Colors.BlueV3}`,
+  transform: 'scale(1)',
+  transition: 'transform 0.1s ease-in-out',
   '&.avatar-small': {
     width: '40px',
     height: '40px',
@@ -21,6 +23,9 @@ export const avatar = css({
     backgroundPosition: 'center center',
     backgroundSize: 'contain',
     border: `2px solid ${Colors.BlueV3}`,
+  },
+  '&:hover': {
+    transform: 'scale(1.2)',
   },
 });
 

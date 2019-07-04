@@ -109,6 +109,7 @@ export interface Metadata {
     offset: number;
     pageCount: number;
     total: number;
+    currentPage: number;
   };
 }
 
@@ -119,7 +120,12 @@ export class DefaultMetadata {
     offset: 0,
     pageCount: 0,
     total: 0,
+    currentPage: 0,
   };
+
+  public static create(): DefaultMetadata {
+    return new DefaultMetadata();
+  }
 }
 
 export interface DataWithMeta {

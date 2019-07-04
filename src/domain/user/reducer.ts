@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { State, Action } from './model';
+import { State, Action, DefaultMetadata } from './model';
 
 const initialState: State = {
   data: undefined,
@@ -7,13 +7,7 @@ const initialState: State = {
   errors: undefined,
   meta: {
     loading: false,
-    searchValue: '',
-    pagination: {
-      perPage: 12,
-      offset: 0,
-      pageCount: 1,
-      total: 0,
-    },
+    ...DefaultMetadata.create(),
   },
 };
 
