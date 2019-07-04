@@ -6,6 +6,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import onClickOutside from 'react-onclickoutside';
+import { debounce } from 'throttle-debounce';
 
 // components
 import { Container } from 'components/Wrapper';
@@ -80,6 +81,9 @@ class ListOfUser extends React.Component<Props, State> {
       searchValue: '',
       pagination: props.pagination,
     };
+
+    this.handlePageClick = debounce(500, this.handlePageClick);
+    this.searchBy = debounce(500, this.searchBy);
   }
 
   public componentDidMount(): void {
@@ -167,6 +171,10 @@ class ListOfUser extends React.Component<Props, State> {
     fetchAllData(this.fetchMeta());
   };
 
+  private searchBy = (meta: User.Metadata): void => {
+    this.props.fetchAllData(meta);
+  };
+
   private handleSearchBy = (
     event: React.ChangeEvent<HTMLInputElement>,
   ): void => {
@@ -181,7 +189,7 @@ class ListOfUser extends React.Component<Props, State> {
         },
       }),
       () => {
-        this.props.fetchAllData(this.fetchMeta());
+        this.searchBy(this.fetchMeta());
       },
     );
   };

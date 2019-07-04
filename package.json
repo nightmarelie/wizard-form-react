@@ -38,6 +38,7 @@
     "redux-form": "^8.2.3",
     "redux-form-input-masks": "^2.0.1",
     "redux-saga": "^1.0.2",
+    "throttle-debounce": "^2.1.0",
     "typesafe-actions": "^4.4.0",
     "typescript": "3.4.5"
   },
@@ -86,6 +87,7 @@
     "@types/redux": "^3.6.0",
     "@types/redux-form": "^8.1.1",
     "@types/redux-saga": "^0.10.5",
+    "@types/throttle-debounce": "^1.1.1",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
     "class-transformer": "^0.2.3",
