@@ -19,7 +19,7 @@
     "@emotion/core": "^10.0.10",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.4.0",
-    "dexie": "^2.0.4",
+    "dexie": "^3.2.2",
     "moment": "^2.24.0",
     "query-string": "^6.8.1",
     "react": "^16.8.6",
